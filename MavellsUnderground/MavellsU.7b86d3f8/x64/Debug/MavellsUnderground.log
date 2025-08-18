@@ -1,0 +1,8 @@
+﻿  Entity.cpp
+  Interactables.cpp
+  MavellsUnderground.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(57,22): error C2040: 'entityList': 'std::vector<Entity,std::allocator<Entity>>' differs in levels of indirection from 'Entity [1]'
+  Player.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Player.cpp(4,62): error C2059: syntax error: ')'
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Player.cpp(4,64): error C2143: syntax error: missing ')' before '{'
+  Generating Code...
