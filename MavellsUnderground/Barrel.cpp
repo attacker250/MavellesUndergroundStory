@@ -8,8 +8,8 @@ Barrel::Barrel() {
 
 
 void Barrel::interact() {
-	for (int i = 0 ; i < giveItems.size(); i++) {
-		Player::playerInventory.storage.push_back(giveItems[i]);
+	for (int i = 0 ; i < barrelinventory.storage.size(); i++) {
+		Player::playerInventory.storage.push_back(barrelinventory.storage[i]);
 	}
 	for (int i = 0; i < Player::playerInventory.storage.size(); i++){
 		std::cout << Player::playerInventory.storage[i] << " ";

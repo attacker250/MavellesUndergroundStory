@@ -14,12 +14,14 @@ public:
 	
 	int xmov = 0;
 	int ymov = 0;
+	const int maxInvSize = 5;
 	static Inventory playerInventory;
 
 	std::string RoomDestination;
 	std::string lastDoor;
 
 	bool move() override;
+	
 	Player() {
 		icon = 'P';
 	}

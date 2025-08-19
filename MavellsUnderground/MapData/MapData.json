@@ -36,10 +36,11 @@
       ],
       "RoomType": "TestRoom",
       "Enemies": 0,
+      "DoorCount":1,
       "Door1": {
-        "FirstPos": [ 40, 5 ],
+        "FirstPos": [ 40,5 ],
         "SecondPos": [ 40, 8 ],
-        "Destination": "RoomTest1"
+        "Destination": "RoomTest2"
       }
 
     },
@@ -60,7 +61,7 @@
       ],
       "RoomType": "TestRoom",
       "Enemies": 0,
-      "PlayerSpawnPos": [ 20, 6 ],
+      "DoorCount": 1,
       "Door1": {
         "FirstPos": [ 0, 5 ],
         "SecondPos": [ 0, 8 ],

@@ -73,6 +73,8 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 }
 
 int main(){
+	std::ifstream fMapdata("MapData/MapData.json");
+	auto MapJson = nlohmann::json::parse(fMapdata);
 	enum ScreenState {
 		MAP_RENDER,
 		BATTLE,
@@ -99,6 +101,7 @@ int main(){
 	// 		MapData[i][f] = new char;
 	// 	}
 	// }
+	std::string currentRoom;
 
 	Game game;
 	Player player;
@@ -107,6 +110,8 @@ int main(){
 	
 	player.lastDoor = "Door1";
 	player.RoomDestination = "RoomTest1";
+	currentRoom = "RoomTest1";
+
 	std::vector<Entity*> EntityList;
 
 	InitGame(game,player,EntityList,"TestMaps","RoomTest1");
@@ -136,18 +141,30 @@ int main(){
 			
 			if (!player.move()) {
 				//check the array
+				int PlayerIntendedX = player.x + player.xmov;
+				int PlayerIntendedY = player.y + player.ymov;
 				for (int i = 1; i < EntityList.size(); i++) {
-					if ((EntityList[i]->x == player.x + player.xmov) && (EntityList[i]->y == player.y + player.ymov)) {
+					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
 						EntityList[i]->interact();
 						break;
 					}
-
-				if ((player.x + player.xmov) >= 40 || (player.y + player.ymov) >= 12) {
-
-
-					InitGame(game, player, EntityList, "TestMaps", "RoomTest2");
-					//in json, specify the door position range. Then store what door the plaayer when through
 				}
+				if ((PlayerIntendedX) >= 40 || (PlayerIntendedY) >= 12) {
+					//std::cout << player.RoomDestination;
+					//for (int i = 0; i < MapJson["TestMaps"][currentRoom]["DoorCount"]; i++) {
+					//	if(MapJson["TestMaps"][currentRoom]["Door"+std::to_string(i)][0] == PlayerIntendedX){
+					//		std::cout << "Test 1";
+					//		system("pause");
+					//		if (MapJson["TestMaps"][currentRoom]["Door" + std::to_string(i)][1] == PlayerIntendedY) {
+					//			player.RoomDestination = MapJson["TestMaps"][currentRoom]["Door" + std::to_string(i)]["Destination"];
+					//			currentRoom = MapJson["TestMaps"][currentRoom]["Door" + std::to_string(i)]["Destination"];
+
+					//			break;
+					//		}
+					//	}
+					//}
+					//InitGame(game, player, EntityList, "TestMaps", "RoomTest2");
+					//in json, specify the door position range. Then store what door the plaayer when through
 				}
 			}
 
@@ -173,7 +190,7 @@ int main(){
 				std::cout << player.playerInventory.storage[i];
 			}
 		}
-
+		//std::cout << MapJson["TestMaps"].;
 
 		
 		//;
