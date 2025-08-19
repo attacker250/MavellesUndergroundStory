@@ -67,24 +67,30 @@ int main(){
 	// 	}
 	// }
 
-	Player player;
 	Game game;
+	game.LoadMap("TestMaps", "MovementTest");
+	
+	Player player;
+	player.spawn(20, 6);
+
+	
 
 	std::vector<Entity*> EntityList;
-	
 	//EntityList.push_back(new Barrel);
+	EntityList.push_back(&player);
 
+	//Detects the objects that are predefined on the map
 	for (int i = 0; i < ROWS; i++) {
  		for (int f = 0; f < COLUMNS; f++) {
 			switch (game.mapData[i][f]) {
 				case 'B':
 					EntityList.push_back(new Barrel);
+					EntityList[EntityList.size()-1]->x = f;
+					EntityList[EntityList.size()-1]->y = i;
 			}
  		}
 	}
     
-	player.spawn(20, 6);
-
 
 
 	while (true) {
@@ -111,7 +117,13 @@ int main(){
 			
 			if (!player.move()) {
 				//check the array
-				//game.getPos()
+				for (int i = 1; i < EntityList.size(); i++) {
+					if ((EntityList[i]->x == player.x + player.xmov) && (EntityList[i]->y == player.y + player.ymov)) {
+						EntityList[i]->interact();
+						break;
+					}
+
+				}
 			}
 
 			std::string Map;
@@ -123,6 +135,9 @@ int main(){
 				Map += "\n";
 			}
 			std::cout << Map;	
+			if (game.curScreenState != MAP_RENDER) {
+				system("cls");
+			}
 		}
 
 		if (game.curScreenState == BATTLE) {

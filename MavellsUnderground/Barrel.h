@@ -4,6 +4,8 @@
 
 class Barrel: public Entity {
 	public:
+
+		Barrel();
 		void interact();
 
 };
