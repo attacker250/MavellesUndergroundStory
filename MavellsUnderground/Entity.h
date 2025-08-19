@@ -15,5 +15,6 @@ public:
 	void updatePos(int movetox, int movetoy);
 	virtual bool move();
 	void spawn(int spawnx, int spawny);
+	virtual void interact();
 };
 

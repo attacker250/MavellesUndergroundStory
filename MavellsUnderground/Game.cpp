@@ -6,8 +6,7 @@ char Game::mapData[ROWS][COLUMNS];
 int Game::curScreenState = MAP_RENDER;
 
 
-char Game::getPos(int x, int y)
-{
+char Game::getPos(int x, int y){
 	return mapData[y][x];
 
 }

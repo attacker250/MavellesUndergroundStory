@@ -78,7 +78,6 @@ int main(){
  		for (int f = 0; f < COLUMNS; f++) {
 			switch (game.mapData[i][f]) {
 				case 'B':
-					//Barrel *barrel = new Barrel;
 					EntityList.push_back(new Barrel);
 			}
  		}
@@ -112,6 +111,7 @@ int main(){
 			
 			if (!player.move()) {
 				//check the array
+				//game.getPos()
 			}
 
 			std::string Map;
@@ -130,7 +130,7 @@ int main(){
 		}
 
 
-
+		
 		//;
 		ClearScreen();
 	}

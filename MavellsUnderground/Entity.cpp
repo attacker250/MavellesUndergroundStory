@@ -7,7 +7,12 @@ void Entity::updatePos(int movetox, int movetoy){
 	x = movetox;
 }
 
-bool Entity::move(){}
+bool Entity::move(){
+	return false;
+}
+
+void Entity::interact() {}
+
 
 void Entity::spawn(int xspawn, int yspawn){
 	updatePos(xspawn, yspawn);
