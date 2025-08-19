@@ -50,10 +50,10 @@ void ShowConsoleCursor(bool showFlag)
 void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string Room , std::string map) {
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
-	game.LoadMap(Room, map);
+	game.LoadMap("TestMaps", player.RoomDestination);
 
-	player.spawn(20, 6);
-
+	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
+	player.spawn(20,6);
 
 	EntityList.push_back(&player);
 	//Detects the objects that are predefined on the map
@@ -102,10 +102,11 @@ int main(){
 
 	Game game;
 	Player player;
-	
 	ShowConsoleCursor(false);
 	
-
+	
+	player.lastDoor = "Door1";
+	player.RoomDestination = "RoomTest1";
 	std::vector<Entity*> EntityList;
 
 	InitGame(game,player,EntityList,"TestMaps","RoomTest1");
@@ -140,11 +141,13 @@ int main(){
 						EntityList[i]->interact();
 						break;
 					}
-					else if ((player.x + player.xmov) >= 40 || (player.y + player.ymov) >= 12) {
-						InitGame(game, player, EntityList, "TestMaps", "RoomTest2");
-						//in json, specify the door position range. Then store what door the plaayer when through
-					}
 
+				if ((player.x + player.xmov) >= 40 || (player.y + player.ymov) >= 12) {
+
+
+					InitGame(game, player, EntityList, "TestMaps", "RoomTest2");
+					//in json, specify the door position range. Then store what door the plaayer when through
+				}
 				}
 			}
 
@@ -166,8 +169,8 @@ int main(){
 			std::cout << "Battle\n";
 		}
 		if (game.curScreenState == INVENTORY){
-			for (int i = 0; i < player.inventory.size(); i++){
-				std::cout << player.inventory[i];
+			for (int i = 0; i < player.playerInventory.storage.size(); i++){
+				std::cout << player.playerInventory.storage[i];
 			}
 		}
 

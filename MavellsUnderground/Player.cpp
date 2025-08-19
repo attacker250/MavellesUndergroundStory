@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-std::vector<std::string> Player::inventory = {};
+Inventory Player::playerInventory;
 
 
 bool Player::move(){
