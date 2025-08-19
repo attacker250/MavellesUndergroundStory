@@ -17,8 +17,10 @@
 //Entity headers
 #include "Player.h"
 #include "Barrel.h"
-
+#include "TestEnemyClass.h"
 #include "Entity.h"
+
+
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
 //		for (int j = 0; j < 40; j++){
@@ -62,12 +64,186 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 			switch (game.mapData[i][f]) {
 			case 'B':
 				EntityList.push_back(new Barrel);
-				EntityList[EntityList.size() - 1]->x = f;
-				EntityList[EntityList.size() - 1]->y = i;
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
+			
+			case 'E':
+				EntityList.push_back(new TestEnemyClass);
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
 			}
 		}
 	}
-	//hhehheh
+}
+
+void PrintBoard() { //to be replaced with enemy ASCII
+	const int width = 41;
+	const int height = 12;
+	const int inner = 39;
+	for (int i = 0; i < 41; i++) {
+		std::cout << '_';
+	}
+	std::cout << "\n";
+	for (int i = 0; i < height; i++) {
+		std::cout << '|';
+		for (int j = 0; j < inner; j++) {
+			std::cout << ' ';
+		}
+		std::cout << '|' << std::endl;
+	}
+	for (int i = 0; i < width; i++) {
+		std::cout << '-';
+	}
+}
+
+void Battle(int e1hp) {
+	int enemy1hp = e1hp;
+	bool stillbattle = true;
+	if (enemy1hp <= 0) {
+		enemy1hp = 0;
+		stillbattle = false;
+	}
+	if (stillbattle == true) {
+		std::cout << "\n";
+		std::cout << "Enemy's HP:" << enemy1hp << std::endl;
+		std::cout << "[1] Attack 1" << std::endl;
+		std::cout << "[2] Items" << std::endl;
+		std::cout << "[3] Run 1" << std::endl;
+	}
+	else if (stillbattle == false) {
+		std::cout << "YOU WON!" << std::endl;
+		return;
+	}
+
+}
+
+void ItemList() {
+	std::cout << "\n";
+	std::cout << "[1] Item 1" << std::endl;
+	std::cout << "[2] Item 2" << std::endl;
+	std::cout << "[3] Item 3" << std::endl;
+	std::cout << "[4] Back" << std::endl;
+
+	char getbtn = static_cast<char>(_getch());
+	if (getbtn) {
+		Beep(1080, 300);
+		switch (getbtn) {
+		case '1':
+			std::cout << "use item 1" << std::endl;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '2':
+			std::cout << "use item 2" << std::endl;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '3':
+			std::cout << "use item 3" << std::endl;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '4':
+			system("cls");
+			PrintBoard();
+			return;
+		}
+	}
+}
+
+void AttackList(int& e1hp) {
+	int enemy1hp = e1hp;
+	std::cout << "\n";
+	std::cout << "[1] Fire attack" << std::endl;
+	std::cout << "[2] Water attack" << std::endl;
+	std::cout << "[3] Grass attack" << std::endl;
+	std::cout << "[4] Back" << std::endl;
+
+	char getbtn = static_cast<char>(_getch());
+	if (getbtn) {
+		Beep(1080, 300);
+		switch (getbtn) {
+		case '1':
+			std::cout << "You chose Fire attack!" << std::endl;
+			e1hp -= 20;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '2':
+			std::cout << "You chose Water attack!" << std::endl;
+			e1hp -= 5;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '3':
+			std::cout << "You chose Grass attack!" << std::endl;
+			e1hp -= 10;
+			Sleep(500);
+			system("cls");
+			PrintBoard();
+			break;
+		case '4':
+			system("cls");
+			PrintBoard();
+			return;
+		}
+	}
+
+}
+
+void mainmenu(int& e1hp, int &curScreenState) {
+	int enemy1hp = e1hp;
+	bool isRunning = true;
+//	while (isRunning) {
+	Battle(enemy1hp);
+	char getbtn = static_cast<char>(_getch());
+	if (getbtn) {
+		Beep(1080, 300);
+		switch (getbtn) {
+		case '1':
+			system("cls");
+			PrintBoard();
+			AttackList(enemy1hp);
+			break;
+		case '2':
+			system("cls");
+			PrintBoard();
+			ItemList();
+			break;
+		case '3':
+			std::cout << "You chose Run 1!" << std::endl;
+			curScreenState = 0;
+			system("cls");
+			break;
+		default:
+			std::cout << "Invalid choice!" << std::endl;
+			break;
+			
+		}
+	}
+}
+//typewriter effect for dialogue
+void typewriter(std::string& text, int delay) {
+	int textspeed = delay;
+
+	for (char c : text) {
+		std::cout << c;
+		std::cout.flush();
+		Sleep(textspeed);
+
+		if (GetAsyncKeyState('k') & 0x8000) {
+			textspeed = 2;
+		}
+		else {
+			textspeed = delay;
+		}
+	}
+
 }
 
 int main(){
@@ -181,12 +357,18 @@ int main(){
 		}
 
 		if (game.curScreenState == BATTLE) {
-			std::cout << "Battle\n";
+			//std::cout << "Battle\n";
+			int enemy1hp = 100;
+
+			PrintBoard();
+			mainmenu(enemy1hp,game.curScreenState);
+			std::cout << '\n' << game.curScreenState;
 		}
 		if (game.curScreenState == INVENTORY){
 			for (int i = 0; i < player.playerInventory.storage.size(); i++){
 				std::cout << player.playerInventory.storage[i];
 			}
+
 		}
 		//std::cout << MapJson["TestMaps"].;
 

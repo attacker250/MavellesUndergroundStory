@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "conio.h"
+
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -31,6 +33,16 @@ bool Player::move(){
             case ('d'):
             case ('D'):
                 xmov++;
+                break;
+
+            case ('i'):
+                playerInventory.addItem("SWORD");
+                break;
+            case ('u'):
+                if (playerInventory.removeItem("SWORD")){
+
+                    
+                }
                 break;
         }
         if (mapData[y + ymov][x + xmov] == ' ') {

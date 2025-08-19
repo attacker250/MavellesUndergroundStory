@@ -133,6 +133,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="MavellsUnderground.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TestEnemyClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityData\EntityData.json" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="TestEnemyClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

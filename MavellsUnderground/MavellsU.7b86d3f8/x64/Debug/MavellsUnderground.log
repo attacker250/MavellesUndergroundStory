@@ -1,9 +1,2 @@
-﻿  Barrel.cpp
-  Entity.cpp
-  Game.cpp
-  Inventory.cpp
-  MavellsUnderground.cpp
-  Player.cpp
-  Generating Code...
-  LINK : C:\Users\lenovo\Desktop\Mavelle underground\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe not found or not built by the last incremental link; performing full link
+﻿  MavellsUnderground.cpp
   MavellsUnderground.vcxproj -> C:\Users\lenovo\Desktop\Mavelle underground\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
