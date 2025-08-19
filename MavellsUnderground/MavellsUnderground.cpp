@@ -68,8 +68,6 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 		}
 	}
 
-
-
 }
 
 int main(){
