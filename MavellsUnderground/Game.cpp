@@ -13,8 +13,8 @@ char Game::getPos(int x, int y)
 }
 
 
-void Game::MapEdit(int xpos, int ypos, char changeto)
-{
+void Game::MapEdit(int xpos, int ypos, char changeto){
+
 
 }
 

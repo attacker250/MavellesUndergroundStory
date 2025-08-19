@@ -1,8 +1,15 @@
-﻿  Entity.cpp
-  Interactables.cpp
+﻿  Barrel.cpp
+  Entity.cpp
+  Game.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Entity.cpp(10,14): error C2556: 'void Entity::move(void)': overloaded function differs only by return type from 'bool Entity::move(void)'
+      C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Entity.h(16,15):
+      see declaration of 'Entity::move'
+  
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Entity.cpp(10,14): error C2371: 'Entity::move': redefinition; different basic types
+      C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Entity.h(16,15):
+      see declaration of 'Entity::move'
+  
   MavellsUnderground.cpp
-C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(57,22): error C2040: 'entityList': 'std::vector<Entity,std::allocator<Entity>>' differs in levels of indirection from 'Entity [1]'
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(81,4): error C2059: syntax error: '}'
   Player.cpp
-C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Player.cpp(4,62): error C2059: syntax error: ')'
-C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Player.cpp(4,64): error C2143: syntax error: missing ')' before '{'
   Generating Code...

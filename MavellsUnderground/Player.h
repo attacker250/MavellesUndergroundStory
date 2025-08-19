@@ -6,7 +6,7 @@ public:
 	int xmov = 0;
 	int ymov = 0;
 
-	void move() override;
+	bool move() override;
 	Player() {
 		icon = 'P';
 	}

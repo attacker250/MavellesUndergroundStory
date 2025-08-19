@@ -13,7 +13,7 @@ public:
 	std::string type = "none";
 	char icon = ' ';
 	void updatePos(int movetox, int movetoy);
-	virtual void move();
+	virtual bool move();
 	void spawn(int spawnx, int spawny);
 };
 

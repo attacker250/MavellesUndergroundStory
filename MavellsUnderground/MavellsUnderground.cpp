@@ -1,17 +1,24 @@
 // MavellsUnderground.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+//Input
 #include <iostream>
 #include "conio.h"
-#include "json.hpp"
+
+//Json and File library
 #include <fstream>
-#include <windows.h>
-#include "Player.h"
-#include "Entity.h"
+#include "json.hpp"
+//Misc
 #include <vector>
 #include <string>
+#include <windows.h>
 
 
+//Entity headers
+#include "Player.h"
+#include "Barrel.h"
+
+#include "Entity.h"
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
 //		for (int j = 0; j < 40; j++){
@@ -34,14 +41,22 @@ void ClearScreen(){
 }
 
 int main(){
-	//Entity entityList[1];
-		std::ifstream fMapdata("MapData/MapData.json");
-		auto MapJson = nlohmann::json::parse(fMapdata);
+	enum ScreenState {
+		MAP_RENDER,
+		BATTLE,
+		INVENTORY,
+		CUTSCENE,
+		TRADING,
+		MENU,
+		MAXSCREENSTATE
+
+	};
+	//std::ifstream fMapdata("MapData/MapData.json");
+	//auto MapJson = nlohmann::json::parse(fMapdata);
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 12
 	};
-	Game game;
 	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
     //char MapData[ROWS][COLUMNS];
 	//char* mapDataPtr[ROWS][COLUMNS] = MapData;
@@ -53,31 +68,29 @@ int main(){
 	// }
 
 	Player player;
+	Game game;
 
-	std::vector<Entity> entityList;
+	std::vector<Entity*> EntityList;
 	
+	//EntityList.push_back(new Barrel);
 
+	for (int i = 0; i < ROWS; i++) {
+ 		for (int f = 0; f < COLUMNS; f++) {
+			switch (game.mapData[i][f]) {
+				case 'B':
+					//Barrel *barrel = new Barrel;
+					EntityList.push_back(new Barrel);
+			}
+ 		}
+	}
     
 	player.spawn(20, 6);
-    //Render gets all the relevant character data and then sets it
 
 
-	enum ScreenState {
-		MAP_RENDER,
-		BATTLE,
-		INVENTORY,
-		CUTSCENE,
-		TRADING,
-		MENU,
-		MAXSCREENSTATE
-
-	};
 
 	while (true) {
 
-		player.move();
-		//int xmov = 0;
-		//int ymov = 0;
+
 		//if (_kbhit()) {
 		//	player.move();
 		//	char getbtn = static_cast<char>(_getch());
@@ -96,6 +109,11 @@ int main(){
 
 		if (game.curScreenState == MAP_RENDER){
 			//print out map
+			
+			if (!player.move()) {
+				//check the array
+			}
+
 			std::string Map;
 			for (int i = 0; i < 12; i++) {
 				for (int j = 0; j < 40; j++) {

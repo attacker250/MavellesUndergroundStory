@@ -5,10 +5,8 @@ void SwitchScreen() {
 
 }
 
-void Player::move()
-{
-    if (_kbhit())
-    {
+bool Player::move(){
+    if (_kbhit()){
         xmov = 0;
         ymov = 0;
         char getbtn = static_cast<char>(_getch());
@@ -34,6 +32,15 @@ void Player::move()
                 xmov++;
                 break;
         }
-        updatePos(x + xmov, y + ymov);
+        if (mapData[y + ymov][x + xmov] == ' ') {
+            updatePos(x + xmov, y + ymov);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return true;
     }
 }
