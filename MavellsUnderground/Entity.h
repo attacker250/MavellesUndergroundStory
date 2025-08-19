@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
+#include "Game.h"
 
-class Entity
+class Entity: public Game
 {
 public:
 	int x = 0;
@@ -11,8 +12,8 @@ public:
 	bool alive = true;
 	std::string type = "none";
 	char icon = ' ';
-	void updatePos(int movetox, int movetoy, char mapData[12][40]);
+	void updatePos(int movetox, int movetoy);
 	virtual void move();
-	void spawn(int spawnx, int spawny, char mapData[12][40]);
+	void spawn(int spawnx, int spawny);
 };
 

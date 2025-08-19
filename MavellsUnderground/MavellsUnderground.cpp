@@ -34,16 +34,16 @@ void ClearScreen(){
 }
 
 int main(){
-	Entity entityList[1];
-	int xpos = 0;
-	int ypos = 0;
-	std::ifstream fMapdata("MapData/MapData.json");
-	auto MapJson = nlohmann::json::parse(fMapdata);
+	//Entity entityList[1];
+		std::ifstream fMapdata("MapData/MapData.json");
+		auto MapJson = nlohmann::json::parse(fMapdata);
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 12
 	};
-    char MapData[ROWS][COLUMNS];
+	Game game;
+	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
+    //char MapData[ROWS][COLUMNS];
 	//char* mapDataPtr[ROWS][COLUMNS] = MapData;
 	
 	// for (int i = 0; i < ROWS; i++) {
@@ -57,21 +57,12 @@ int main(){
 	std::vector<Entity> entityList;
 	
 
-    for (int i = 0;i < 12;i++) {
-        for (int j = 0;j < 40;j++) {
-            MapData[i][j] = MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
-        }
-    }
-	player.spawn(6, 20, MapData);
+    
+	player.spawn(20, 6);
     //Render gets all the relevant character data and then sets it
-	//for(int i = 0;i < EntityData.size();I++{
-		//for(int i = 0;i < EntityData.size();I++{
-		//	if(map[] entity data or something
-		// } 
-	//}
-	//
 
-	enum ScreenState{
+
+	enum ScreenState {
 		MAP_RENDER,
 		BATTLE,
 		INVENTORY,
@@ -82,67 +73,33 @@ int main(){
 
 	};
 
-	int curScreenState = MAP_RENDER;
-
-
-	MapData[7][20] = 'B';
-
-
-
 	while (true) {
-		//Sleep(50);
-		//system("cls");
-		//Clear when any entity moves
 
-		int xmov = 0;
-		int ymov = 0;
-		if (_kbhit()) {
-			player.move();
-			char getbtn = static_cast<char>(_getch());
-
-			// if (getbtn == 'a') {
-			// 	xmov--;
-			// }
-			// else if (getbtn == 'w') {
-			// 	ymov--;
-			// }
-			// else if (getbtn == 's') {
-			// 	ymov++;
-			// }
-			// else if (getbtn == 'd') {
-			// 	xmov++;
-			// }
+		player.move();
+		//int xmov = 0;
+		//int ymov = 0;
+		//if (_kbhit()) {
+		//	player.move();
+		//	char getbtn = static_cast<char>(_getch());
 			
-			if (getbtn == '1'){
-				system("cls");
-				curScreenState = BATTLE;
-				}
-			if (getbtn == '2') {
-				system("cls");
-				curScreenState = MAP_RENDER;
-			}
+			//if (getbtn == '1'){
+			//	system("cls");
+			//	curScreenState = BATTLE;
+			//	}
+			//if (getbtn == '2') {
+			//	system("cls");
+			//	curScreenState = MAP_RENDER;
+			//}
 
-		}
-
-
-		for (int i = 0; i < COLUMNS; i++) {
-			for (int f = 0; f < ROWS; f++) {
-				if (MapData[f][i] == 'P') {
-					xpos = i;
-					ypos = f;
-				}
-			}
-		}
-		MapData[ypos][xpos] = ' ';
-		MapData[ypos + ymov][xpos + xmov] = 'P';
+	
 
 
-		if (curScreenState == MAP_RENDER){
+		if (game.curScreenState == MAP_RENDER){
 			//print out map
 			std::string Map;
 			for (int i = 0; i < 12; i++) {
 				for (int j = 0; j < 40; j++) {
-					Map += MapData[i][j];
+					Map += game.mapData[i][j];
 					//std::cout << MapData[i][j];
 				}
 				Map += "\n";
@@ -150,7 +107,7 @@ int main(){
 			std::cout << Map;	
 		}
 
-		if (curScreenState == BATTLE) {
+		if (game.curScreenState == BATTLE) {
 			std::cout << "Battle\n";
 		}
 

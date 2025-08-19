@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "conio.h"
 
-void SwitchScreen(char MapData[12][40], int *curScreenState, ) {
+void SwitchScreen() {
 
 }
 
@@ -9,6 +9,8 @@ void Player::move()
 {
     if (_kbhit())
     {
+        xmov = 0;
+        ymov = 0;
         char getbtn = static_cast<char>(_getch());
         switch (getbtn) {
             case ('a'): 
@@ -32,5 +34,6 @@ void Player::move()
                 xmov++;
                 break;
         }
+        updatePos(x + xmov, y + ymov);
     }
 }
