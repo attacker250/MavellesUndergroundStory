@@ -1,9 +1,10 @@
 #include "Player.h"
 #include "conio.h"
+#include <vector>
+#include <string>
 
-void SwitchScreen() {
+std::vector<std::string> Player::inventory = {};
 
-}
 
 bool Player::move(){
     if (_kbhit()){

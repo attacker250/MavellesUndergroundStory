@@ -32,12 +32,44 @@
 //}
 
 
-void SwitchScreen(char MapData[12][40], int NewX, int NewY){
-
-}
-
 void ClearScreen(){
 	COORD cursorPosition;	cursorPosition.X = 0;	cursorPosition.Y = 0;	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
+}
+
+void ShowConsoleCursor(bool showFlag)
+{
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_CURSOR_INFO     cursorInfo;
+
+	GetConsoleCursorInfo(out, &cursorInfo);
+	cursorInfo.bVisible = showFlag; // set the cursor visibility
+	SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string Room , std::string map) {
+	std::ifstream fMapdata("MapData/MapData.json");
+	auto MapJson = nlohmann::json::parse(fMapdata);
+	game.LoadMap(Room, map);
+
+	player.spawn(20, 6);
+
+
+	EntityList.push_back(&player);
+	//Detects the objects that are predefined on the map
+	for (int i = 0; i < 12; i++) {
+		for (int f = 0; f < 40; f++) {
+			switch (game.mapData[i][f]) {
+			case 'B':
+				EntityList.push_back(new Barrel);
+				EntityList[EntityList.size() - 1]->x = f;
+				EntityList[EntityList.size() - 1]->y = i;
+			}
+		}
+	}
+
+
+
 }
 
 int main(){
@@ -57,6 +89,7 @@ int main(){
 		COLUMNS = 40,
 		ROWS = 12
 	};
+	ShowCursor(FALSE);
 	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
     //char MapData[ROWS][COLUMNS];
 	//char* mapDataPtr[ROWS][COLUMNS] = MapData;
@@ -68,30 +101,15 @@ int main(){
 	// }
 
 	Game game;
-	game.LoadMap("TestMaps", "MovementTest");
-	
 	Player player;
-	player.spawn(20, 6);
-
+	
+	ShowConsoleCursor(false);
 	
 
 	std::vector<Entity*> EntityList;
+
+	InitGame(game,player,EntityList,"TestMaps","RoomTest1");
 	//EntityList.push_back(new Barrel);
-	EntityList.push_back(&player);
-
-	//Detects the objects that are predefined on the map
-	for (int i = 0; i < ROWS; i++) {
- 		for (int f = 0; f < COLUMNS; f++) {
-			switch (game.mapData[i][f]) {
-				case 'B':
-					EntityList.push_back(new Barrel);
-					EntityList[EntityList.size()-1]->x = f;
-					EntityList[EntityList.size()-1]->y = i;
-			}
- 		}
-	}
-    
-
 
 	while (true) {
 
@@ -122,6 +140,10 @@ int main(){
 						EntityList[i]->interact();
 						break;
 					}
+					else if ((player.x + player.xmov) >= 40 || (player.y + player.ymov) >= 12) {
+						InitGame(game, player, EntityList, "TestMaps", "RoomTest2");
+						//in json, specify the door position range. Then store what door the plaayer when through
+					}
 
 				}
 			}
@@ -142,6 +164,11 @@ int main(){
 
 		if (game.curScreenState == BATTLE) {
 			std::cout << "Battle\n";
+		}
+		if (game.curScreenState == INVENTORY){
+			for (int i = 0; i < player.inventory.size(); i++){
+				std::cout << player.inventory[i];
+			}
 		}
 
 
