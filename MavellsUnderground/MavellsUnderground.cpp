@@ -20,6 +20,10 @@
 #include "TestEnemyClass.h"
 #include "Entity.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
@@ -55,24 +59,36 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 	game.LoadMap("TestMaps", player.RoomDestination);
 	auto Data = MapJson["TestMaps"][player.RoomDestination];
 
-
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
-	if(Data[Door]["FirstPos"][0] == Data[Door]["SecondPos"][0]){
-		if(Data[Door]["FirstPos"][0] < 0){
-			player.spawn(Data[Door]["FirstPos"][0]+1,player.y);
-		}
-		else{
-			player.spawn(Data[Door]["FirstPos"][0] - 1, player.y);
-		}
-	} 
-	else if (Data[Door]["FirstPos"][1] == Data[Door]["SecondPos"][1]) {
-		if(Data[Door]["FirstPos"][1] < 0){
-			player.spawn(player.x, Data[Door]["FirstPos"][1]+1);
-		}
-		else{
-			player.spawn(player.x, Data[Door]["FirstPos"][1] - 1);
+	if (EntityList.size() > 0) {
+		for (int i = 0; i < EntityList.size(); i++) {
+			delete EntityList[i];
 		}
 	}
+	if(Door != "Nill"){
+		if(Data[Door]["FirstPos"][0] == Data[Door]["SecondPos"][0]){
+			if(Data[Door]["FirstPos"][0] < 0){
+				player.spawn(Data[Door]["FirstPos"][0]+1,player.y);
+			}
+			else{
+				player.spawn(Data[Door]["FirstPos"][0] - 1, player.y);
+			}
+		} 
+		else if (Data[Door]["FirstPos"][1] == Data[Door]["SecondPos"][1]) {
+			if(Data[Door]["FirstPos"][1] < 0){
+				player.spawn(player.x, Data[Door]["FirstPos"][1]+1);
+			}
+			else{
+				player.spawn(player.x, Data[Door]["FirstPos"][1] - 1);
+			}
+		}
+	}
+	else{
+		player.spawn(20, 6);
+	}
+
+	EntityList.clear();
+	_CrtDumpMemoryLeaks();
 
 	system("cls");
 
@@ -82,12 +98,16 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 		for (int f = 0; f < 40; f++) {
 			switch (game.mapData[i][f]) {
 			case 'B':
-				EntityList.push_back(new Barrel);
+				Barrel *barrel;
+				barrel = new Barrel;
+				EntityList.push_back(barrel);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			
 			case 'E':
-				EntityList.push_back(new TestEnemyClass);
+				TestEnemyClass *testenemy;
+				testenemy = new TestEnemyClass;
+				EntityList.push_back(testenemy);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			}
@@ -232,7 +252,6 @@ int main(){
 	}
 		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 		
-
 
     return 0;
 }

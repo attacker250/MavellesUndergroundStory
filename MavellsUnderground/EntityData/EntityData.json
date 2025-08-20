@@ -6,7 +6,8 @@
   "TestMaps": {
     "0": {
       "Name": "Jesica",
-      "HP":100,
+      "HP": 100,
+      "Potrait":[],
       "Attacks": [
         {
           "NAME": "Punch",
@@ -30,5 +31,7 @@
 
     }
   }
+
+
 
 }
