@@ -6,7 +6,8 @@
 #include <string>
 
 Inventory Player::playerInventory;
-
+std::string Player::currentRoom;
+std::string Player::currentPlace;
 
 bool Player::move(){
     if (_kbhit()){
@@ -30,6 +31,7 @@ bool Player::move(){
                 ymov++;
                 break;
 
+
             case ('d'):
             case ('D'):
                 xmov++;
@@ -37,24 +39,32 @@ bool Player::move(){
 
             case ('i'):
                 playerInventory.addItem("SWORD");
+                learnAtk("FIRE");
                 break;
             case ('u'):
-                if (playerInventory.removeItem("SWORD")){
+                learnAtk("FIRE");
 
                     
-                }
+                
                 break;
         }
         if (mapData[y + ymov][x + xmov] == ' ') {
             updatePos(x + xmov, y + ymov);
             return true;
+			
         }
         else {
             return false;
         }
     }
+
     else {
         return true;
     }
 }
 
+void Player::learnAtk(std::string atkName){
+    atkLearn = atkName;
+    curScreenState = LEARNATK;
+    
+}

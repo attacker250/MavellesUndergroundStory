@@ -2,7 +2,33 @@
   "Test": {
     "Icon":"T",
     "Type": "Test"
-  }
+  },
+  "TestMaps": {
+    "0": {
+      "Name": "Jesica",
+      "HP":100,
+      "Attacks": [
+        {
+          "NAME": "Punch",
+          "DMG": 10
+        },
+        {
+          "NAME": "Bite",
+          "DMG": 5
+        },
+        {
+          "NAME": "Kick",
+          "DMG": 15
+        },
+        {
+          "NAME": "Canibalism",
+          "DMG": 3
+        }
 
+
+      ]
+
+    }
+  }
 
 }

@@ -38,8 +38,8 @@
       "Enemies": 0,
       "DoorCount":1,
       "Door1": {
-        "FirstPos": [ 40,5 ],
-        "SecondPos": [ 40, 8 ],
+        "FirstPos": [ 40,4 ],
+        "SecondPos": [ 40, 6 ],
         "Destination": "RoomTest2"
       }
 
@@ -63,8 +63,8 @@
       "Enemies": 0,
       "DoorCount": 1,
       "Door1": {
-        "FirstPos": [ 0, 5 ],
-        "SecondPos": [ 0, 8 ],
+        "FirstPos": [ -1, 4 ],
+        "SecondPos": [ -1, 6 ],
         "Destination": "RoomTest1"
       }
     }

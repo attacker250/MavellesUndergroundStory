@@ -1,10 +1,13 @@
 #pragma once
 #include "Entity.h"
-class TestEnemyClass : public Entity
+#include "Enemy.h"
+
+class TestEnemyClass : public Enemy
 {
 public:
-	void interact() override;
+
 	TestEnemyClass(){
+		hp = 300;
 		icon = 'E';
 	}
 };

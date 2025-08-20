@@ -15,13 +15,25 @@ public:
         CUTSCENE,
         TRADING,
         MENU,
-        MAXSCREENSTATE
+		LEARNATK,
 
+        MAXSCREENSTATE,
     };
+	const static int atkListSize = 3;
+	static std::string atkList[atkListSize];
+    static std::string atkLearn;
+
+    static int battleHp;
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Room, std::string Map);
-    //void LoadMap();
     void MapEdit(int xpos, int ypos, char changeto);
+    void typewriter(std::string& text, int delay);
+    void AttackList();
+    void ItemList();
+    void Battle();
+    void PrintBoard();
+    void BattleMenu(int& curScreenState);
+    void learnScreen();
 
     struct EntityArray {
         int x;
