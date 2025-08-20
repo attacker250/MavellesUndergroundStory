@@ -1,12 +1,8 @@
 {
   "Cave": {
     "Room1": {
-      "Active": false
-
-      [
-
-      ]
+      "ButtonsActive":1
     }
-  
+  }
   
 }

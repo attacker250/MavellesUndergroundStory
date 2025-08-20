@@ -2,6 +2,7 @@
 
 Button::Button(){
 	icon = '-';
+	
 }
 
 
@@ -19,3 +20,4 @@ void Button::interact(){
 }
 
 
+ 

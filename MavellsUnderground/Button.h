@@ -8,5 +8,6 @@ class Button: public Entity
 		Button();
         void interact();
 		bool active = false;
+		int id = 0;
 };
 

@@ -138,6 +138,10 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	}
 }
 
+void checkClearCondition(std::vector<Entity*>& EntityList){
+
+}
+
 
 int main() {
 	std::ifstream fMapdata("MapData/MapData.json");
@@ -189,35 +193,19 @@ int main() {
 	//EntityList.push_back(new Barrel);
 
 	while (true) {
-
-
-		//if (_kbhit()) {
-		//	player.move();
-		//	char getbtn = static_cast<char>(_getch());
-
-			//if (getbtn == '1'){
-			//	system("cls");
-			//	curScreenState = BATTLE;
-			//	}
-			//if (getbtn == '2') {
-			//	system("cls");
-			//	curScreenState = MAP_RENDER;
-			//}
-
-
-
-
 		if (game.curScreenState == MAP_RENDER) {
 			//print out map
-
+			
+			//Means the players next move is not into a ' '
 			if (!player.move()) {
-				//check the array
+				//check the Entity array
+				//check the conditions when the buttons interacted AND when the player leaves a battle or something
 				int PlayerIntendedX = player.x + player.xmov;
 				int PlayerIntendedY = player.y + player.ymov;
 				for (int i = 1; i < EntityList.size(); i++) {
 					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
 						EntityList[i]->interact();
-						
+
 						break;
 					}
 				}

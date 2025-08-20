@@ -7,11 +7,14 @@
 #include <string>
 
 char Game::mapData[ROWS][COLUMNS];
+
 int Game::curScreenState = MAP_RENDER;
 int Game::battleHp = 0;
 
 std::string Game::atkList[atkListSize];
 std::string Game::atkLearn;
+
+char Game::mapObjects[roomCount][ROWS][COLUMNS];
 
 //typewriter effect for dialogue
 void Game::typewriter(std::string& text, int delay) {

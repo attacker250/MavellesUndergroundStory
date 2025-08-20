@@ -19,6 +19,7 @@ public:
 
         MAXSCREENSTATE,
     };
+    const static char roomCount = 2;
 	const static int atkListSize = 3;
 	static std::string atkList[atkListSize];
     static std::string atkLearn;
@@ -43,7 +44,7 @@ public:
     };
 
     static char mapData[ROWS][COLUMNS];
-    //static char ogMap[ROWS][COLUMNS];
+    static char mapObjects[roomCount][ROWS][COLUMNS];
     static int curScreenState;
 
 };
