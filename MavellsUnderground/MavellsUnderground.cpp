@@ -162,8 +162,9 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 			active++;
 		}
 	}
-	if(ButtonJson[Player::currentPlace][Player::currentRoom].contains("ButtonsActive")){
-		if(ButtonJson[Player::currentPlace][Player::currentRoom].contains("ButtonsActive") == active){
+	//std::cout << active << '\n';
+	if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")){
+		if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive") == active){
 			//stuff it in a function
 			//check through the list and see if its a door.
 			//if it is, make it dead and have interact decide what to do
@@ -230,7 +231,7 @@ int main() {
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
-	player.currentPlace = "Cave";
+	player.currentPlace = "Cave1";
 
 	std::vector<Entity*> EntityList;
 
@@ -273,7 +274,7 @@ int main() {
 					//in json, specify the door position range. Then store what door the plaayer when through
 				}
 			}
-
+			//std::cout << 
 			std::string Map;
 			for (int i = 0; i < ROWS; i++) {
 				for (int j = 0; j < COLUMNS; j++) {
@@ -302,6 +303,9 @@ int main() {
 		}
 		if (game.curScreenState == LEARNATK) {
 			game.learnScreen();
+		}
+		if (game.curScreenState == TRADING){
+			game.TradeMenu();
 		}
 		//std::cout << MapJson["TestMaps"].;
 

@@ -17,8 +17,7 @@ public:
 	int ymov = 0;
 	const int maxInvSize = 5;
 	static Inventory playerInventory;
-	std::string RoomDestination;
-	std::string lastDoor;
+
 
 	bool move() override;
 	void learnAtk(std::string atkName);

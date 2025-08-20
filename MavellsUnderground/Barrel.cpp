@@ -14,7 +14,7 @@ void Barrel::interact() {
 	for (int i = 0; i < Player::playerInventory.storage.size(); i++){
 		std::cout << Player::playerInventory.storage[i] << " ";
 	}
-	curScreenState = INVENTORY;
+	curScreenState = TRADING;
 	//std::cout << "BARREL INTERACT";
 		
 }

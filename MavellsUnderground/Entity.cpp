@@ -5,8 +5,14 @@ std::string Entity::currentRoom;
 std::string Entity::currentPlace;
 
 void Entity::updatePos(int movetox, int movetoy){
+	
+	//int currRmNum = static_cast<int>(currentRoom[currentRoom.length() - 1] - 48);
+	//int currPlaceNum = static_cast<int>(currentPlace[currentPlace.length() - 1] - 48);
+	//if (icon != 'd') {
+	//	mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
+	//	mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = icon;
+	//}
 	mapData[y][x] = ' ';
-//	if (static_cast<int>(Room[Room.length() - 1]) - 48)
 	mapData[movetoy][movetox] = icon;
 	y = movetoy;
 	x = movetox;

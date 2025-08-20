@@ -18,23 +18,33 @@ char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
 bool Game::enteredRm[SECTORS][ROOMS];
 
 //typewriter effect for dialogue
-void Game::typewriter(std::string& text, int delay) {
-	int textspeed = delay;
+void Game::typewriter(std::string& text, int delay, int maxChar) {
+	int charCount = 0;
 
 	for (char c : text) {
-		Beep(500, 100);
 		std::cout << c;
 		std::cout.flush();
-		Sleep(textspeed);
 
-		if (GetAsyncKeyState('k') & 0x8000) {
-			textspeed = 2;
+
+		if (GetAsyncKeyState('K') & 0x8000) {
+			Sleep(2);
 		}
 		else {
-			textspeed = delay;
+			Sleep(delay);
+			Beep(800, 40);
 		}
-	}
 
+		charCount++;
+
+		if (charCount > maxChar && c == ' ') {
+			std::cout << "\n";
+			charCount = 0;
+		}
+		if (c == '.' || c == '!') {
+			Sleep(1000);
+		}
+
+	}
 }
 
 void Game::PrintBattle() { //to be replaced with enemy ASCII
@@ -73,7 +83,7 @@ void Game::Battle() {
 		std::cout << "[4] Test out learn attack" << std::endl;
 	}
 	else if (stillbattle == false) {
-		typewriter(WinMessage, 40);
+		typewriter(WinMessage, 40, 50);
 		return;
 	}
 
@@ -150,9 +160,176 @@ void Game::AttackList() {
 			return;
 		}
 	}
-
 }
 
+//trading
+void Game::PrintTrade(){
+	const int width = 41;
+	const int height = 12;
+	const int inner = 39;
+	for (int i = 0; i < 41; i++) {
+		std::cout << '_';
+	}
+	std::cout << "\n";
+	for (int i = 0; i < height; i++) {
+		std::cout << '|';
+		for (int j = 0; j < inner; j++) {
+			std::cout << ' ';
+		}
+		std::cout << '|' << std::endl;
+	}
+	for (int i = 0; i < width; i++) {
+		std::cout << '-';
+	}
+}
+
+void Game::TradeSystem(){
+	system("cls");
+	PrintTrade();
+	std::cout << "\n";
+	for (int a = 1; a < 6; a++)
+	{
+		std::cout << '|';
+		std::cout << '[' << a << ']';
+		std::cout << "Test item";
+
+		for (int j = 0; j < 27; j++)
+		{
+			std::cout << ' ';
+		}
+
+		std::cout << '|' << std::endl;
+	}
+	
+	std::cout << '|' << '[' << 6 << ']';
+	std::cout << "Back";
+	for (int e = 0; e < 32; e++)
+	{
+		std::cout << ' ';
+	}
+	std::cout << '|';
+	std::cout << "\n";
+	
+	for (int i = 0; i < 41; i++)
+	{
+		std::cout << '-';
+	}
+
+	char getbtn = static_cast<char>(_getch());
+	switch (getbtn) {
+	case '1':
+		std::cout << "\nYou have selected item 1.";
+		Sleep(2000);
+		system("cls");
+		PrintTrade();
+		break;
+	case '2':
+		std::cout << "\nYou have selected item 2.";
+		Sleep(2000);
+		system("cls");
+		PrintTrade();
+		break;
+	case '3':
+		std::cout << "\nYou have selected item 3.";
+		Sleep(2000);
+		system("cls");
+		PrintTrade();
+		break;
+	case '4':
+		std::cout << "\nYou have selected item 4.";
+		Sleep(2000);
+		system("cls");
+		PrintTrade();
+		break;
+	case '5':
+		std::cout << "\nYou have selected item 5.";
+		Sleep(2000);
+		system("cls");
+		PrintTrade();
+		break;
+	case '6':
+		std::cout << "\nYou have selected Back.";
+		system("cls");
+		PrintTrade();
+		return;
+	}
+}
+
+void Game::TradeMenu(){
+	PrintTrade();
+
+	std::cout << "\n";
+	std::cout << '|';
+	std::cout << '[' << 1 << ']';
+	std::cout << "Trade";
+	for (int j = 0; j < 31; j++) {
+		std::cout << ' ';
+	}
+	std::cout << '|' << std::endl;
+	std::cout << '|';
+	std::cout << '[' << 2 << ']';
+	std::cout << "Talk";
+	for (int j = 0; j < 32; j++) {
+		std::cout << ' ';
+	}
+	std::cout << '|' << std::endl;
+
+	std::cout << '|';
+	std::cout << '[' << 3 << ']';
+	std::cout << "Back";
+	for (int e = 0; e < 32; e++)
+	{
+		std::cout << ' ';
+
+	}
+	std::cout << '|';
+	std::cout << "\n";
+
+
+	for (int i = 0; i < 41; i++) {
+		std::cout << '-';
+	}
+	std::cout << "\n";
+
+	std::string dialogue = "Hello traveller! Welcome to my humble shop. I sell all sorts of cool weapons here.";
+	std::string dialogue2 = "Please, don't hesitate to look around! Anything caught your eye?";
+	char getbtn = static_cast<char>(_getch());
+	if (getbtn) {
+		switch (getbtn) {
+		case '1':
+			std::cout << "You have selected Trade.\n";
+			TradeSystem();
+			break;
+		case '2':
+			std::cout << "You have selected Talk.\n";
+			system("cls");
+			PrintTrade();
+			std::cout << "\n";
+			typewriter(dialogue, 30, 50);
+			std::cout << "\n";
+			Sleep(100);
+			typewriter(dialogue2, 30, 50);
+			Sleep(1000);
+			_kbhit();
+			system("cls");
+			PrintTrade();
+			break;
+		case '3':
+			std::cout << "You have selected Back.\n";
+			//go back to the map
+			curScreenState = MAP_RENDER;
+			Sleep(1000);
+			system("cls");
+			break;
+		default:
+			std::cout << "Invalid selection. Please choose 1, 2, or 3.\n";
+			system("cls");
+			PrintTrade();
+			break;
+			
+		}
+	}
+}
 
 
 char Game::getPos(int x, int y){
@@ -169,8 +346,9 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 void Game::LoadMap(std::string Map, std::string Room){
     std::ifstream fMapdata("MapData/MapData.json");
     auto MapJson = nlohmann::json::parse(fMapdata);
-	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 48;
-	int mapCatalogue = static_cast<int>(Room[Room.length() - 1]) - 48;
+	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 49;
+	int mapCatalogue = static_cast<int>(Room[Room.length() - 1]) - 49;
+	std::cout << rmCatalogue << ' ' << mapCatalogue << '\n';
 	if (!enteredRm[mapCatalogue][rmCatalogue]) {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
@@ -204,7 +382,7 @@ void Game::BattleMenu(int& curScreenState) {
 		case '3':
 			std::cout << "You selected to run!" << std::endl;
 			Sleep(300);
-			typewriter(Escape, 40);
+			typewriter(Escape, 40, 50);
 			Sleep(300);
 			curScreenState = 0;
 			system("cls");
@@ -243,4 +421,13 @@ void Game::learnScreen(){
 	Sleep(3000);
 	curScreenState = MAP_RENDER;
 
+}
+
+void Game::resetRooms()
+{
+	for (int i = 0; i < SECTORS; i++) {
+		for (int f = 0; f < ROOMS; f++) {
+			enteredRm[SECTORS][ROOMS] = false;
+		}
+	}
 }

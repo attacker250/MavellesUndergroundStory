@@ -32,13 +32,17 @@ public:
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Room, std::string Map);
     void MapEdit(int xpos, int ypos, char changeto);
-    void typewriter(std::string& text, int delay);
+    void typewriter(std::string& text, int delay, int maxChar);
     void AttackList();
     void ItemList();
     void Battle();
     void PrintBattle();
     void BattleMenu(int& curScreenState);
     void learnScreen();
+    void resetRooms();
+    void PrintTrade();
+    void TradeMenu();
+    void TradeSystem();
 
     struct EntityArray {
         int x;
@@ -51,6 +55,10 @@ public:
     static char mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
     static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
+
+    Game() {
+        resetRooms();
+    }
 
     //Game() {
     //    for (int i = 0; i < atkListSize; i++) {
