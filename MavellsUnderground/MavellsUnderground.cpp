@@ -117,7 +117,10 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	//Detects the objects that are predefined on the map
 	for (int i = 0; i < ROWS; i++) {
 		for (int f = 0; f < COLUMNS; f++) {
-			switch (game.mapData[i][f]) {
+			int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
+			int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
+
+			switch (game.mapObjects[mapCatalogue][rmCatalogue][i][f]) {
 			case 'B':
 				Barrel * barrel;
 				barrel = new Barrel;
@@ -145,14 +148,22 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 				EntityList.push_back(pointer);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
+			case 'o':
+				Door * door;
+				door = new Door;
+				door->alive = false;
+				EntityList.push_back(door);
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
 			}
+			
 		}
 	}
 }
 
 void checkClearCondition(std::vector<Entity*>& EntityList){
-	std::string Room = Player::currentRoom;
-	std::string Place = Player::currentPlace;
+	std::string Room = Entity::currentRoom;
+	std::string Place = Entity::currentPlace;
 	std::ifstream fButtondata("ButtonData/ButtonData.json");
 	auto ButtonJson = nlohmann::json::parse(fButtondata);
 	int active = 0;
@@ -164,7 +175,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 	}
 	//std::cout << active << '\n';
 	if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")){
-		if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive") == active){
+		if(ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
 			//stuff it in a function
 			//check through the list and see if its a door.
 			//if it is, make it dead and have interact decide what to do
@@ -222,6 +233,7 @@ int main() {
 	// }
 	Game game;
 	Player player;
+	game.resetRooms();
 	ShowConsoleCursor(false);
 
 	for (int i = 0; i < game.atkListSize; i++) {
@@ -239,10 +251,21 @@ int main() {
 	//EntityList.push_back(new Barrel);
 
 	while (true) {
+		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
+		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
 		if (game.curScreenState == MAP_RENDER) {
+			//int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
+			//int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
+			////std::cout << rmCatalogue << ' ' << mapCatalogue << '\n';
+			//if (player.enteredRm[mapCatalogue][rmCatalogue]) {
+			//	std::cout << "A \n";
+			//}
+			if (!game.testNew) {
+				std::cout << "A \n";
+			}
 			//std::cout << player.currentRoom[player.currentRoom.length() - 1] << ' ' << player.RoomDestination[player.RoomDestination.length() - 1];
 			//print out map
-			
+
 			//Means the players next move is not into a ' '
 			if (!player.move()) {
 				//check the Entity array
@@ -264,8 +287,9 @@ int main() {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
-								InitGame(game, player, EntityList, "Door" + std::to_string(i));
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
+								InitGame(game, player, EntityList, "Door" + std::to_string(i));
+
 
 								break;
 							}
@@ -283,15 +307,30 @@ int main() {
 				}
 				Map += "\n";
 			}
-			
+
 			std::cout << Map;
+			if (game.enteredRm[0][0] == false) {
+				std::cout << "a \n";
+				
+			}
+			Map = "";
+			for (int i = 0; i < ROWS; i++) {
+				for (int j = 0; j < COLUMNS; j++) {
+
+					Map += game.mapObjects[0][0][i][j];
+						//std::cout << MapData[i][j];
+				}
+				Map += "\n";
+			}
+			std::cout << Map;
+
 			if (game.curScreenState != MAP_RENDER) {
 				system("cls");
 			}
 		}
 
 		if (game.curScreenState == BATTLE) {
-			//std::cout << "Battle\n";
+				//std::cout << "Battle\n";
 			game.PrintBattle();
 			game.BattleMenu(game.curScreenState);
 			std::cout << '\n' << game.curScreenState;
@@ -304,16 +343,16 @@ int main() {
 		if (game.curScreenState == LEARNATK) {
 			game.learnScreen();
 		}
-		if (game.curScreenState == TRADING){
+		if (game.curScreenState == TRADING) {
 			game.TradeMenu();
 		}
-		//std::cout << MapJson["TestMaps"].;
+			//std::cout << MapJson["TestMaps"].;
 
 
-		//;
+			//;
 		ClearScreen();
 	}
-	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
+		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
 	_CrtDumpMemoryLeaks();
 	return 0;

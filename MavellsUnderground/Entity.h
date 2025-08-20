@@ -21,5 +21,7 @@ public:
 	static std::string currentPlace;
 	std::string RoomDestination;
 	std::string lastDoor;
+	int rmIndex = static_cast<int>(currentRoom[currentRoom.length() - 1]) - 49;
+	int placeIndex = static_cast<int>(currentPlace[currentPlace.length() - 1]) - 49;
 };
 

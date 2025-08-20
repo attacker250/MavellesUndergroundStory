@@ -28,6 +28,8 @@ public:
 	static std::string atkList[atkListSize];
     static std::string atkLearn;
 
+    bool testNew = false;
+
     static int battleHp;
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Room, std::string Map);
@@ -56,9 +58,7 @@ public:
     static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
 
-    Game() {
-        resetRooms();
-    }
+
 
     //Game() {
     //    for (int i = 0; i < atkListSize; i++) {
