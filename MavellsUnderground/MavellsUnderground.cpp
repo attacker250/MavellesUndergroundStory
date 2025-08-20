@@ -63,6 +63,7 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 	if (EntityList.size() > 0) {
 		for (int i = 0; i < EntityList.size(); i++) {
 			delete EntityList[i];
+			EntityList.erase(EntityList.begin() + i);
 		}
 	}
 	if(Door != "Nill"){
@@ -100,7 +101,9 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 			case 'B':
 				Barrel *barrel;
 				barrel = new Barrel;
-				EntityList.push_back(barrel);
+				//works aparently	
+				EntityList.push_back(new Barrel);
+				//EntityList.push_back(barrel);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			
