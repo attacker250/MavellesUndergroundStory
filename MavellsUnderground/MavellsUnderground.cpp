@@ -61,11 +61,13 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
 	if (EntityList.size() > 0) {
-		for (int i = 0; i < EntityList.size(); i++) {
+		for (int i = 1; i < EntityList.size(); i++) {
 			delete EntityList[i];
-			EntityList.erase(EntityList.begin() + i);
+			EntityList[i] = nullptr;
 		}
 	}
+	EntityList.clear();
+
 	if(Door != "Nill"){
 		if(Data[Door]["FirstPos"][0] == Data[Door]["SecondPos"][0]){
 			if(Data[Door]["FirstPos"][0] < 0){
@@ -88,8 +90,6 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 		player.spawn(20, 6);
 	}
 
-	EntityList.clear();
-	_CrtDumpMemoryLeaks();
 
 	system("cls");
 
@@ -102,8 +102,8 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 				Barrel *barrel;
 				barrel = new Barrel;
 				//works aparently	
-				EntityList.push_back(new Barrel);
-				//EntityList.push_back(barrel);
+				//EntityList.push_back(new Barrel);
+				EntityList.push_back(barrel);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			
@@ -189,7 +189,7 @@ int main(){
 
 		if (game.curScreenState == MAP_RENDER){
 			//print out map
-			
+
 			if (!player.move()) {
 				//check the array
 				int PlayerIntendedX = player.x + player.xmov;
@@ -255,6 +255,6 @@ int main(){
 	}
 		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 		
-
+	_CrtDumpMemoryLeaks();
     return 0;
 }
