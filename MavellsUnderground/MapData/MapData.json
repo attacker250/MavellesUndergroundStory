@@ -92,12 +92,13 @@
       "Door1": {
         "FirstPos": [ -1, 5 ],
         "SecondPos": [ -1, 6 ],
-        "Destination": "Room1"
+        "Destination": "Room1",
+        "Active": true
       }
     },
     "Room2": {
       "Map": [
-        "||||||||||||||||||||||||||||||||||||||||",
+        "||||||||||||||||||||||||||||||||||||||||", 
         "||||||||||||||||          \\|||||||||||||",
         "|||||/                            \\|||||",
         "||||/                            __|||||",
@@ -117,12 +118,14 @@
       "Door1": {
         "FirstPos": [ 20, -1 ],
         "SecondPos": [ 21, -1 ],
-        "Destination": "Room1"
+        "Destination": "Room1",
+        "Active": false
       },
       "Door2": {
         "FirstPos": [ 40, 4 ],
         "SecondPos": [ 40, 6 ],
-        "Destination": "Room3"
+        "Destination": "Room3",
+        "Active": true
       }
     }
   }

@@ -19,6 +19,9 @@
 #include "Barrel.h"
 #include "TestEnemyClass.h"
 #include "Entity.h"
+#include "Button.h"
+#include "Door.h"
+
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -53,7 +56,7 @@ void ShowConsoleCursor(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string Door) {
+void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string door) {
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 13
@@ -73,21 +76,21 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 	}
 	EntityList.clear();
 
-	if(Door != "Nill"){
-		if(Data[Door]["FirstPos"][0] == Data[Door]["SecondPos"][0]){
-			if(Data[Door]["FirstPos"][0] < 0){
-				player.spawn(Data[Door]["FirstPos"][0]+1,player.y);
+	if(door != "Nill"){
+		if(Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]){
+			if(Data[door]["FirstPos"][0] < 0){
+				player.spawn(Data[door]["FirstPos"][0]+1,player.y);
 			}
 			else{
-				player.spawn(Data[Door]["FirstPos"][0] - 1, player.y);
+				player.spawn(Data[door]["FirstPos"][0] - 1, player.y);
 			}
 		} 
-		else if (Data[Door]["FirstPos"][1] == Data[Door]["SecondPos"][1]) {
-			if(Data[Door]["FirstPos"][1] < 0){
-				player.spawn(player.x, Data[Door]["FirstPos"][1]+1);
+		else if (Data[door]["FirstPos"][1] == Data[door]["SecondPos"][1]) {
+			if(Data[door]["FirstPos"][1] < 0){
+				player.spawn(player.x, Data[door]["FirstPos"][1]+1);
 			}
 			else{
-				player.spawn(player.x, Data[Door]["FirstPos"][1] - 1);
+				player.spawn(player.x, Data[door]["FirstPos"][1] - 1);
 			}
 		}
 	}
@@ -110,12 +113,24 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 				//EntityList.push_back(new Barrel);
 				EntityList.push_back(barrel);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			
+				break;			
 			case 'E':
 				TestEnemyClass *testenemy;
 				testenemy = new TestEnemyClass;
 				EntityList.push_back(testenemy);
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
+			case '+':
+			case '-':
+				Button *button;
+				button = new Button;
+				EntityList.push_back(button);
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
+			case '=':
+				Door* pointer;
+				pointer = new Door;
+				EntityList.push_back(pointer);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			}
@@ -253,8 +268,10 @@ int main(){
 			game.learnScreen();
 		} 
 		//std::cout << MapJson["TestMaps"].;
+		std::ifstream fButtondata("ButtonData/ButtonData.json");
+		auto ButtonJson = nlohmann::json::parse(fButtondata);
+		mapData[i][j] = ButtonJson[Room][Map]["Map"][i].get<std::string>()[j];
 
-		
 		//;
 		ClearScreen();
 	}

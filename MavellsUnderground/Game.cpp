@@ -18,6 +18,7 @@ void Game::typewriter(std::string& text, int delay) {
 	int textspeed = delay;
 
 	for (char c : text) {
+		Beep(500, 100);
 		std::cout << c;
 		std::cout.flush();
 		Sleep(textspeed);
@@ -147,7 +148,6 @@ void Game::AttackList() {
 	}
 
 }
-
 
 
 
