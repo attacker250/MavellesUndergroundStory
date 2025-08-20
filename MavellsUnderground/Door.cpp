@@ -1,8 +1,13 @@
 #include "Door.h"
 
-void Door::closeDoor(){
-	icon = '=';
-}
-void Door::openDoor(){
-	icon = ' ';
+void Door::interact(){
+	if(alive){
+		icon = '=';
+		updatePos(x, y);
+	}
+	else{
+		icon = ' ';
+		updatePos(x, y);
+	}
+
 }

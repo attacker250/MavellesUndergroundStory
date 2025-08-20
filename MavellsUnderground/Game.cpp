@@ -15,7 +15,7 @@ std::string Game::atkList[atkListSize];
 std::string Game::atkLearn;
 
 char Game::mapObjects[roomCount][ROWS][COLUMNS];
-
+bool Game::enteredRoom[SECTORS][ROOMS];
 //typewriter effect for dialogue
 void Game::typewriter(std::string& text, int delay) {
 	int textspeed = delay;
@@ -36,7 +36,7 @@ void Game::typewriter(std::string& text, int delay) {
 
 }
 
-void Game::PrintBoard() { //to be replaced with enemy ASCII
+void Game::PrintBattle() { //to be replaced with enemy ASCII
 	const int width = 41;
 	const int height = 12;
 	const int inner = 39;
@@ -93,23 +93,23 @@ void Game::ItemList() {
 			std::cout << "use item 1" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '2':
 			std::cout << "use item 2" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '3':
 			std::cout << "use item 3" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '4':
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			return;
 		}
 	}
@@ -129,23 +129,23 @@ void Game::AttackList() {
 			std::cout << "You chose Fire attack!" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '2':
 			std::cout << "You chose Water attack!" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '3':
 			std::cout << "You chose Grass attack!" << std::endl;
 			Sleep(500);
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			break;
 		case '4':
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			return;
 		}
 	}
@@ -165,15 +165,18 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 }
 
-void Game::LoadMap(std::string Room, std::string Map){
+void Game::LoadMap(std::string Map, std::string Room){
     std::ifstream fMapdata("MapData/MapData.json");
     auto MapJson = nlohmann::json::parse(fMapdata);
-        
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            mapData[i][j] = MapJson[Room][Map]["Map"][i].get<std::string>()[j];
-        }
-    }
+	//int rmCatalgoue = static_cast<int>(Room[Room.length() - 1]) - 48;
+//	if (enteredRm == false) {
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLUMNS; j++) {
+				mapData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
+			}
+		}
+		
+	//}
 }
 
 void Game::BattleMenu(int& curScreenState) {
@@ -187,12 +190,12 @@ void Game::BattleMenu(int& curScreenState) {
 		switch (getbtn) {
 		case '1':
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			AttackList();
 			break;
 		case '2':
 			system("cls");
-			PrintBoard();
+			PrintBattle();
 			ItemList();
 			break;
 		case '3':

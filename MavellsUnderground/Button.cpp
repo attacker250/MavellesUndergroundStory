@@ -1,10 +1,14 @@
 #include "Button.h"
+int Button::maxId = 0;
 
 Button::Button(){
 	icon = '-';
-	
+	maxId++;
+	id = maxId;
 }
-
+Button::~Button(){
+	maxId--;
+}
 
 //add button array sequence in player.
 //Get button active status in entity list

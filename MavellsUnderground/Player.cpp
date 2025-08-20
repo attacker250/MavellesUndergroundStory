@@ -54,6 +54,7 @@ bool Player::move(){
 			
         }
         else {
+            //std::cout << "wall" << mapData[y + ymov][x + xmov]  ;
             return false;
         }
     }

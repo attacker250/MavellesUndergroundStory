@@ -77,6 +77,18 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	EntityList.clear();
 
 	if (door != "Nill") {
+		if(Data[door]["FirstPos"][1] > player.y){
+			player.y = Data[door]["FirstPos"][1];
+		}
+		if (Data[door]["SecondPos"][1] < player.y) {
+			player.y = Data[door]["FirstPos"][1];
+		}
+		if (Data[door]["FirstPos"][0] > player.x) {
+			player.x = Data[door]["FirstPos"][0];
+		}
+		if (Data[door]["SecondPos"][0] < player.x) {
+			player.x = Data[door]["SecondPos"][0];
+		}
 		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
 			if (Data[door]["FirstPos"][0] < 0) {
 				player.spawn(Data[door]["FirstPos"][0] + 1, player.y);
@@ -139,6 +151,39 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 }
 
 void checkClearCondition(std::vector<Entity*>& EntityList){
+	std::string Room = Player::currentRoom;
+	std::string Place = Player::currentPlace;
+	std::ifstream fButtondata("ButtonData/ButtonData.json");
+	auto ButtonJson = nlohmann::json::parse(fButtondata);
+	int active = 0;
+	//check how many buttons are active
+	for (int i = 0; i < EntityList.size(); i++){
+		if(EntityList[i]->icon == '+'){
+			active++;
+		}
+	}
+	if(ButtonJson[Player::currentPlace][Player::currentRoom].contains("ButtonsActive")){
+		if(ButtonJson[Player::currentPlace][Player::currentRoom].contains("ButtonsActive") == active){
+			//stuff it in a function
+			//check through the list and see if its a door.
+			//if it is, make it dead and have interact decide what to do
+			for (int i = 0; i < EntityList.size(); i++) {
+				if (EntityList[i]->icon == '=') {
+					EntityList[i]->alive = false;
+					EntityList[i]->interact();
+				}
+			}
+		}
+		else{
+			for (int i = 0; i < EntityList.size(); i++) {
+				if (EntityList[i]->icon == '=') {
+					EntityList[i]->alive = true;
+					EntityList[i]->interact();
+				}
+			}
+		}
+	}
+
 
 }
 
@@ -205,7 +250,7 @@ int main() {
 				for (int i = 1; i < EntityList.size(); i++) {
 					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
 						EntityList[i]->interact();
-
+						checkClearCondition(EntityList);
 						break;
 					}
 				}
@@ -245,7 +290,7 @@ int main() {
 
 		if (game.curScreenState == BATTLE) {
 			//std::cout << "Battle\n";
-			game.PrintBoard();
+			game.PrintBattle();
 			game.BattleMenu(game.curScreenState);
 			std::cout << '\n' << game.curScreenState;
 		}

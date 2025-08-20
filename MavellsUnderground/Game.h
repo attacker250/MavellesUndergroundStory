@@ -19,6 +19,10 @@ public:
 
         MAXSCREENSTATE,
     };
+    enum gameRooms {
+        SECTORS = 3,
+        ROOMS = 7
+    };
     const static char roomCount = 2;
 	const static int atkListSize = 3;
 	static std::string atkList[atkListSize];
@@ -32,7 +36,7 @@ public:
     void AttackList();
     void ItemList();
     void Battle();
-    void PrintBoard();
+    void PrintBattle();
     void BattleMenu(int& curScreenState);
     void learnScreen();
 
@@ -45,6 +49,13 @@ public:
 
     static char mapData[ROWS][COLUMNS];
     static char mapObjects[roomCount][ROWS][COLUMNS];
+    static bool enteredRoom[SECTORS][ROOMS];
     static int curScreenState;
+
+    //Game() {
+    //    for (int i = 0; i < atkListSize; i++) {
+    //        atkList[i] = " ";
+    //    }
+    //}
 
 };

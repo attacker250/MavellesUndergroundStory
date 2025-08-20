@@ -9,7 +9,7 @@ public:
 		icon = '=';
 	}
 	int doorLvl = 0;
-	void openDoor();
-	void closeDoor();
+	bool opened = false;
+	void interact() override;
 };
 
