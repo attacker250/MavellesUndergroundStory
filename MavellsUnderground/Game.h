@@ -5,7 +5,7 @@
 class Game {
 public:
     enum mapDimensions {
-        ROWS = 12,
+        ROWS = 13,
         COLUMNS = 40
     };
     enum ScreenState {
@@ -42,7 +42,8 @@ public:
         std::string hi;
     };
 
-    static char mapData[12][40];
+    static char mapData[ROWS][COLUMNS];
+    //static char ogMap[ROWS][COLUMNS];
     static int curScreenState;
 
 };

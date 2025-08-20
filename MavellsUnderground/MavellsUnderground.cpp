@@ -54,10 +54,15 @@ void ShowConsoleCursor(bool showFlag)
 }
 
 void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string Door) {
+	enum boarddimensions {
+		COLUMNS = 40,
+		ROWS = 13
+	};
+
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
-	game.LoadMap("TestMaps", player.RoomDestination);
-	auto Data = MapJson["TestMaps"][player.RoomDestination];
+	game.LoadMap(player.currentPlace, player.RoomDestination);
+	auto Data = MapJson[player.currentPlace][player.RoomDestination];
 
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
 	if (EntityList.size() > 0) {
@@ -95,8 +100,8 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 
 	EntityList.push_back(&player);
 	//Detects the objects that are predefined on the map
-	for (int i = 0; i < 12; i++) {
-		for (int f = 0; f < 40; f++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int f = 0; f < COLUMNS; f++) {
 			switch (game.mapData[i][f]) {
 			case 'B':
 				Barrel *barrel;
@@ -138,7 +143,7 @@ int main(){
 	//auto MapJson = nlohmann::json::parse(fMapdata);
 	enum boarddimensions {
 		COLUMNS = 40,
-		ROWS = 12
+		ROWS = 13
 	};
 	ShowCursor(FALSE);
 	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
@@ -159,9 +164,9 @@ int main(){
 	}
 	
 	player.lastDoor = "Door1";
-	player.RoomDestination = "RoomTest1";
-	player.currentRoom = "RoomTest1";
-	player.currentPlace = "TestMaps";
+	player.RoomDestination = "Room1";
+	player.currentRoom = "Room1";
+	player.currentPlace = "Cave";
 
 	std::vector<Entity*> EntityList;
 
@@ -200,8 +205,8 @@ int main(){
 						break;
 					}
 				}
-				if ((PlayerIntendedX) >= 40 || (PlayerIntendedY) >= 12 || (PlayerIntendedX) <= 0 || (PlayerIntendedY) <= 0) {
-					auto setter = MapJson["TestMaps"][player.currentRoom];
+				if ((PlayerIntendedX) >= COLUMNS || (PlayerIntendedY) >= ROWS || (PlayerIntendedX) <= 0 || (PlayerIntendedY) <= 0) {
+					auto setter = MapJson[player.currentPlace][player.currentRoom];
 					//Second pos must be the larger value
 
 					for (int i = 0; i < setter["DoorCount"]+1; i++) {
@@ -220,8 +225,8 @@ int main(){
 			}
 
 			std::string Map;
-			for (int i = 0; i < 12; i++) {
-				for (int j = 0; j < 40; j++) {
+			for (int i = 0; i < ROWS; i++) {
+				for (int j = 0; j < COLUMNS; j++) {
 					Map += game.mapData[i][j];
 					//std::cout << MapData[i][j];
 				}

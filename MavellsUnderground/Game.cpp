@@ -166,8 +166,8 @@ void Game::LoadMap(std::string Room, std::string Map){
     std::ifstream fMapdata("MapData/MapData.json");
     auto MapJson = nlohmann::json::parse(fMapdata);
         
-    for (int i = 0; i < 12; i++) {
-        for (int j = 0; j < 40; j++) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
             mapData[i][j] = MapJson[Room][Map]["Map"][i].get<std::string>()[j];
         }
     }
