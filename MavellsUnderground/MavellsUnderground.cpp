@@ -41,7 +41,7 @@
 //}
 
 
-void ClearScreen(){
+void ClearScreen() {
 	COORD cursorPosition;	cursorPosition.X = 0;	cursorPosition.Y = 0;	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
 }
 
@@ -56,7 +56,7 @@ void ShowConsoleCursor(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::string door) {
+void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door) {
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 13
@@ -76,25 +76,25 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 	}
 	EntityList.clear();
 
-	if(door != "Nill"){
-		if(Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]){
-			if(Data[door]["FirstPos"][0] < 0){
-				player.spawn(Data[door]["FirstPos"][0]+1,player.y);
+	if (door != "Nill") {
+		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
+			if (Data[door]["FirstPos"][0] < 0) {
+				player.spawn(Data[door]["FirstPos"][0] + 1, player.y);
 			}
-			else{
+			else {
 				player.spawn(Data[door]["FirstPos"][0] - 1, player.y);
 			}
-		} 
+		}
 		else if (Data[door]["FirstPos"][1] == Data[door]["SecondPos"][1]) {
-			if(Data[door]["FirstPos"][1] < 0){
-				player.spawn(player.x, Data[door]["FirstPos"][1]+1);
+			if (Data[door]["FirstPos"][1] < 0) {
+				player.spawn(player.x, Data[door]["FirstPos"][1] + 1);
 			}
-			else{
+			else {
 				player.spawn(player.x, Data[door]["FirstPos"][1] - 1);
 			}
 		}
 	}
-	else{
+	else {
 		player.spawn(20, 6);
 	}
 
@@ -107,28 +107,28 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 		for (int f = 0; f < COLUMNS; f++) {
 			switch (game.mapData[i][f]) {
 			case 'B':
-				Barrel *barrel;
+				Barrel * barrel;
 				barrel = new Barrel;
 				//works aparently	
 				//EntityList.push_back(new Barrel);
 				EntityList.push_back(barrel);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;			
+				break;
 			case 'E':
-				TestEnemyClass *testenemy;
+				TestEnemyClass * testenemy;
 				testenemy = new TestEnemyClass;
 				EntityList.push_back(testenemy);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			case '+':
 			case '-':
-				Button *button;
+				Button * button;
 				button = new Button;
 				EntityList.push_back(button);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			case '=':
-				Door* pointer;
+				Door * pointer;
 				pointer = new Door;
 				EntityList.push_back(pointer);
 				EntityList[EntityList.size() - 1]->spawn(f, i);
@@ -139,7 +139,7 @@ void InitGame(Game &game,Player &player, std::vector<Entity*> &EntityList,std::s
 }
 
 
-int main(){
+int main() {
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 	enum ScreenState {
@@ -162,9 +162,9 @@ int main(){
 	};
 	ShowCursor(FALSE);
 	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
-    //char MapData[ROWS][COLUMNS];
+	//char MapData[ROWS][COLUMNS];
 	//char* mapDataPtr[ROWS][COLUMNS] = MapData;
-	
+
 	// for (int i = 0; i < ROWS; i++) {
 	// 	for (int f = 0; f < COLUMNS; f++) {
 	// 		MapData[i][f] = new char;
@@ -173,11 +173,11 @@ int main(){
 	Game game;
 	Player player;
 	ShowConsoleCursor(false);
-	
-	for (int i = 0; i < game.atkListSize; i++){
+
+	for (int i = 0; i < game.atkListSize; i++) {
 		game.atkList[i] = " ";
 	}
-	
+
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
@@ -185,7 +185,7 @@ int main(){
 
 	std::vector<Entity*> EntityList;
 
-	InitGame(game,player,EntityList,"Nill");
+	InitGame(game, player, EntityList, "Nill");
 	//EntityList.push_back(new Barrel);
 
 	while (true) {
@@ -194,7 +194,7 @@ int main(){
 		//if (_kbhit()) {
 		//	player.move();
 		//	char getbtn = static_cast<char>(_getch());
-			
+
 			//if (getbtn == '1'){
 			//	system("cls");
 			//	curScreenState = BATTLE;
@@ -204,10 +204,10 @@ int main(){
 			//	curScreenState = MAP_RENDER;
 			//}
 
-	
 
 
-		if (game.curScreenState == MAP_RENDER){
+
+		if (game.curScreenState == MAP_RENDER) {
 			//print out map
 
 			if (!player.move()) {
@@ -224,9 +224,9 @@ int main(){
 					auto setter = MapJson[player.currentPlace][player.currentRoom];
 					//Second pos must be the larger value
 
-					for (int i = 0; i < setter["DoorCount"]+1; i++) {
-						if(setter["Door"+std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door"+std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX ){
-							if (setter["Door"+std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY  && setter["Door"+std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
+					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
+						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
+							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								InitGame(game, player, EntityList, "Door" + std::to_string(i));
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
@@ -259,24 +259,22 @@ int main(){
 			game.BattleMenu(game.curScreenState);
 			std::cout << '\n' << game.curScreenState;
 		}
-		if (game.curScreenState == INVENTORY){
-			for (int i = 0; i < player.playerInventory.storage.size(); i++){
+		if (game.curScreenState == INVENTORY) {
+			for (int i = 0; i < player.playerInventory.storage.size(); i++) {
 				std::cout << player.playerInventory.storage[i];
 			}
-		} 
-		if (game.curScreenState == LEARNATK){
+		}
+		if (game.curScreenState == LEARNATK) {
 			game.learnScreen();
-		} 
+		}
 		//std::cout << MapJson["TestMaps"].;
-		std::ifstream fButtondata("ButtonData/ButtonData.json");
-		auto ButtonJson = nlohmann::json::parse(fButtondata);
-		mapData[i][j] = ButtonJson[Room][Map]["Map"][i].get<std::string>()[j];
+
 
 		//;
 		ClearScreen();
 	}
-		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
-		
+	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
+
 	_CrtDumpMemoryLeaks();
-    return 0;
+	return 0;
 }

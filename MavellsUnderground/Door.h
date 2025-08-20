@@ -3,7 +3,7 @@
 #include "Entity.h"
 
 class Door : public Entity
-{
+{	
 public:
 	Door(){
 		icon = '=';
