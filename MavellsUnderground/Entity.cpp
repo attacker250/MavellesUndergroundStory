@@ -11,10 +11,10 @@ void Entity::updatePos(int movetox, int movetoy){
 
 bool Entity::move(){
 	return false;
-}
+}	
 
 void Entity::interact() {
-	std::cout << "Base";
+	//std::cout << "Base";
 }
 
 

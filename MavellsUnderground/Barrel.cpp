@@ -16,6 +16,6 @@ void Barrel::interact() {
 	}
 	curScreenState = INVENTORY;
 	//std::cout << "BARREL INTERACT";
-
+		
 }
 

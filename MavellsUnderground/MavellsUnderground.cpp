@@ -217,6 +217,7 @@ int main() {
 				for (int i = 1; i < EntityList.size(); i++) {
 					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
 						EntityList[i]->interact();
+						
 						break;
 					}
 				}
@@ -247,6 +248,7 @@ int main() {
 				}
 				Map += "\n";
 			}
+			
 			std::cout << Map;
 			if (game.curScreenState != MAP_RENDER) {
 				system("cls");
