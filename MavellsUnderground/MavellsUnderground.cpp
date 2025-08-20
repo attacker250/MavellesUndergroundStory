@@ -77,16 +77,16 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	EntityList.clear();
 
 	if (door != "Nill") {
-		if(Data[door]["FirstPos"][1] > player.y){
+		if(Data[door]["FirstPos"][1] < player.y){
 			player.y = Data[door]["FirstPos"][1];
 		}
-		if (Data[door]["SecondPos"][1] < player.y) {
+		if (Data[door]["SecondPos"][1] > player.y) {
 			player.y = Data[door]["FirstPos"][1];
 		}
-		if (Data[door]["FirstPos"][0] > player.x) {
+		if (Data[door]["FirstPos"][0] < player.x) {
 			player.x = Data[door]["FirstPos"][0];
 		}
-		if (Data[door]["SecondPos"][0] < player.x) {
+		if (Data[door]["SecondPos"][0] > player.x) {
 			player.x = Data[door]["SecondPos"][0];
 		}
 		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
@@ -168,7 +168,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 			//check through the list and see if its a door.
 			//if it is, make it dead and have interact decide what to do
 			for (int i = 0; i < EntityList.size(); i++) {
-				if (EntityList[i]->icon == '=') {
+				if (EntityList[i]->type == "Door") {
 					EntityList[i]->alive = false;
 					EntityList[i]->interact();
 				}
@@ -176,7 +176,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 		}
 		else{
 			for (int i = 0; i < EntityList.size(); i++) {
-				if (EntityList[i]->icon == '=') {
+				if (EntityList[i]->type == "Door") {
 					EntityList[i]->alive = true;
 					EntityList[i]->interact();
 				}
@@ -239,6 +239,7 @@ int main() {
 
 	while (true) {
 		if (game.curScreenState == MAP_RENDER) {
+			//std::cout << player.currentRoom[player.currentRoom.length() - 1] << ' ' << player.RoomDestination[player.RoomDestination.length() - 1];
 			//print out map
 			
 			//Means the players next move is not into a ' '

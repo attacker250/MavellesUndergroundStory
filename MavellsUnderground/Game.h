@@ -48,8 +48,8 @@ public:
     };
 
     static char mapData[ROWS][COLUMNS];
-    static char mapObjects[roomCount][ROWS][COLUMNS];
-    static bool enteredRoom[SECTORS][ROOMS];
+    static char mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
+    static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
 
     //Game() {

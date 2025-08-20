@@ -1,2 +1,12 @@
-﻿  Player.cpp
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  Barrel.cpp
+  Button.cpp
+  Door.cpp
+  Enemy.cpp
+  Entity.cpp
+  Game.cpp
+  MavellsUnderground.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(166,89): warning C4805: '==': unsafe mix of type 'bool' and type 'int' in operation
+  Player.cpp
+  TestEnemyClass.cpp
+  Generating Code...
+  MavellsUnderground.vcxproj -> C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

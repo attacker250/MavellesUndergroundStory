@@ -6,8 +6,7 @@
 #include <string>
 
 Inventory Player::playerInventory;
-std::string Player::currentRoom;
-std::string Player::currentPlace;
+
 
 bool Player::move(){
     if (_kbhit()){

@@ -16,5 +16,7 @@ public:
 	virtual bool move();
 	void spawn(int spawnx, int spawny);
 	virtual void interact();
+	static std::string currentRoom;
+	static std::string currentPlace;
 };
 

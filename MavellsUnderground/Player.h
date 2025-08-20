@@ -17,8 +17,6 @@ public:
 	int ymov = 0;
 	const int maxInvSize = 5;
 	static Inventory playerInventory;
-	static std::string currentRoom;
-	static std::string currentPlace;
 	std::string RoomDestination;
 	std::string lastDoor;
 

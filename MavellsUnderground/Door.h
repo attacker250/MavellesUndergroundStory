@@ -7,6 +7,8 @@ class Door : public Entity
 public:
 	Door(){
 		icon = '=';
+		type = "Door";
+
 	}
 	int doorLvl = 0;
 	bool opened = false;

@@ -14,8 +14,9 @@ int Game::battleHp = 0;
 std::string Game::atkList[atkListSize];
 std::string Game::atkLearn;
 
-char Game::mapObjects[roomCount][ROWS][COLUMNS];
-bool Game::enteredRoom[SECTORS][ROOMS];
+char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
+bool Game::enteredRm[SECTORS][ROOMS];
+
 //typewriter effect for dialogue
 void Game::typewriter(std::string& text, int delay) {
 	int textspeed = delay;
@@ -168,15 +169,17 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 void Game::LoadMap(std::string Map, std::string Room){
     std::ifstream fMapdata("MapData/MapData.json");
     auto MapJson = nlohmann::json::parse(fMapdata);
-	//int rmCatalgoue = static_cast<int>(Room[Room.length() - 1]) - 48;
-//	if (enteredRm == false) {
+	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 48;
+	int mapCatalogue = static_cast<int>(Room[Room.length() - 1]) - 48;
+	if (!enteredRm[mapCatalogue][rmCatalogue]) {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
+				//std::cout << Room[Room.length() - 1];
+				mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 				mapData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 			}
 		}
-		
-	//}
+	}
 }
 
 void Game::BattleMenu(int& curScreenState) {
@@ -226,13 +229,15 @@ void Game::learnScreen(){
 			fullAmt++;
 		}
 	}
-	int moveForget = 0;
-	if (fullAmt == atkListSize) {
-		std::cout << '\n' << "Which move do you want to forget? " << '\n';
-		for (int i = 0; i < atkListSize; i++) {
-			std::cout << "[" << i + 1 << "]" << atkList[i] << std::endl;
+	int moveForget = -1;
+	while (moveForget >= 0 && moveForget < atkListSize) {
+		if (fullAmt == atkListSize) {
+			std::cout << '\n' << "Which move do you want to forget? " << '\n';
+			for (int i = 0; i < atkListSize; i++) {
+				std::cout << "[" << i + 1 << "]" << atkList[i] << std::endl;
+			}
+			std::cin >> moveForget;
 		}
-		std::cin >> moveForget;
 	}
 	atkList[moveForget - 1] = atkLearn;
 	Sleep(3000);
