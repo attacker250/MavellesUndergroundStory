@@ -16,22 +16,21 @@ Room::Room(std::string Map, std::string Room) {
 			//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 
 			roomData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
-			std::cout << roomData[i][j];
+			//std::cout << roomData[i][j];
 		}
-		std::cout << '\n';
+		//std::cout << '\n';
 	}
-	system("cls");
+	//system("cls");
 
 }
 
 void Room::importEntityList(std::vector<Entity*> &entityList)
 {
 	entityRoomSave.clear();
-	for (int i = 1; i < entityList.size(); i++) {
-		
+	for (int i = 0; i < entityList.size(); i++) {
 		entityRoomSave.push_back(entityList[i]);
 	}
-	std::cout << entityRoomSave.size();
+
 }
 
 void Room::roomSaveLayout(char roomLayout[ROWS][COLUMNS]) {

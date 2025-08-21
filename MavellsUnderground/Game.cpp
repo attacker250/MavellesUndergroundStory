@@ -377,32 +377,22 @@ void Game::LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMN
 	int mapCatalogue = static_cast<int>(Map[Map.length() - 1]) - 49;
 
 	enteredRm[mapCatalogue][rmCatalogue] = true;
-	std::cout << Map << "\n";
-	std::cout << room;
-	Sleep(1000);
-	system("cls");
-	if (ifNew) {
-		std::cout << "a \n";
-	}
-	else {
-		std::cout << "b \n";
-	}
+
+//	system("cls");
+
 	for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLUMNS; j++) {
-				//std::cout << Room[Room.length() - 1];
-				//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
-				if (ifNew) {
-					
-					mapData[i][j] = MapJson[Map][room]["Map"][i].get<std::string>()[j];
-				}
-				else {
-					
-					mapData[i][j] = roomData[i][j];
-				}
-				std::cout << mapData[i][j];
+		for (int j = 0; j < COLUMNS; j++) {
+			//std::cout << Room[Room.length() - 1];
+			//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
+			if (ifNew) {
+
+				mapData[i][j] = MapJson[Map][room]["Map"][i].get<std::string>()[j];
 			}
-			std::cout << '\n';
-			
+			else {
+
+				mapData[i][j] = roomData[i][j];
+			}
+		}
 	}
 	system("cls");
 }

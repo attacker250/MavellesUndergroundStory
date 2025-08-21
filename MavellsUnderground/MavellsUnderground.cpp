@@ -58,10 +58,10 @@ void ShowConsoleCursor(bool showFlag)
 }
 
 int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
-	std::cout << roomList.size();
+	//std::cout << roomList.size();
 	for (int i = 0; i < roomList.size(); i++) {
-		std::cout << roomList[i]->room << ' ' << roomList[i]->place << '\n';
-		std::cout << room << ' ' << place << '\n';
+		//std::cout << roomList[i]->room << ' ' << roomList[i]->place << '\n';
+		//std::cout << room << ' ' << place << '\n';
 		if (roomList[i]->room == room && roomList[i]->place == place) {
 			return i;
 		}
@@ -98,14 +98,8 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		for (int i = 0; i < roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size(); i++) {
 			EntityList.push_back(roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave[i]);
 		}
-		std::cout << roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size();
-		std::cout << "paing";
+
 	}
-	//for (int i = 0; i < ROWS; i++) {
-	//	for (int f = 0; f < COLUMNS; f++) {
-	//		//roomList.mapData[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)] = game
-	//	}
-	//}
 
 
 	
@@ -116,7 +110,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 
 	
-	game.checkMap();
+	//game.checkMap();
 	if (door != "Nill") {
 		if(Data[door]["FirstPos"][1] > player.y){
 			player.y = Data[door]["FirstPos"][1];
@@ -154,7 +148,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	//game.checkMap();
 
 
-	system("cls");
+//	system("cls");
 
 	if (roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
 		roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom = false;
@@ -347,7 +341,7 @@ int main() {
 
 								
 								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
-								system("cls");
+								//system("cls");
 								break;
 							}
 						}
@@ -365,20 +359,6 @@ int main() {
 				Map += "\n";
 			}
 
-			std::cout << Map;
-			if (game.enteredRm[0][0] == false) {
-				std::cout << "a \n";
-				
-			}
-			Map = "";
-			for (int i = 0; i < ROWS; i++) {
-				for (int j = 0; j < COLUMNS; j++) {
-
-					Map += game.mapData[i][j];
-						//std::cout << MapData[i][j];
-				}
-				Map += "\n";
-			}
 			std::cout << Map;
 
 			if (game.curScreenState != MAP_RENDER) {
