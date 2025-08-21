@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Windows.h"
 #include <string>
+#include "Room.h"
 
 char Game::mapData[ROWS][COLUMNS];
 
@@ -369,24 +370,43 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 }
 
-void Game::LoadMap(std::string Map, std::string Room){
+void Game::LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew) {
     std::ifstream fMapdata("MapData/MapData.json");
     auto MapJson = nlohmann::json::parse(fMapdata);
-	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 49;
+	int rmCatalogue = static_cast<int>(room[room.length() - 1]) - 49;
 	int mapCatalogue = static_cast<int>(Map[Map.length() - 1]) - 49;
 
 	enteredRm[mapCatalogue][rmCatalogue] = true;
+	std::cout << Map << "\n";
+	std::cout << room;
+	Sleep(1000);
+	system("cls");
+	if (ifNew) {
+		std::cout << "a \n";
+	}
+	else {
+		std::cout << "b \n";
+	}
 	for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
 				//std::cout << Room[Room.length() - 1];
 				//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
-				mapData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
+				if (ifNew) {
+					
+					mapData[i][j] = MapJson[Map][room]["Map"][i].get<std::string>()[j];
+				}
+				else {
+					
+					mapData[i][j] = roomData[i][j];
+				}
+				std::cout << mapData[i][j];
 			}
-		}
-		
-	
-
+			std::cout << '\n';
+			
+	}
+	system("cls");
 }
+
 
 void Game::BattleMenu(int& curScreenState) {
 	

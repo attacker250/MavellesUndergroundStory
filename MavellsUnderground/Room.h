@@ -17,8 +17,8 @@ public:
 	};
 	char roomData[ROWS][COLUMNS];
 
-	std::string place = "cave";
-	std::string room = "room1";
+	std::string place;
+	std::string room;
 	bool newRoom = true;
 
 	std::vector<Entity*> entityRoomSave;

@@ -32,7 +32,7 @@ public:
 
     static int battleHp;
     char getPos(int xpos, int ypos);
-    void LoadMap(std::string Room, std::string Map);
+    void LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew);
     void MapEdit(int xpos, int ypos, char changeto);
     void typewriter(std::string& text, int delay, int maxChar);
     void AttackList();

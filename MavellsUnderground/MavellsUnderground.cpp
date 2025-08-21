@@ -58,12 +58,15 @@ void ShowConsoleCursor(bool showFlag)
 }
 
 int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
+	std::cout << roomList.size();
 	for (int i = 0; i < roomList.size(); i++) {
+		std::cout << roomList[i]->room << ' ' << roomList[i]->place << '\n';
+		std::cout << room << ' ' << place << '\n';
 		if (roomList[i]->room == room && roomList[i]->place == place) {
 			return i;
 		}
 	}
-	return 0;
+	//return 0;
 }
 
 bool checkIn(std::string place, std::string room, std::vector<Room*> &roomList) {
@@ -83,17 +86,34 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
-	game.LoadMap(player.currentPlace, player.RoomDestination);
-	game.checkMap();
-	auto Data = MapJson[player.currentPlace][player.RoomDestination];
-
-	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
+	game.LoadMap(player.currentPlace, player.RoomDestination, roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomData, roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom);
 	if (EntityList.size() > 0) {
 		for (int i = 1; i < EntityList.size(); i++) {
-			delete EntityList[i];
 			EntityList[i] = nullptr;
 		}
+		system("pause");
 	}
+	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
+		for (int i = 0; i < roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size(); i++) {
+			EntityList.push_back(roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave[i]);
+		}
+		std::cout << roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size();
+		std::cout << "paing";
+	}
+	//for (int i = 0; i < ROWS; i++) {
+	//	for (int f = 0; f < COLUMNS; f++) {
+	//		//roomList.mapData[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)] = game
+	//	}
+	//}
+
+
+	
+	//game.checkMap();
+	auto Data = MapJson[player.currentPlace][player.RoomDestination];
+	system("pause");
+	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
+
+
 	EntityList.clear();
 	game.checkMap();
 	if (door != "Nill") {
@@ -135,8 +155,8 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 	system("cls");
 
-	if (roomList[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)]->newRoom) {
-		roomList[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)]->newRoom = false;
+	if (roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
+		roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom = false;
 		EntityList.push_back(&player);
 		//Detects the objects that are predefined on the map
 		for (int i = 0; i < ROWS; i++) {
@@ -216,7 +236,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 			for (int i = 0; i < EntityList.size(); i++) {
 				if (EntityList[i]->type == "Door") {
 					EntityList[i]->alive = false;
-					EntityList[i]->interact();
+					EntityList[i]->interact();	
 				}
 			}
 		}
@@ -238,10 +258,10 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 
 int main() {
 
-	std::vector<std::vector <std::vector<Entity>>> mapObj;
-	//std::vector<
-	mapObj.resize(3);
-	mapObj[0].resize(7);
+	//std::vector<std::vector <std::vector<Entity>>> mapObj;
+	////std::vector<
+	//mapObj.resize(3);
+	//mapObj[0].resize(7);
 
 	std::vector<Room*> roomList;
 	Room* room1 = new Room("Cave", "Room1");
@@ -282,7 +302,7 @@ int main() {
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
-	player.currentPlace = "Cave1";
+	player.currentPlace = "Cave";
 
 	std::vector<Entity*> EntityList;
 
@@ -316,13 +336,14 @@ int main() {
 					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
+
+								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
+								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
+
+								
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
-								if (checkIn(player.currentRoom, player.RoomDestination, roomList)) {
-									roomList[(returnRoomIndex(player.currentRoom, player.RoomDestination, roomList))]->importEntityList(EntityList);
-									roomList[(returnRoomIndex(player.currentRoom, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
-								}
 								
 								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
 								system("cls");

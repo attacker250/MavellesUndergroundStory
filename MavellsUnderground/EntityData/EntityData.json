@@ -6,6 +6,7 @@
   "TestMaps": {
     "0": {
       "Name": "Slime",
+      "Type": "WATER",
       "HP": 80,
       "Potrait": [],
       "Attacks": [
@@ -24,6 +25,7 @@
 
     "1": {
       "Name": "Slime",
+      "Type":  "WATER",
       "HP": 80,
       "Potrait": [],
       "Attacks": [
@@ -42,6 +44,7 @@
 
     "2": {
       "Name": "Slime",
+      "Type": "WATER",
       "HP": 80,
       "Potrait": [],
       "Attacks": [
@@ -60,6 +63,7 @@
 
     "3": {
       "Name": "Zombie",
+      "Type": "GRASS",
       "HP": 100,
       "Potrait": [],
       "Attacks": [
@@ -78,6 +82,7 @@
 
     "4": {
       "Name": "Zombie",
+      "Type": "GRASS",
       "HP": 100,
       "Potrait": [],
       "Attacks": [
@@ -93,7 +98,5 @@
         }
       ]
     }
-
-
   }
   }
