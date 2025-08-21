@@ -86,9 +86,18 @@ void Game::Battle() {
 		typewriter(WinMessage, 40, 50);
 		return;
 	}
-
 }
 
+//input enemy damage here
+void Game::EnemyTurn()
+{
+	Sleep(300);
+	int enemydmg = 50;
+	std::string enemymssg = "\nThe enemy attacks! It dealt " + std::to_string(enemydmg) + " damage to you..."; //pass in enemydmg
+	typewriter(enemymssg, 20, 50);
+	Sleep(300);
+	system("cls");
+}
 void Game::ItemList() {
 	std::cout << "\n";
 	std::cout << "[1] Item 1" << std::endl;
@@ -131,7 +140,7 @@ void Game::AttackList() {
 	for (int i = 0; i < atkListSize; i++) {
 		std::cout << "[" << i + 1 << "]" << atkList[i] << std::endl;
 	}
-
+	std::cout << "[" << 4 << "]" << " Back" << std::endl;
 	char getbtn = static_cast<char>(_getch());
 	if (getbtn) {
 		Beep(1080, 300);
@@ -141,6 +150,7 @@ void Game::AttackList() {
 			Sleep(500);
 			system("cls");
 			PrintBattle();
+			EnemyTurn();
 			break;
 		case '2':
 			std::cout << "You chose Water attack!" << std::endl;
@@ -255,6 +265,22 @@ void Game::TradeSystem(){
 	}
 }
 
+void Game::checkMap()
+{
+	for (int i = 0; i < ROWS; i++) {
+		for (int f = 0; f < COLUMNS; f++) {
+
+			std::cout << mapData[i][f];
+
+
+		}
+		std::cout << '\n';
+	}
+
+	system("cls");
+//	Sleep(1000);
+}
+
 void Game::TradeMenu(){
 	PrintTrade();
 
@@ -349,8 +375,8 @@ void Game::LoadMap(std::string Map, std::string Room){
 	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 49;
 	int mapCatalogue = static_cast<int>(Map[Map.length() - 1]) - 49;
 	//std::cout << rmCatalogue << ' ' << mapCatalogue << '\n';
-	if (enteredRm[0][0] == false) {
-		enteredRm[0][0] = true;
+	if (enteredRm[mapCatalogue][rmCatalogue] == false) {
+		enteredRm[mapCatalogue][rmCatalogue] = true;
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
 				//std::cout << Room[Room.length() - 1];
@@ -361,7 +387,7 @@ void Game::LoadMap(std::string Map, std::string Room){
 		
 	}
 	else {
-		testNew = true;
+		//system("cls");
 		for (int i = 0; i < ROWS; i++) {
 			for (int f = 0; f < COLUMNS; f++) {
 				if (mapObjects[mapCatalogue][rmCatalogue][i][f] == 'o') {
@@ -370,12 +396,19 @@ void Game::LoadMap(std::string Map, std::string Room){
 				else {
 					mapData[i][f] = mapObjects[mapCatalogue][rmCatalogue][i][f];
 				}
+				//std::cout << mapData[i][f];
+				
+				
 			}
+			std::cout << '\n';
 		}
+
+		system("cls");
 	}
 }
 
 void Game::BattleMenu(int& curScreenState) {
+	
 	bool isRunning = true;
 	//	while (isRunning) {
 	Battle();

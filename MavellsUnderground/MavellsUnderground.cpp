@@ -65,6 +65,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 	game.LoadMap(player.currentPlace, player.RoomDestination);
+	game.checkMap();
 	auto Data = MapJson[player.currentPlace][player.RoomDestination];
 
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
@@ -75,20 +76,21 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		}
 	}
 	EntityList.clear();
-
+	game.checkMap();
 	if (door != "Nill") {
-		if(Data[door]["FirstPos"][1] < player.y){
+		if(Data[door]["FirstPos"][1] > player.y){
 			player.y = Data[door]["FirstPos"][1];
 		}
-		if (Data[door]["SecondPos"][1] > player.y) {
+		if (Data[door]["FirstPos"][1] < player.y) {
 			player.y = Data[door]["FirstPos"][1];
-		}
-		if (Data[door]["FirstPos"][0] < player.x) {
-			player.x = Data[door]["FirstPos"][0];
 		}
 		if (Data[door]["SecondPos"][0] > player.x) {
 			player.x = Data[door]["SecondPos"][0];
 		}
+		if (Data[door]["SecondPos"][0] < player.x) {
+			player.x = Data[door]["SecondPos"][0];
+		}
+
 		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
 			if (Data[door]["FirstPos"][0] < 0) {
 				player.spawn(Data[door]["FirstPos"][0] + 1, player.y);
@@ -109,6 +111,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	else {
 		player.spawn(20, 6);
 	}
+	game.checkMap();
 
 
 	system("cls");
@@ -121,7 +124,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 			int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
 
 			switch (game.mapObjects[mapCatalogue][rmCatalogue][i][f]) {
-			case 'B':
+			case 'B':	
 				Barrel * barrel;
 				barrel = new Barrel;
 				//works aparently	
@@ -136,6 +139,11 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 				EntityList[EntityList.size() - 1]->spawn(f, i);
 				break;
 			case '+':
+				Button * activeBtn;
+				activeBtn = new Button;
+				EntityList.push_back(activeBtn);
+				EntityList[EntityList.size() - 1]->spawn(f, i);
+				break;
 			case '-':
 				Button * button;
 				button = new Button;
@@ -159,6 +167,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 			
 		}
 	}
+	game.checkMap();
 }
 
 void checkClearCondition(std::vector<Entity*>& EntityList){
@@ -200,7 +209,13 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 }
 
 
+
+
 int main() {
+	std::vector<std::vector <std::vector<Entity>>> mapObj;
+	//std::vector<
+	mapObj.resize(3);
+
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 	enum ScreenState {
@@ -254,16 +269,7 @@ int main() {
 		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
 		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
 		if (game.curScreenState == MAP_RENDER) {
-			//int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
-			//int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
-			////std::cout << rmCatalogue << ' ' << mapCatalogue << '\n';
-			//if (player.enteredRm[mapCatalogue][rmCatalogue]) {
-			//	std::cout << "A \n";
-			//}
-			if (!game.testNew) {
-				std::cout << "A \n";
-			}
-			//std::cout << player.currentRoom[player.currentRoom.length() - 1] << ' ' << player.RoomDestination[player.RoomDestination.length() - 1];
+
 			//print out map
 
 			//Means the players next move is not into a ' '
@@ -289,8 +295,16 @@ int main() {
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
 								InitGame(game, player, EntityList, "Door" + std::to_string(i));
+								for (int i = 0; i < ROWS; i++) {
+									for (int f = 0; f < COLUMNS; f++) {
+										std::cout << game.mapData[i][f];
 
 
+
+									}
+									std::cout << '\n';
+								}
+								system("cls");
 								break;
 							}
 						}
@@ -317,7 +331,7 @@ int main() {
 			for (int i = 0; i < ROWS; i++) {
 				for (int j = 0; j < COLUMNS; j++) {
 
-					Map += game.mapObjects[0][0][i][j];
+					Map += game.mapObjects[player.placeIndex][player.rmIndex][i][j];
 						//std::cout << MapData[i][j];
 				}
 				Map += "\n";

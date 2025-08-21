@@ -8,7 +8,9 @@ void Entity::updatePos(int movetox, int movetoy){
 	
 	int currRmNum = static_cast<int>(currentRoom[currentRoom.length() - 1] - 49);
 	int currPlaceNum = static_cast<int>(currentPlace[currentPlace.length() - 1] - 49);
-	mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
+	if (mapObjects[currPlaceNum][currRmNum][y][x] != 'o') {
+		mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
+	}
 	mapData[y][x] = ' ';
 	if (icon != 'P') {
 		if (icon != ' ') {

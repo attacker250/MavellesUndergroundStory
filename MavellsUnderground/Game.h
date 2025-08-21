@@ -40,11 +40,13 @@ public:
     void Battle();
     void PrintBattle();
     void BattleMenu(int& curScreenState);
+    void EnemyTurn();
     void learnScreen();
     void resetRooms();
     void PrintTrade();
     void TradeMenu();
     void TradeSystem();
+    void checkMap();
 
     struct EntityArray {
         int x;

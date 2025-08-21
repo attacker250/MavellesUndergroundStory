@@ -1,11 +1,4 @@
-﻿  Barrel.cpp
-  Button.cpp
-  Door.cpp
-  Enemy.cpp
-  Entity.cpp
-  Game.cpp
+﻿  Game.cpp
   MavellsUnderground.cpp
-  Player.cpp
-  TestEnemyClass.cpp
   Generating Code...
   MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
