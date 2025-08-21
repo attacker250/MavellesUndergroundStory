@@ -25,6 +25,6 @@ public:
 	Room(std::string Map, std::string Room);
 	void importEntityList(std::vector<Entity*>& entityList);
 	std::vector<Entity*> returnEntities();
-
+	void roomSaveLayout(char roomLayout[ROWS][COLUMNS]);
 };
 

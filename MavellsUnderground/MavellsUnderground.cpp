@@ -237,24 +237,17 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 
 
 int main() {
-	//int roomlistnum
-	//string rm1 string cave
-	//for ....
-	//if roomLoist[i].room == rm1
-	//    if roomlist[i].place == cave
-	//		return i;
 
-
-	//rmlist[roomlistnum(rm1,cave,rmList)]
 	std::vector<std::vector <std::vector<Entity>>> mapObj;
 	//std::vector<
 	mapObj.resize(3);
 	mapObj[0].resize(7);
 
 	std::vector<Room*> roomList;
-	Room* room = new Room("Cave", "room1");
-	Room* room = new Room("Cave", "room2");
-	roomList.push_back(room);
+	Room* room1 = new Room("Cave", "Room1");
+	Room* room2 = new Room("Cave", "Room2");
+	roomList.push_back(room1);
+	roomList.push_back(room2);
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
@@ -270,22 +263,13 @@ int main() {
 		MAXSCREENSTATE
 
 	};
-	//std::ifstream fMapdata("MapData/MapData.json");
-	//auto MapJson = nlohmann::json::parse(fMapdata);
+
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 13
 	};
 	ShowCursor(FALSE);
-	//MapJson["TestMaps"]["MovementTest"]["Map"][i].get<std::string>()[j];
-	//char MapData[ROWS][COLUMNS];
-	//char* mapDataPtr[ROWS][COLUMNS] = MapData;
 
-	// for (int i = 0; i < ROWS; i++) {
-	// 	for (int f = 0; f < COLUMNS; f++) {
-	// 		MapData[i][f] = new char;
-	// 	}
-	// }
 	Game game;
 	Player player;
 	game.resetRooms();
@@ -302,7 +286,7 @@ int main() {
 
 	std::vector<Entity*> EntityList;
 
-	InitGame(game, player, EntityList, "Nill");
+	InitGame(game, player, EntityList, "Nill", roomList);
 	//EntityList.push_back(new Barrel);
 
 	while (true) {
@@ -336,9 +320,11 @@ int main() {
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
 								if (checkIn(player.currentRoom, player.RoomDestination, roomList)) {
 									roomList[(returnRoomIndex(player.currentRoom, player.RoomDestination, roomList))]->importEntityList(EntityList);
+									roomList[(returnRoomIndex(player.currentRoom, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
+
 								}
 								
-								InitGame(game, player, EntityList, "Door" + std::to_string(i));
+								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
 								system("cls");
 								break;
 							}
