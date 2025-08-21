@@ -1,4 +1,31 @@
-﻿  Game.cpp
+﻿  Barrel.cpp
+  Door.cpp
+  Enemy.cpp
+  Entity.cpp
+  Game.cpp
+  Button.cpp
   MavellsUnderground.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(256,8): error C2374: 'room': redefinition; multiple initialization
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(255,8):
+      see declaration of 'room'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(256,8): error C2086: 'Room *room': redefinition
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(255,8):
+      see declaration of 'room'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(305,2): error C2660: 'InitGame': function does not take 4 arguments
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(78,6):
+      see declaration of 'InitGame'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(305,2):
+      while trying to match the argument list '(Game, Player, std::vector<Entity *,std::allocator<Entity *>>, const char [5])'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(341,9): error C2660: 'InitGame': function does not take 4 arguments
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(78,6):
+      see declaration of 'InitGame'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(341,9):
+      while trying to match the argument list '(Game, Player, std::vector<Entity *,std::allocator<Entity *>>, std::basic_string<char,std::char_traits<char>,std::allocator<char>>)'
+  
+  Player.cpp
+  Room.cpp
+  TestEnemyClass.cpp
   Generating Code...
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

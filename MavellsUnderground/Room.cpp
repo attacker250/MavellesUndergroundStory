@@ -15,9 +15,10 @@ Room::Room(std::string Map, std::string Room) {
 			roomData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 		}
 	}
+
 }
 
-void Room::importEntityList(std::vector<Entity> entityList)
+void Room::importEntityList(std::vector<Entity*> &entityList)
 {
 	entityRoomSave.clear();
 	for (int i = 0; i < entityList.size(); i++) {
@@ -25,7 +26,7 @@ void Room::importEntityList(std::vector<Entity> entityList)
 	}
 }
 
-std::vector<Entity> Room::returnEntities()
+std::vector<Entity*> Room::returnEntities()
 {
 	return entityRoomSave;
 }

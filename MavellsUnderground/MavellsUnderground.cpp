@@ -21,6 +21,7 @@
 #include "Entity.h"
 #include "Button.h"
 #include "Door.h"
+#include "Room.h"
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -56,7 +57,25 @@ void ShowConsoleCursor(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door) {
+int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
+	for (int i = 0; i < roomList.size(); i++) {
+		if (roomList[i]->room == room && roomList[i]->place == place) {
+			return i;
+		}
+	}
+	return 0;
+}
+
+bool checkIn(std::string place, std::string room, std::vector<Room*> &roomList) {
+	for (int i = 0; i < roomList.size(); i++) {
+		if (roomList[i]->room == room && roomList[i]->place == place) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door, std::vector<Room*>& roomList) {
 	enum boarddimensions {
 		COLUMNS = 40,
 		ROWS = 13
@@ -111,63 +130,69 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	else {
 		player.spawn(20, 6);
 	}
-	game.checkMap();
+	//game.checkMap();
 
 
 	system("cls");
 
-	EntityList.push_back(&player);
-	//Detects the objects that are predefined on the map
-	for (int i = 0; i < ROWS; i++) {
-		for (int f = 0; f < COLUMNS; f++) {
-			int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
-			int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
+	if (roomList[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)]->newRoom) {
+		roomList[returnRoomIndex(player.currentPlace, player.currentRoom, roomList)]->newRoom = false;
+		EntityList.push_back(&player);
+		//Detects the objects that are predefined on the map
+		for (int i = 0; i < ROWS; i++) {
+			for (int f = 0; f < COLUMNS; f++) {
+				int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
+				int mapCatalogue = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
 
-			switch (game.mapObjects[mapCatalogue][rmCatalogue][i][f]) {
-			case 'B':	
-				Barrel * barrel;
-				barrel = new Barrel;
-				//works aparently	
-				//EntityList.push_back(new Barrel);
-				EntityList.push_back(barrel);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			case 'E':
-				TestEnemyClass * testenemy;
-				testenemy = new TestEnemyClass;
-				EntityList.push_back(testenemy);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			case '+':
-				Button * activeBtn;
-				activeBtn = new Button;
-				EntityList.push_back(activeBtn);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			case '-':
-				Button * button;
-				button = new Button;
-				EntityList.push_back(button);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			case '=':
-				Door * pointer;
-				pointer = new Door;
-				EntityList.push_back(pointer);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
-			case 'o':
-				Door * door;
-				door = new Door;
-				door->alive = false;
-				EntityList.push_back(door);
-				EntityList[EntityList.size() - 1]->spawn(f, i);
-				break;
+				switch (game.mapData[i][f]) {
+				case 'B':
+					Barrel * barrel;
+					barrel = new Barrel;
+					//works aparently	
+					//EntityList.push_back(new Barrel);
+					EntityList.push_back(barrel);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				case 'E':
+					TestEnemyClass * testenemy;
+					testenemy = new TestEnemyClass;
+					EntityList.push_back(testenemy);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				case '+':
+					Button * activeBtn;
+					activeBtn = new Button;
+					EntityList.push_back(activeBtn);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				case '-':
+					Button * button;
+					button = new Button;
+					EntityList.push_back(button);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				case '=':
+					Door * pointer;
+					pointer = new Door;
+					EntityList.push_back(pointer);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				case 'o':
+					Door * door;
+					door = new Door;
+					door->alive = false;
+					EntityList.push_back(door);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
+				}
+
+
 			}
-			
 		}
 	}
-	game.checkMap();
+	//
+	// 
+	// game.checkMap();
 }
 
 void checkClearCondition(std::vector<Entity*>& EntityList){
@@ -212,9 +237,24 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 
 
 int main() {
+	//int roomlistnum
+	//string rm1 string cave
+	//for ....
+	//if roomLoist[i].room == rm1
+	//    if roomlist[i].place == cave
+	//		return i;
+
+
+	//rmlist[roomlistnum(rm1,cave,rmList)]
 	std::vector<std::vector <std::vector<Entity>>> mapObj;
 	//std::vector<
 	mapObj.resize(3);
+	mapObj[0].resize(7);
+
+	std::vector<Room*> roomList;
+	Room* room = new Room("Cave", "room1");
+	Room* room = new Room("Cave", "room2");
+	roomList.push_back(room);
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
@@ -294,16 +334,11 @@ int main() {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
-								InitGame(game, player, EntityList, "Door" + std::to_string(i));
-								for (int i = 0; i < ROWS; i++) {
-									for (int f = 0; f < COLUMNS; f++) {
-										std::cout << game.mapData[i][f];
-
-
-
-									}
-									std::cout << '\n';
+								if (checkIn(player.currentRoom, player.RoomDestination, roomList)) {
+									roomList[(returnRoomIndex(player.currentRoom, player.RoomDestination, roomList))]->importEntityList(EntityList);
 								}
+								
+								InitGame(game, player, EntityList, "Door" + std::to_string(i));
 								system("cls");
 								break;
 							}
@@ -331,7 +366,7 @@ int main() {
 			for (int i = 0; i < ROWS; i++) {
 				for (int j = 0; j < COLUMNS; j++) {
 
-					Map += game.mapObjects[player.placeIndex][player.rmIndex][i][j];
+					Map += game.mapData[i][j];
 						//std::cout << MapData[i][j];
 				}
 				Map += "\n";
@@ -366,6 +401,7 @@ int main() {
 			//;
 		ClearScreen();
 	}
+	
 		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
 	_CrtDumpMemoryLeaks();

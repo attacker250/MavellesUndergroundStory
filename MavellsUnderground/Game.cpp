@@ -14,7 +14,7 @@ int Game::battleHp = 0;
 std::string Game::atkList[atkListSize];
 std::string Game::atkLearn;
 
-char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
+//char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
 bool Game::enteredRm[SECTORS][ROOMS];
 
 //typewriter effect for dialogue
@@ -374,37 +374,18 @@ void Game::LoadMap(std::string Map, std::string Room){
     auto MapJson = nlohmann::json::parse(fMapdata);
 	int rmCatalogue = static_cast<int>(Room[Room.length() - 1]) - 49;
 	int mapCatalogue = static_cast<int>(Map[Map.length() - 1]) - 49;
-	//std::cout << rmCatalogue << ' ' << mapCatalogue << '\n';
-	if (enteredRm[mapCatalogue][rmCatalogue] == false) {
-		enteredRm[mapCatalogue][rmCatalogue] = true;
-		for (int i = 0; i < ROWS; i++) {
+
+	enteredRm[mapCatalogue][rmCatalogue] = true;
+	for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
 				//std::cout << Room[Room.length() - 1];
-				mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
+				//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 				mapData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 			}
 		}
 		
-	}
-	else {
-		//system("cls");
-		for (int i = 0; i < ROWS; i++) {
-			for (int f = 0; f < COLUMNS; f++) {
-				if (mapObjects[mapCatalogue][rmCatalogue][i][f] == 'o') {
-					mapData[i][f] = ' ';
-				}
-				else {
-					mapData[i][f] = mapObjects[mapCatalogue][rmCatalogue][i][f];
-				}
-				//std::cout << mapData[i][f];
-				
-				
-			}
-			std::cout << '\n';
-		}
+	
 
-		system("cls");
-	}
 }
 
 void Game::BattleMenu(int& curScreenState) {

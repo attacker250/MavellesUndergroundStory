@@ -6,20 +6,20 @@ std::string Entity::currentPlace = "Cave1";
 
 void Entity::updatePos(int movetox, int movetoy){
 	
-	int currRmNum = static_cast<int>(currentRoom[currentRoom.length() - 1] - 49);
-	int currPlaceNum = static_cast<int>(currentPlace[currentPlace.length() - 1] - 49);
-	if (mapObjects[currPlaceNum][currRmNum][y][x] != 'o') {
-		mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
-	}
+	//int currRmNum = static_cast<int>(currentRoom[currentRoom.length() - 1] - 49);
+	//int currPlaceNum = static_cast<int>(currentPlace[currentPlace.length() - 1] - 49);
+	//if (mapObjects[currPlaceNum][currRmNum][y][x] != 'o') {
+	//	mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
+	//}
 	mapData[y][x] = ' ';
-	if (icon != 'P') {
-		if (icon != ' ') {
-			mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = icon;
-		}
-		else {
-			mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = 'o';
-		}
-	}
+	//if (icon != 'P') {
+	//	if (icon != ' ') {
+	//		mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = icon;
+	//	}
+	//	else {
+	//		mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = 'o';
+	//	}
+	//}
 	
 	mapData[movetoy][movetox] = icon;
 	y = movetoy;
