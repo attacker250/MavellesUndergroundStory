@@ -58,6 +58,7 @@ void ShowConsoleCursor(bool showFlag)
 }
 
 int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
+	//gets the room index of the rm thats called "place" and "map" is in list
 	//std::cout << roomList.size();
 	for (int i = 0; i < roomList.size(); i++) {
 		//std::cout << roomList[i]->room << ' ' << roomList[i]->place << '\n';
@@ -70,6 +71,7 @@ int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roo
 }
 
 bool checkIn(std::string place, std::string room, std::vector<Room*> &roomList) {
+	//checks if a room thats called "place" and "map" is in list
 	for (int i = 0; i < roomList.size(); i++) {
 		if (roomList[i]->room == room && roomList[i]->place == place) {
 			return true;
@@ -93,6 +95,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		}
 		//system("pause");
 	}
+	//sets the rooms objects onto the screen
 	EntityList.clear();
 	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
 		for (int i = 0; i < roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size(); i++) {
@@ -248,7 +251,11 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 
 }
 
-
+void createRoom(std::vector<Room*> &roomList, std::string place, std::string room) {
+	//creates room with the identifiers "place" and "room
+	Room* newroom = new Room(place, room);
+	roomList.push_back(newroom);
+}
 
 
 int main() {
@@ -259,13 +266,23 @@ int main() {
 	//mapObj[0].resize(7);
 
 	std::vector<Room*> roomList;
-	Room* room1 = new Room("Cave", "Room1");
-	Room* room2 = new Room("Cave", "Room2");
-	roomList.push_back(room1);
-	roomList.push_back(room2);
+
+
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
+
+	createRoom(roomList, "Cave", "Room1");
+	createRoom(roomList, "Cave", "Room2");
+
+	//for (int i = 0; i < MapJson.size(); i++) {
+	//	for (int f = 0; f < MapJson[i].size(); f++) {
+	//		std::cout << MapJson[i] << ' ' << MapJson[i][f];
+	//		createRoom(roomList, MapJson[i], MapJson[i][f]);
+	//	}
+	//}
+
+
 	enum ScreenState {
 		MAP_RENDER,
 		BATTLE,

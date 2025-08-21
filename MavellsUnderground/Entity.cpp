@@ -4,34 +4,20 @@
 std::string Entity::currentRoom = "Room1";
 std::string Entity::currentPlace = "Cave1";
 
+//updates the position and icon of obj on board
 void Entity::updatePos(int movetox, int movetoy){
-	
-	//int currRmNum = static_cast<int>(currentRoom[currentRoom.length() - 1] - 49);
-	//int currPlaceNum = static_cast<int>(currentPlace[currentPlace.length() - 1] - 49);
-	//if (mapObjects[currPlaceNum][currRmNum][y][x] != 'o') {
-	//	mapObjects[currPlaceNum][currRmNum][y][x] = ' ';
-	//}
 	mapData[y][x] = ' ';
-	//if (icon != 'P') {
-	//	if (icon != ' ') {
-	//		mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = icon;
-	//	}
-	//	else {
-	//		mapObjects[currPlaceNum][currRmNum][movetoy][movetox] = 'o';
-	//	}
-	//}
-	
 	mapData[movetoy][movetox] = icon;
 	y = movetoy;
 	x = movetox;
 }
-
+//to trigger movement overriden in child classes)
 bool Entity::move(){
 	return false;
 }	
 
+//to trigger interactions (overriden in child classes)
 void Entity::interact() {
-	//std::cout << "Base";
 }
 
 

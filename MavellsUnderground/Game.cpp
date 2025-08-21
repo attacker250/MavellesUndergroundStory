@@ -382,8 +382,7 @@ void Game::LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMN
 
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
-			//std::cout << Room[Room.length() - 1];
-			//mapObjects[mapCatalogue][rmCatalogue][i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
+			//sets map to the de
 			if (ifNew) {
 
 				mapData[i][j] = MapJson[Map][room]["Map"][i].get<std::string>()[j];

@@ -63,6 +63,7 @@ bool Player::move(){
     }
 }
 
+//lets the player learn an atk (like in pkmn!)
 void Player::learnAtk(std::string atkName){
     atkLearn = atkName;
     curScreenState = LEARNATK;
