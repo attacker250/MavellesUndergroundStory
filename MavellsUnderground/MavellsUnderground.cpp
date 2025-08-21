@@ -91,8 +91,9 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		for (int i = 1; i < EntityList.size(); i++) {
 			EntityList[i] = nullptr;
 		}
-		system("pause");
+		//system("pause");
 	}
+	EntityList.clear();
 	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
 		for (int i = 0; i < roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size(); i++) {
 			EntityList.push_back(roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave[i]);
@@ -110,11 +111,11 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	
 	//game.checkMap();
 	auto Data = MapJson[player.currentPlace][player.RoomDestination];
-	system("pause");
+	//system("pause");
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
 
 
-	EntityList.clear();
+	
 	game.checkMap();
 	if (door != "Nill") {
 		if(Data[door]["FirstPos"][1] > player.y){
