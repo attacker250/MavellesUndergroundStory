@@ -144,8 +144,8 @@
     <ClCompile Include="Trading.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Animations\Cutscenes.json" />
     <None Include="ButtonData\ButtonData.json" />
-    <None Include="Cutscenes\Cutscenes.json" />
     <None Include="EntityData\EntityData.json" />
     <None Include="MapData\MapData.json" />
   </ItemGroup>

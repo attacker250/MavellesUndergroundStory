@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Windows.h"
 #include "conio.h"
+#include <string>
+
+
 
 int Battle::battleHp = 0;
 std::string Battle::atkList[atkListSize];
@@ -36,10 +39,10 @@ void Battle::BattleMode() {
     }
     if (stillbattle == true) {
         std::cout << "\n";
-        std::cout << "Enemy's HP:" << battleHp << std::endl;
-        std::cout << "[1] Attack 1" << std::endl;
+        std::cout <<  "'s HP:" << battleHp << std::endl;
+        std::cout << "[1] Attack" << std::endl;
         std::cout << "[2] Items" << std::endl;
-        std::cout << "[3] Run 1" << std::endl;
+        std::cout << "[3] Run" << std::endl;
         std::cout << "[4] Test out learn attack" << std::endl;
     }
     else if (stillbattle == false) {

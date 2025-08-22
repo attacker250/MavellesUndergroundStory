@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Windows.h"
 #include "conio.h"
+#include "Enemy.h"
 #include "Effects.h"
 
 class Battle : public Effects
@@ -18,6 +19,7 @@ public:
 	void PrintBattle();
 	void BattleMenu(int& curScreenState);
 	void EnemyTurn();
+	void initEnemy(Enemy enemy);
 
 };
 

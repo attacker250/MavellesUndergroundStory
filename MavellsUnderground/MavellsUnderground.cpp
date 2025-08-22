@@ -8,6 +8,7 @@
 //Json and File library
 #include <fstream>
 #include "json.hpp"
+
 //Misc
 #include <vector>
 #include <string>
@@ -22,8 +23,12 @@
 #include "Button.h"
 #include "Door.h"
 #include "Room.h"
+
+//SceneHeaders
 #include "Battle.h"
 #include "Trading.h"
+#include "Cutscenes.h"
+#include "Game.h"
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -112,7 +117,6 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	auto Data = MapJson[player.currentPlace][player.RoomDestination];
 	//system("pause");
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
-
 
 	
 	//game.checkMap();
@@ -312,6 +316,9 @@ int main() {
 	Battle battle;
 	Player player;
 	Trading trading;
+	Cutscenes cutscenes;
+
+
 	game.resetRooms();
 	ShowConsoleCursor(false);
 
@@ -408,6 +415,10 @@ int main() {
 		if (game.curScreenState == TRADING) {
 			trading.TradeMenu();
 		}
+		if (game.curScreenState == CUTSCENE) {
+			cutscenes.startScene();
+		}
+		
 			//std::cout << MapJson["TestMaps"].;
 
 

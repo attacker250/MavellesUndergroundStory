@@ -18,8 +18,9 @@ void Barrel::interact() {
 	//curScreenState = TRADING;
 
 	curScreenState = CUTSCENE;
-
-
+	Cutscenes::InteractionNo = interactions;
+	Cutscenes::key = "Barrel";
+	interactions++;
 	
 
 

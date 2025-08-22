@@ -71,7 +71,7 @@
     <None Include="ButtonData\ButtonData.json">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Cutscenes\Cutscenes.json">
+    <None Include="Animations\Cutscenes.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
