@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Effects.h"
 
-class Game {
+class Game : public Effects
+{
 public:
     enum mapDimensions {
         ROWS = 13,
@@ -24,28 +26,17 @@ public:
         ROOMS = 7
     };
     const static char roomCount = 2;
-	const static int atkListSize = 3;
-	static std::string atkList[atkListSize];
-    static std::string atkLearn;
+	
 
     bool testNew = false;
 
-    static int battleHp;
+	void resetRooms();
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew);
     void MapEdit(int xpos, int ypos, char changeto);
-    void typewriter(std::string& text, int delay, int maxChar);
-    void AttackList();
-    void ItemList();
-    void Battle();
-    void PrintBattle();
-    void BattleMenu(int& curScreenState);
-    void EnemyTurn();
+    
     void learnScreen();
-    void resetRooms();
-    void PrintTrade();
-    void TradeMenu();
-    void TradeSystem();
+    
     void checkMap();
 
     struct EntityArray {

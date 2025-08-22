@@ -9,5 +9,4 @@ void Door::interact(){
 		icon = ' ';
 		updatePos(x, y);
 	}
-
 }

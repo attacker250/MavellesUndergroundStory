@@ -22,6 +22,8 @@
 #include "Button.h"
 #include "Door.h"
 #include "Room.h"
+#include "Battle.h"
+#include "Trading.h"
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -202,6 +204,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList.push_back(door);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
+
 				}
 
 
@@ -303,12 +306,14 @@ int main() {
 	ShowCursor(FALSE);
 
 	Game game;
+	Battle battle;
 	Player player;
+	Trading trading;
 	game.resetRooms();
 	ShowConsoleCursor(false);
 
-	for (int i = 0; i < game.atkListSize; i++) {
-		game.atkList[i] = " ";
+	for (int i = 0; i < Battle::atkListSize; i++) {
+		Battle::atkList[i] = " ";
 	}
 
 	player.lastDoor = "Door1";
@@ -385,8 +390,8 @@ int main() {
 
 		if (game.curScreenState == BATTLE) {
 				//std::cout << "Battle\n";
-			game.PrintBattle();
-			game.BattleMenu(game.curScreenState);
+			battle.PrintBattle();
+			battle.BattleMenu(game.curScreenState);
 			std::cout << '\n' << game.curScreenState;
 		}
 		if (game.curScreenState == INVENTORY) {
@@ -398,7 +403,7 @@ int main() {
 			game.learnScreen();
 		}
 		if (game.curScreenState == TRADING) {
-			game.TradeMenu();
+			trading.TradeMenu();
 		}
 			//std::cout << MapJson["TestMaps"].;
 

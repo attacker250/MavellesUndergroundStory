@@ -1,10 +1,47 @@
 ﻿  Enemy.cpp
-  Entity.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(14,8): error C2600: 'Enemy::Enemy': cannot define a compiler-generated special member function (must be declared in the class first)
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(15,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(14,8):
+      This diagnostic occurred in the compiler generated function 'Enemy::Enemy(void)'
+  
   Game.cpp
-  Inventory.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.cpp(106,12): error C2039: 'resetRooms': is not a member of 'Game'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.h(6,7):
+      see declaration of 'Game'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.cpp(108,22): error C2065: 'SECTORS': undeclared identifier
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.cpp(109,23): error C2065: 'ROOMS': undeclared identifier
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.cpp(110,4): error C2065: 'enteredRm': undeclared identifier
   MavellsUnderground.cpp
-  Player.cpp
-  Room.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.h(8,24): warning C4584: 'Trading': base-class 'Effects' is already a base-class of 'Game'
+  (compiling source file 'MavellsUnderground.cpp')
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Effects.h(7,7):
+      see declaration of 'Effects'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.h(6,7):
+      see declaration of 'Game'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(312,7): error C2039: 'resetRooms': is not a member of 'Game'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.h(6,7):
+      see declaration of 'Game'
+  
+  Trading.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.h(8,24): warning C4584: 'Trading': base-class 'Effects' is already a base-class of 'Game'
+  (compiling source file 'Trading.cpp')
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Effects.h(7,7):
+      see declaration of 'Effects'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.h(6,7):
+      see declaration of 'Game'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(146,4): error C2385: ambiguous access of 'typewriter'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(146,4):
+      could be the 'typewriter' in base 'Effects'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(146,4):
+      or could be the 'typewriter' in base 'Effects'
+  
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(149,4): error C2385: ambiguous access of 'typewriter'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(149,4):
+      could be the 'typewriter' in base 'Effects'
+      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.cpp(149,4):
+      or could be the 'typewriter' in base 'Effects'
+  
   Generating Code...
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(71,1): warning C4715: 'returnRoomIndex': not all control paths return a value
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

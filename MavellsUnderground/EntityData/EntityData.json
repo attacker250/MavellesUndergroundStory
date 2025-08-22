@@ -23,64 +23,8 @@
       ]
     },
 
+
     "1": {
-      "Name": "Slime",
-      "Type":  "WATER",
-      "HP": 80,
-      "Potrait": [],
-      "Attacks": [
-        {
-          "NAME": "Punch",
-          "ELEMENT": "FIRE",
-          "DMG": 10
-        },
-        {
-          "NAME": "Bite",
-          "ELEMENT": "WATER",
-          "DMG": 5
-        }
-      ]
-    },
-
-    "2": {
-      "Name": "Slime",
-      "Type": "WATER",
-      "HP": 80,
-      "Potrait": [],
-      "Attacks": [
-        {
-          "NAME": "Punch",
-          "ELEMENT": "FIRE",
-          "DMG": 10
-        },
-        {
-          "NAME": "Bite",
-          "ELEMENT": "WATER",
-          "DMG": 5
-        }
-      ]
-    },
-
-    "3": {
-      "Name": "Zombie",
-      "Type": "GRASS",
-      "HP": 100,
-      "Potrait": [],
-      "Attacks": [
-        {
-          "NAME": "Kick",
-          "ELEMENT": "GRASS",
-          "DMG": 20
-        },
-        {
-          "NAME": "Chomp",
-          "ELEMENT": "WATER",
-          "DMG": 10
-        }
-      ]
-    },
-
-    "4": {
       "Name": "Zombie",
       "Type": "GRASS",
       "HP": 100,

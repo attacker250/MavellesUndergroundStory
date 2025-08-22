@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Inventory.h"
+#include "Battle.h"
 
 
 
@@ -24,8 +25,8 @@ public:
 	
 	Player() {
 		icon = 'P';
-		for (int i = 0; i < atkListSize; i++){
-			atkList[i] = ' ';
+		for (int i = 0; i < Battle::atkListSize; i++){
+			Battle::atkList[i] = ' ';
 		}
 	}
 };

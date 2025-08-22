@@ -1,8 +1,12 @@
 #include "Room.h"
 #include "Game.h"
 #include <iostream>
+#include <random>
+#include <ctime>
+
 
 Room::Room(std::string Map, std::string Room) {
+	srand(time(0));
 	room = Room;
 	place = Map;
 	std::ifstream fMapdata("MapData/MapData.json");
@@ -14,6 +18,17 @@ Room::Room(std::string Map, std::string Room) {
 		for (int j = 0; j < COLUMNS; j++) {
 			roomData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 		}
+	}
+	for (int f = 0; f < MapJson[Map][Room]["EnemyCount"]; f++) {
+		int randX = rand() % COLUMNS;
+		int randY = rand() % ROWS;
+		if (roomData[randY][randX] == ' ') {
+			roomData[randY][randX] = 'E';
+		}
+		else {
+			f--;
+		}
+
 	}
 }
 
