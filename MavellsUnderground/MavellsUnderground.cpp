@@ -322,9 +322,7 @@ int main() {
 	game.resetRooms();
 	ShowConsoleCursor(false);
 
-	for (int i = 0; i < Battle::atkListSize; i++) {
-		Battle::atkList[i] = " ";
-	}
+
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
@@ -399,10 +397,16 @@ int main() {
 		}
 
 		if (game.curScreenState == BATTLE) {
+			for (int i = 1; i < EntityList.size(); i++) {
+				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
+					battle.initBattle(EntityList[i], EntityList[0]);
+					battle.PrintBattle();
+					battle.BattleMenu(game.curScreenState);
+					std::cout << '\n' << game.curScreenState;
+				}
+			}
 				//std::cout << "Battle\n";
-			battle.PrintBattle();
-			battle.BattleMenu(game.curScreenState);
-			std::cout << '\n' << game.curScreenState;
+			
 		}
 		if (game.curScreenState == INVENTORY) {
 			for (int i = 0; i < player.playerInventory.storage.size(); i++) {

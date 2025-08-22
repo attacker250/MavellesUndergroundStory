@@ -18,16 +18,14 @@ public:
 	int ymov = 0;
 	const int maxInvSize = 5;
 	static Inventory playerInventory;
-
+	
 
 	bool move() override;
 	void learnAtk(std::string atkName);
 	
 	Player() {
 		icon = 'P';
-		for (int i = 0; i < Battle::atkListSize; i++){
-			Battle::atkList[i] = ' ';
-		}
+		atkList.push_back("FIRE");
 	}
 };
 

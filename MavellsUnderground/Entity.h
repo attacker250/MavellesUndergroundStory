@@ -18,6 +18,8 @@ public:
 	void spawn(int spawnx, int spawny);
 	virtual void interact();
 
+	//const static int atkListSize = 4;
+	std::vector<std::string> atkList;
 	static std::string currentRoom;
 	static std::string currentPlace;
 	std::string RoomDestination;

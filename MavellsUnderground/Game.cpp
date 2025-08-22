@@ -76,9 +76,9 @@ void Game::LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMN
 
 
 void Game::learnScreen(){
-	int fullAmt = 0;
+	/*int fullAmt = 0;
 	for (int i = 0; i < Battle::atkListSize; i++) {
-		if (Battle::atkList[i] == " ") {
+		if (player->atkList[i] == " ") {
 			Battle::atkList[i] = Battle::atkLearn;
 			std::cout << "You have learned " << Battle::atkLearn << '\n';
 			break;
@@ -99,7 +99,7 @@ void Game::learnScreen(){
 	}
 	Battle::atkList[moveForget - 1] = Battle::atkLearn;
 	Sleep(3000);
-	curScreenState = MAP_RENDER;
+	curScreenState = MAP_RENDER;*/
 
 }
 

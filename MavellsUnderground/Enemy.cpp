@@ -38,7 +38,7 @@ Enemy::Enemy() {
 		type = EnemyJson["TestMaps"][enemyIndex]["Type"];
 		//std::cout << type;
 		for (int f = 0; f < EnemyJson["TestMaps"][enemyIndex]["Attacks"].size(); f++){
-			attacks.push_back(EnemyJson["TestMaps"][enemyIndex]["Attacks"][f]["NAME"]);
+			atkList.push_back(EnemyJson["TestMaps"][enemyIndex]["Attacks"][f]["NAME"]);
 			//attacks[i];
 		}
 	}

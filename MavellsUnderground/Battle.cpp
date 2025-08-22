@@ -2,13 +2,11 @@
 #include <iostream>
 #include "Windows.h"
 #include "conio.h"
-#include <string>
+
 
 
 
 int Battle::battleHp = 0;
-std::string Battle::atkList[atkListSize];
-std::string Battle::atkLearn;
 
 void Battle::PrintBattle() { //to be replaced with enemy ASCII
     const int width = 41;
@@ -30,25 +28,7 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
     }
 }
 
-void Battle::BattleMode() {
-    //to be changed to enemy class hp
-    std::string WinMessage = "You Won!";
-    bool stillbattle = true;
-    if (battleHp <= 0) {
-        stillbattle = false;
-    }
-    if (stillbattle == true) {
-        std::cout << "\n";
-        std::cout <<  "'s HP:" << battleHp << std::endl;
-        std::cout << "[1] Attack" << std::endl;
-        std::cout << "[2] Items" << std::endl;
-        std::cout << "[3] Run" << std::endl;
-        std::cout << "[4] Test out learn attack" << std::endl;
-    }
-    else if (stillbattle == false) {
-        typewriter(WinMessage, 40, 50);
-    }
-}
+
 
 //input enemy damage here
 void Battle::EnemyTurn()
@@ -59,6 +39,36 @@ void Battle::EnemyTurn()
     typewriter(enemymssg, 20, 50);
     Sleep(300);
     system("cls");
+}
+void Battle::initBattle(Entity *enemy, Entity* player)
+{
+    battleEnemy = enemy;
+    battlePlayer = player;
+    //for (int i = 0; i < player->atkList; i++) {
+    //    atkList[i] = player->atkList[atkListSize];
+    //}
+}
+
+void Battle::BattleMode() {
+	//to be changed to enemy class hp
+	std::string WinMessage = "You Won!";
+	bool stillbattle = true;
+	if (battleHp <= 0) {
+		stillbattle = false;
+	}
+	if (stillbattle == true) {
+		std::cout << "\n";
+
+		std::cout << '\n' << battleEnemy->name << "'s HP:" << battleHp << std::endl;
+		std::cout << "[1] Attack" << std::endl;
+		std::cout << "[2] Items" << std::endl;
+		std::cout << "[3] Run" << std::endl;
+		std::cout << "[4] Test out learn attack" << std::endl;
+	}
+	else if (stillbattle == false) {
+		typewriter(WinMessage, 40, 50);
+	}
+
 }
 void Battle::ItemList() {
     std::cout << "\n";
@@ -99,39 +109,38 @@ void Battle::ItemList() {
 
 void Battle::AttackList() {
     std::cout << "\n";
-    for (int i = 0; i < Battle::atkListSize; i++) {
-        std::cout << "[" << i + 1 << "]" << Battle::atkList[i] << std::endl;
-    }
-    std::cout << "[" << 4 << "]" << " Back" << std::endl;
-    char getbtn = static_cast<char>(_getch());
-    if (getbtn) {
-        Beep(1080, 300);
-        switch (getbtn) {
-        case '1':
-            std::cout << "You chose Fire attack!" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            EnemyTurn();
-            break;
-        case '2':
-            std::cout << "You chose Water attack!" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            break;
-        case '3':
-            std::cout << "You chose Grass attack!" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            break;
-        case '4':
-            system("cls");
-            PrintBattle();
-            return;
+    if (battlePlayer->atkList.size() > 0) {
+        for (int i = 0; i < battlePlayer->atkList.size(); i++) {
+            std::cout << "[" << i + 1 << "]" << battlePlayer->atkList[i] << std::endl;
         }
     }
+    std::cout << "[" << battlePlayer->atkList.size() + 1 << "]" << " Back" << std::endl;
+    int getbtn = static_cast<int>(_getch()) - 48;
+    Beep(1080, 300);
+
+    if (battlePlayer->atkList.size() + 1 == getbtn) {
+        system("cls");
+        PrintBattle();
+    }
+    else if (battlePlayer->atkList.size() >= getbtn && getbtn > 0){
+        std::string txt = "You chose " + battlePlayer->atkList[getbtn - 1];
+        typewriter(txt, 40, 40);
+        Sleep(500);
+        system("cls");
+        PrintBattle();
+        EnemyTurn();
+
+    }
+    else {
+        std::cout << "Invalid option";
+        Sleep(500);
+        system("cls");
+        PrintBattle();
+        AttackList();
+    }
+            
+        
+    
 }
 
 void Battle::BattleMenu(int& curScreenState) {

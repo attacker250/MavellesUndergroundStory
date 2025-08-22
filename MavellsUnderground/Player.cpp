@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
+
 
 Inventory Player::playerInventory;
 
@@ -66,7 +66,7 @@ bool Player::move(){
 
 //lets the player learn an atk (like in pkmn!)
 void Player::learnAtk(std::string atkName){
-    Battle::atkLearn = atkName;
-    curScreenState = LEARNATK;
-    
+    //Battle::atkLearn = atkName;
+    //curScreenState = LEARNATK;
+    //
 }
