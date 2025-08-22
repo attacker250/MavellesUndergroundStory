@@ -1,18 +1,3 @@
-﻿  Barrel.cpp
-  Battle.cpp
-  Enemy.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(15,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Game.cpp
-  MavellsUnderground.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Trading.h(8,24): warning C4584: 'Trading': base-class 'Effects' is already a base-class of 'Game'
-  (compiling source file 'MavellsUnderground.cpp')
-      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Effects.h(7,7):
-      see declaration of 'Effects'
-      C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Game.h(6,7):
-      see declaration of 'Game'
-  
-  Player.cpp
-  TestEnemyClass.cpp
-  Generating Code...
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(73,1): warning C4715: 'returnRoomIndex': not all control paths return a value
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  Enemy.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(15,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MavellsUnderground.vcxproj -> C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

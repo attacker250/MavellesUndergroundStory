@@ -57,6 +57,9 @@
     <ClCompile Include="Effects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cutscenes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MapData\MapData.json">
@@ -66,6 +69,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="ButtonData\ButtonData.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Cutscenes\Cutscenes.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -107,6 +113,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Effects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cutscenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

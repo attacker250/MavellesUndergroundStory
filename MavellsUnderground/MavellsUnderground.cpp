@@ -117,20 +117,22 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	
 	//game.checkMap();
 	if (door != "Nill") {
-		if(Data[door]["FirstPos"][1] > player.y){
+		if (player.y < Data[door]["FirstPos"][1]) {
 			player.y = Data[door]["FirstPos"][1];
 		}
-		if (Data[door]["FirstPos"][1] < player.y) {
-			player.y = Data[door]["FirstPos"][1];
+		else if (player.y > Data[door]["SecondPos"][1]) {
+			player.y = Data[door]["SecondPos"][1];
 		}
-		if (Data[door]["SecondPos"][0] > player.x) {
+		if (player.x < Data[door]["FirstPos"][0]) {
+			player.x = Data[door]["FirstPos"][0];
+		}
+		else if (player.x > Data[door]["SecondPos"][0]) {
 			player.x = Data[door]["SecondPos"][0];
 		}
-		if (Data[door]["SecondPos"][0] < player.x) {
-			player.x = Data[door]["SecondPos"][0];
-		}
-
+		
+		//check where the door is (is it at the top,bottom,left or right of the room)
 		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
+			//proves that the room is either right or left. then check which one it is based on room width
 			if (Data[door]["FirstPos"][0] < 0) {
 				player.spawn(Data[door]["FirstPos"][0] + 1, player.y);
 			}
@@ -139,6 +141,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 			}
 		}
 		else if (Data[door]["FirstPos"][1] == Data[door]["SecondPos"][1]) {
+			//proves that the room is either right or left. then check which one it is based on room width
 			if (Data[door]["FirstPos"][1] < 0) {
 				player.spawn(player.x, Data[door]["FirstPos"][1] + 1);
 			}

@@ -10,6 +10,6 @@ class Barrel: public Entity {
 		Inventory barrelinventory;
 		Barrel();
 		void interact();
-
+		int interactions = 0;
 };
 

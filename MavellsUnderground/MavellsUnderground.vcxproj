@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="Cutscenes.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -144,12 +145,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ButtonData\ButtonData.json" />
+    <None Include="Cutscenes\Cutscenes.json" />
     <None Include="EntityData\EntityData.json" />
     <None Include="MapData\MapData.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barrel.h" />
     <ClInclude Include="Battle.h" />
+    <ClInclude Include="Cutscenes.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Effects.h" />
     <ClInclude Include="Enemy.h" />

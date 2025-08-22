@@ -87,9 +87,8 @@
         "||||||||||||||||||||||||||||||||||||||||"
       ],
       "RoomType": "Puzzle",
-      "Enemies": 0,
       "DoorCount": 1,
-      "EnemyCount":  2,
+      "EnemyCount":  0,
       "Door1": {
         "FirstPos": [ -1, 4 ],
         "SecondPos": [ -1, 6 ],
@@ -114,7 +113,6 @@
         "||||||||||||||||||||==||||||||||||||||||"
       ],
       "RoomType": "Fight",
-      "Enemies": 0,
       "DoorCount": 1,
       "EnemyCount": 2,
       "Door1": {

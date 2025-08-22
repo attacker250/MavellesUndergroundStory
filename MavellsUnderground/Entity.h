@@ -10,6 +10,7 @@ public:
 	int y = 0;
 	int hp = 0;
 	bool alive = true;
+	std::string name = "none";
 	std::string type = "none";
 	char icon = ' ';
 	void updatePos(int movetox, int movetoy);
