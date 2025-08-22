@@ -143,10 +143,10 @@ void Trading::TradeMenu() {
 			system("cls");
 			PrintTrade();
 			std::cout << "\n";
-			typewriter(dialogue, 30, 50);
+			Effects::typewriter(dialogue, 30, 50);
 			std::cout << "\n";
 			Sleep(100);
-			typewriter(dialogue2, 30, 50);
+			Effects::typewriter(dialogue2, 30, 50);
 			Sleep(1000);
 			_kbhit();
 			system("cls");

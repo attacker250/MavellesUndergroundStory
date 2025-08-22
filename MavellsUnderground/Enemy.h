@@ -5,5 +5,6 @@ class Enemy : public Entity
 {
 public:
 	void interact() override;
+	Enemy();
 };
 
