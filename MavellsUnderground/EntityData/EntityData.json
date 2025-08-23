@@ -8,7 +8,7 @@
       "Name": "Slime",
       "Type": "WATER",
       "HP": 80,
-      "Potrait": [],
+      "Portrait": [],
       "Attacks": [
         {
           "NAME": "Punch",
@@ -28,7 +28,10 @@
       "Name": "Zombie",
       "Type": "GRASS",
       "HP": 100,
-      "Potrait": [],
+      "Portrait": [
+        "TESTINGPICTUEHEREEEEEE",
+        "TESTINGPICTUEHEREEEEEE"
+      ],
       "Attacks": [
         {
           "NAME": "Kick",

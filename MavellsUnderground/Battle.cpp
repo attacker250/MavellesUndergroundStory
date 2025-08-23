@@ -2,14 +2,19 @@
 #include <iostream>
 #include "Windows.h"
 #include "conio.h"
+#include <cstdlib>
+#include <ctime>
+#include "Enemy.h"
 
+#include <fstream>
+#include "json.hpp"
 
 
 
 int Battle::battleHp = 0;
 
 void Battle::PrintBattle() { //to be replaced with enemy ASCII
-    const int width = 41;
+   /* const int width = 41;
     const int height = 12;
     const int inner = 39;
     for (int i = 0; i < 41; i++) {
@@ -25,10 +30,17 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
     }
     for (int i = 0; i < width; i++) {
         std::cout << '-';
+    }*/
+    //char size = battleEnemy->portrait.size()
+    for (int i = 0; i < battleEnemy->portrait.size(); i++) {
+
+		std::cout << battleEnemy->portrait[i];
+        std::cout << '\n';
+        
     }
 }
 
-
+ 
 
 //input enemy damage here
 void Battle::EnemyTurn()
@@ -52,22 +64,29 @@ void Battle::initBattle(Entity *enemy, Entity* player)
 void Battle::BattleMode() {
 	//to be changed to enemy class hp
 	std::string WinMessage = "You Won!";
-	bool stillbattle = true;
+	
 	if (battleHp <= 0) {
 		stillbattle = false;
+        typewriter(WinMessage, 40, 50);
 	}
-	if (stillbattle == true) {
-		std::cout << "\n";
+    if (stillbattle == false) {
+        std::cout << "\n";
+        std::string Encounter = "You encountered a wild " + battleEnemy->name + '!';
+        typewriter(Encounter, 1, 40);
+        stillbattle = true;
+        Sleep(400);
+        system("cls");
+        PrintBattle();
+        BattleMode();
+    }
+    else {
+        std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
+        std::cout << "[1] Attack" << std::endl;
+        std::cout << "[2] Items" << std::endl;
+        std::cout << "[3] Run" << std::endl;
+        std::cout << "[4] Test out learn attack" << std::endl;
+    }
 
-		std::cout << '\n' << battleEnemy->name << "'s HP:" << battleHp << std::endl;
-		std::cout << "[1] Attack" << std::endl;
-		std::cout << "[2] Items" << std::endl;
-		std::cout << "[3] Run" << std::endl;
-		std::cout << "[4] Test out learn attack" << std::endl;
-	}
-	else if (stillbattle == false) {
-		typewriter(WinMessage, 40, 50);
-	}
 
 }
 void Battle::ItemList() {
@@ -115,16 +134,30 @@ void Battle::AttackList() {
         }
     }
     std::cout << "[" << battlePlayer->atkList.size() + 1 << "]" << " Back" << std::endl;
-    int getbtn = static_cast<int>(_getch()) - 48;
+    int getbtn = static_cast<int>(_getch()) - 49;
     Beep(1080, 300);
 
-    if (battlePlayer->atkList.size() + 1 == getbtn) {
+    if (battlePlayer->atkList.size() == getbtn) {
         system("cls");
         PrintBattle();
     }
-    else if (battlePlayer->atkList.size() >= getbtn && getbtn > 0){
-        std::string txt = "You chose " + battlePlayer->atkList[getbtn - 1];
-        typewriter(txt, 40, 40);
+    else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0){
+        std::ifstream fAtkData("MoveData.json");
+        auto AtkJson = nlohmann::json::parse(fAtkData);
+
+        std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
+        typewriter(txt, 20, 40);
+        std::cout << '\n';
+        Sleep(500);
+        txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
+        typewriter(txt, 20, 40);
+        Sleep(500);
+        std::cout << '\n';
+        int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();
+        txt = "It dealt " + std::to_string(dmg) + " damage! \n";
+        battleEnemy->hp -= dmg;
+        //txt += " damage!";
+        typewriter(txt, 20, 40);
         Sleep(500);
         system("cls");
         PrintBattle();
@@ -147,9 +180,11 @@ void Battle::BattleMenu(int& curScreenState) {
     BattleMode();
     bool isRunning = true;
     //	while (isRunning) {
-    Battle();
+   // Battle();
     char getbtn = static_cast<char>(_getch());
     std::string Escape = "You ran away successfully!";
+	std::string attempt = "You attempted to run.";
+    int randNumber = rand() % 2 + 1;
     if (getbtn) {
         Beep(1080, 300);
         switch (getbtn) {
@@ -164,15 +199,38 @@ void Battle::BattleMenu(int& curScreenState) {
             ItemList();
             break;
         case '3':
-            std::cout << "You selected to run!" << std::endl;
             Sleep(300);
-            typewriter(Escape, 40, 50);
-            Sleep(300);
-            curScreenState = 0;
-            system("cls");
+			srand(static_cast<unsigned>(time(0)));
+            typewriter(attempt, 2, 40);
+
+
+
+			if (randNumber == 1) {
+				curScreenState = 0;
+				typewriter(Escape, 2, 50);
+				Sleep(300);
+                stillbattle = false;
+				system("cls");
+                curScreenState = MAP_RENDER;
+			}
+			else if (randNumber == 2) {
+                std::cout << "failed to escape! " << std::endl;
+                Sleep(500);
+                system("cls");
+
+                PrintBattle();
+               //  BattleMode();
+                BattleMenu(curScreenState);
+               
+			}
             break;
         default:
-            std::cout << "Invalid choice!" << std::endl;
+            //std::cout << "Invalid choice!" << std::endl;
+            ClearScreen();
+           
+            PrintBattle();
+        //  BattleMode();
+            BattleMenu(curScreenState);
             break;
 
         }

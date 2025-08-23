@@ -49,20 +49,7 @@
 //}
 
 
-void ClearScreen() {
-	COORD cursorPosition;	cursorPosition.X = 0;	cursorPosition.Y = 0;	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
-}
 
-void ShowConsoleCursor(bool showFlag)
-{
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	CONSOLE_CURSOR_INFO     cursorInfo;
-
-	GetConsoleCursorInfo(out, &cursorInfo);
-	cursorInfo.bVisible = showFlag; // set the cursor visibility
-	SetConsoleCursorInfo(out, &cursorInfo);
-}
 
 int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
 	//gets the room index of the rm thats called "place" and "map" is in list
@@ -320,7 +307,7 @@ int main() {
 
 
 	game.resetRooms();
-	ShowConsoleCursor(false);
+	Effects::ShowConsoleCursor(false);
 
 
 
@@ -427,7 +414,8 @@ int main() {
 
 
 			//;
-		ClearScreen();
+		Effects::
+			ClearScreen();
 	}
 	
 		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {

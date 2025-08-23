@@ -8,5 +8,7 @@ class Effects
 {
 public:
 	void typewriter(std::string& text, int delay, int maxChar);
+	static void ClearScreen();
+	static void ShowConsoleCursor(bool showFlag);
 };
 

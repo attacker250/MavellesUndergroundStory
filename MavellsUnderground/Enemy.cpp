@@ -12,6 +12,7 @@ void Enemy::interact() {
 }
 
 Enemy::Enemy() {
+	
 	srand(time(0));
 	std::ifstream fEnemydata("EntityData/EntityData.json");
 	auto EnemyJson = nlohmann::json::parse(fEnemydata);
@@ -27,19 +28,26 @@ Enemy::Enemy() {
 	// 	//std::cout << "hii";
 	// }
 	// system("pause");
+	//int enemyIndex = 1;
 
 
-	for (int i = 0; i < EnemyJson["TestMaps"].size(); i++) {
-		std::string enemyIndex = std::to_string(i);
-		hp = EnemyJson["TestMaps"][enemyIndex]["HP"];
+	std::string enemyIndex = std::to_string(1);
+	hp = EnemyJson["TestMaps"][enemyIndex]["HP"];
 		//std::cout << hp;
-       name = EnemyJson["TestMaps"][enemyIndex]["Name"];
+	name = EnemyJson["TestMaps"][enemyIndex]["Name"];
        //std::cout << name;
-		type = EnemyJson["TestMaps"][enemyIndex]["Type"];
-		//std::cout << type;
-		for (int f = 0; f < EnemyJson["TestMaps"][enemyIndex]["Attacks"].size(); f++){
-			atkList.push_back(EnemyJson["TestMaps"][enemyIndex]["Attacks"][f]["NAME"]);
-			//attacks[i];
-		}
+	type = EnemyJson["TestMaps"][enemyIndex]["Type"];
+	
+	for (int i = 0; i < EnemyJson["TestMaps"][enemyIndex]["Portrait"].size(); i++) {
+		std::string row = "";
+		row += EnemyJson["TestMaps"][enemyIndex]["Portrait"][i];
+		
+		portrait.push_back(row);
 	}
+		//std::cout << type;
+	for (int f = 0; f < EnemyJson["TestMaps"][enemyIndex]["Attacks"].size(); f++){
+		atkList.push_back(EnemyJson["TestMaps"][enemyIndex]["Attacks"][f]["NAME"]);
+		//attacks[i];
+	}
+	
 }

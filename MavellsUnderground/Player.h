@@ -25,7 +25,7 @@ public:
 	
 	Player() {
 		icon = 'P';
-		atkList.push_back("FIRE");
+		atkList.push_back("TestAttack1");
 	}
 };
 

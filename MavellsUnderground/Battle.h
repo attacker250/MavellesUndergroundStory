@@ -10,8 +10,20 @@
 class Battle : public Effects
 {
 public:
+	enum ScreenState {
+		MAP_RENDER,
+		BATTLE,
+		INVENTORY,
+		CUTSCENE,
+		TRADING,
+		MENU,
+		LEARNATK,
+
+		MAXSCREENSTATE,
+	};
 	static int battleHp;
 	const static int atkListSize = 3;
+	bool stillbattle = false;
 	//static std::string atkList[atkListSize];
 	static std::string atkLearn;
 	Entity *battleEnemy;

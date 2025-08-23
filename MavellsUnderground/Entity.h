@@ -2,10 +2,16 @@
 
 #include <string>
 #include "Game.h"
+#include <vector>
 
 class Entity: public Game
 {
 public:
+	enum portraitDimensions {
+		WIDTH = 62,
+		HEIGHT = 16
+	};
+	std::vector<std::string> portrait;
 	int x = 0;
 	int y = 0;
 	int hp = 0;

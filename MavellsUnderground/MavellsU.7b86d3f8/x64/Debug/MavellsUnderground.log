@@ -1,2 +1,3 @@
-﻿  Battle.cpp
+﻿  Enemy.cpp
+C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

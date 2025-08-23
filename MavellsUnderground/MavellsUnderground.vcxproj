@@ -148,6 +148,7 @@
     <None Include="ButtonData\ButtonData.json" />
     <None Include="EntityData\EntityData.json" />
     <None Include="MapData\MapData.json" />
+    <None Include="MoveData.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barrel.h" />
