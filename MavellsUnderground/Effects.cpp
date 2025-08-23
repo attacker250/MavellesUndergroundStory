@@ -1,6 +1,6 @@
 #include "Effects.h"
 
-void Effects::typewriter(std::string& text, int delay, int maxChar) {
+void Effects::typewriter(std::string text, int delay, int maxChar) {
     int charCount = 0;
 
     for (char c : text) {

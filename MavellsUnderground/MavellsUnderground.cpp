@@ -256,21 +256,28 @@ void createRoom(std::vector<Room*> &roomList, std::string place, std::string roo
 
 
 int main() {
+	std::vector<std::string> placeList;
 
-	//std::vector<std::vector <std::vector<Entity>>> mapObj;
-	////std::vector<
-	//mapObj.resize(3);
-	//mapObj[0].resize(7);
+	placeList.push_back("Cave");
 
 	std::vector<Room*> roomList;
+
 
 
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 
-	createRoom(roomList, "Cave", "Room1");
-	createRoom(roomList, "Cave", "Room2");
+	for (int i = 0; i < placeList.size(); i++) {
+		for (int f = 0; f < MapJson[placeList[i]].size(); f++) {
+			std::string txt = "";
+			txt = "Room" + std::to_string(f + 1);
+			//std::cout << MapJson[placeList[i]];
+			createRoom(roomList, placeList[i], txt);
+		}
+	}
+	//createRoom(roomList, "Cave", "Room1");
+	//createRoom(roomList, "Cave", "Room2");
 
 	//for (int i = 0; i < MapJson.size(); i++) {
 	//	for (int f = 0; f < MapJson[i].size(); f++) {

@@ -16,6 +16,7 @@ Room::Room(std::string Map, std::string Room) {
 
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
+			//roomData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 			roomData[i][j] = MapJson[Map][Room]["Map"][i].get<std::string>()[j];
 		}
 	}

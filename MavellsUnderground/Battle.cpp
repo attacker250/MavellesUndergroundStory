@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Enemy.h"
+#include "Inventory.h"
 
 #include <fstream>
 #include "json.hpp"
@@ -49,6 +50,7 @@ void Battle::EnemyTurn()
     int enemydmg = 50;
     std::string enemymssg = "\nThe enemy attacks! It dealt " + std::to_string(enemydmg) + " damage to you..."; //pass in enemydmg
     typewriter(enemymssg, 20, 50);
+    battlePlayer->hp -= enemydmg;
     Sleep(300);
     system("cls");
 }
@@ -91,38 +93,23 @@ void Battle::BattleMode() {
 }
 void Battle::ItemList() {
     std::cout << "\n";
-    std::cout << "[1] Item 1" << std::endl;
-    std::cout << "[2] Item 2" << std::endl;
-    std::cout << "[3] Item 3" << std::endl;
-    std::cout << "[4] Back" << std::endl;
+
+    for (int i = 0; i < static_cast<Player*>(battlePlayer)->playerInventory.storage.size(); i++) {
+        std::cout << '[' + std::to_string(i + 1) + "] " + static_cast<Player*>(battlePlayer)->playerInventory.storage[i] << '\n';
+
+    }
+
+    std::cout << '[' + std::to_string(static_cast<Player*>(battlePlayer)->playerInventory.storage.size() + 1) + "] Back \n";
+    //std::cout << "[4] Back" << std::endl;
 
     char getbtn = static_cast<char>(_getch());
-    if (getbtn) {
-        Beep(1080, 300);
-        switch (getbtn) {
-        case '1':
-            std::cout << "use item 1" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            break;
-        case '2':
-            std::cout << "use item 2" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            break;
-        case '3':
-            std::cout << "use item 3" << std::endl;
-            Sleep(500);
-            system("cls");
-            PrintBattle();
-            break;
-        case '4':
-            system("cls");
-            PrintBattle();
-            return;
-        }
+    if (battlePlayer->atkList.size() == getbtn) {
+        system("cls");
+        PrintBattle();
+    }
+    else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0) {
+        std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
+        typewriter(txt, 20, 40);
     }
 }
 
