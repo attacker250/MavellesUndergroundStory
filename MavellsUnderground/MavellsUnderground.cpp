@@ -23,6 +23,7 @@
 #include "Button.h"
 #include "Door.h"
 #include "Room.h"
+#include "Healing.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -256,6 +257,7 @@ void createRoom(std::vector<Room*> &roomList, std::string place, std::string roo
 
 
 int main() {
+	std::vector<Healing> healingItemList;
 	std::vector<std::string> placeList;
 
 	placeList.push_back("Cave");

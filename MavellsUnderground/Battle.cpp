@@ -40,15 +40,18 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
         
     }
 }
-
  
 
 //input enemy damage here
 void Battle::EnemyTurn()
 {
+    std::ifstream fEnemydata("EntityData/EntityData.json");
+    auto EnemyJson = nlohmann::json::parse(fEnemydata);
     Sleep(300);
+    srand(time(0));
+    int chosenAtk = rand() % battleEnemy->atkList.size();
     int enemydmg = 50;
-    std::string enemymssg = "\nThe enemy attacks! It dealt " + std::to_string(enemydmg) + " damage to you..."; //pass in enemydmg
+    std::string enemymssg = "\nThe enemy used " + battleEnemy->atkList[chosenAtk] + "!"; //pass in enemydmg
     typewriter(enemymssg, 20, 50);
     battlePlayer->hp -= enemydmg;
     Sleep(300);
@@ -83,6 +86,7 @@ void Battle::BattleMode() {
     }
     else {
         std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
+        std::cout << "Your HP:" << battlePlayer->hp << '\n';
         std::cout << "[1] Attack" << std::endl;
         std::cout << "[2] Items" << std::endl;
         std::cout << "[3] Run" << std::endl;
