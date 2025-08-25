@@ -4,9 +4,15 @@
 #include "conio.h"
 #include <iostream>
 #include "Windows.h"
-#include <string>
 #include "Room.h"
 #include "Battle.h"
+
+Consumables Game::returnItem(std::string type, int itemID) {
+	Consumables obj(type, itemID);
+	return obj;
+}
+
+
 
 char Game::mapData[ROWS][COLUMNS];
 
@@ -53,15 +59,35 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 }
 
+Game::Game()
+{
+	std::ifstream fItem("ItemData.json");
+	auto ItemJson = nlohmann::json::parse(fItem);
+
+
+	std::vector<std::string> itemTypeList;
+
+	itemTypeList.push_back("Healing");
+
+	for (int i = 0; i < itemTypeList.size(); i++) {
+		for (int f = 0; f < ItemJson[itemTypeList[i]].size(); f++) {
+			itemPath itempath;
+			itempath.itemID = f;
+			itempath.itemType = itemTypeList[i];
+			itemList.push_back(itempath);
+		}
+	}
+}
+
 void Game::LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew) {
-    std::ifstream fMapdata("MapData/MapData.json");
-    auto MapJson = nlohmann::json::parse(fMapdata);
+	std::ifstream fMapdata("MapData/MapData.json");
+	auto MapJson = nlohmann::json::parse(fMapdata);
 	int rmCatalogue = static_cast<int>(room[room.length() - 1]) - 49;
 	int mapCatalogue = static_cast<int>(Map[Map.length() - 1]) - 49;
 
 	enteredRm[mapCatalogue][rmCatalogue] = true;
 
-//	system("cls");
+	//	system("cls");
 
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {

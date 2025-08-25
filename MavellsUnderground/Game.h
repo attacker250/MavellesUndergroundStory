@@ -1,11 +1,17 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Consumables.h"
 #include "Effects.h"
 
 class Game : public Effects
 {
 public:
+    struct itemPath {
+        std::string itemType = "";
+        int itemID = 0;
+    };
+
     enum mapDimensions {
         ROWS = 13,
         COLUMNS = 40
@@ -27,16 +33,19 @@ public:
     };
     const static char roomCount = 2;
 	
-
+    std::vector<itemPath> itemList;
     bool testNew = false;
 
-	void resetRooms();
+    void resetRooms();
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew);
     void MapEdit(int xpos, int ypos, char changeto);
+    Game();
     
     void learnScreen();
     
+    Consumables returnItem(std::string type, int itemID);
+
     void checkMap();
 
     struct EntityArray {

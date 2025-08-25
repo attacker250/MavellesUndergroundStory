@@ -5,7 +5,7 @@
 #include "Effects.h"
 #include "Game.h"
 
-class Trading : public Effects, public Game
+class Trading : public Game
 {
 
 public:

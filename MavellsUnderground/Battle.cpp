@@ -86,7 +86,7 @@ void Battle::BattleMode() {
     }
     else {
         std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
-        std::cout << "Your HP:" << battlePlayer->hp << '\n';
+        std::cout << "Your HP:" << (static_cast<Player*>(battlePlayer))->hp << '\n';
         std::cout << "[1] Attack" << std::endl;
         std::cout << "[2] Items" << std::endl;
         std::cout << "[3] Run" << std::endl;
@@ -98,22 +98,43 @@ void Battle::BattleMode() {
 void Battle::ItemList() {
     std::cout << "\n";
 
-    for (int i = 0; i < static_cast<Player*>(battlePlayer)->playerInventory.storage.size(); i++) {
-        std::cout << '[' + std::to_string(i + 1) + "] " + static_cast<Player*>(battlePlayer)->playerInventory.storage[i] << '\n';
+    for (int i = 0; i < static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size(); i++) {
+        std::cout << '[' + std::to_string(i + 1) + "] " + static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage[i]->name << '\n';
 
     }
 
-    std::cout << '[' + std::to_string(static_cast<Player*>(battlePlayer)->playerInventory.storage.size() + 1) + "] Back \n";
+    std::cout << '[' + std::to_string(static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size() + 1) + "] Back \n";
     //std::cout << "[4] Back" << std::endl;
 
-    char getbtn = static_cast<char>(_getch());
-    if (battlePlayer->atkList.size() == getbtn) {
+    int getbtn = static_cast<int>(_getch()) - 49;
+
+    if (static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size() == getbtn) {
         system("cls");
         PrintBattle();
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0) {
-        std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
+        std::string txt = "You chose " + (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->name + '!';
         typewriter(txt, 20, 40);
+        std::cout << '\n';
+        typewriter((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->description, 20, 60);
+        //if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
+        //    std::cout << (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+        //    (static_cast<Player*>(battlePlayer))->hp += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+        //    std::cout << (static_cast<Player*>(battlePlayer))->hp;
+        //}
+        //else if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Buff") {
+        //    (static_cast<Player*>(battlePlayer))->dmgModifier += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+        //}
+        //(static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->consume(1);
+        //for (int i = 0; i < (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.size(); i++) {
+        //    if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[i]->broken) {
+        //        (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.erase((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.begin() + i);
+        //    }
+        //}
+        (static_cast<Player*>(battlePlayer))->consumeItem((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType, (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
+        Sleep(1000);
+        system("cls");
+        PrintBattle();
     }
 }
 

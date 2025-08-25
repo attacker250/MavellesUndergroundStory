@@ -70,3 +70,21 @@ void Player::learnAtk(std::string atkName){
     //curScreenState = LEARNATK;
     //
 }
+
+void Player::consumeItem(std::string typeItem, int effectiveness, int itemIndex){
+    if (playerInventory.consumableStorage[itemIndex]->itemType == "Healing") {
+        //std::cout << playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
+        hp += playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
+        //std::cout << (static_cast<Player*>(battlePlayer))->hp;
+    }
+    else if (playerInventory.consumableStorage[itemIndex]->itemType == "Buff") {
+        dmgModifier += playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
+    }
+    playerInventory.consumableStorage[itemIndex]->consume(1);
+    for (int i = 0; i < playerInventory.consumableStorage.size(); i++) {
+        if (playerInventory.consumableStorage[i]->broken) {
+            delete playerInventory.consumableStorage[i];
+            playerInventory.consumableStorage.erase(playerInventory.consumableStorage.begin() + i);
+        }
+    }
+}

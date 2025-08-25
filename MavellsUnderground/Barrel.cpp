@@ -17,11 +17,16 @@ void Barrel::interact() {
 	//}
 	//curScreenState = TRADING;
 
-	curScreenState = CUTSCENE;
-	Cutscenes::InteractionNo = interactions;
-	Cutscenes::key = "Barrel";
-	interactions++;
-	
+	//curScreenState = CUTSCENE;
+	//Cutscenes::InteractionNo = interactions;
+	//Cutscenes::key = "Barrel";
+	//interactions++;
+	Consumables* newConsumable;
+	newConsumable = new Consumables(itemList[0].itemType,itemList[0].itemID);
+	Player::playerInventory.consumableStorage.push_back(newConsumable);
+	std::cout << Player::playerInventory.consumableStorage[0]->name;
+	Sleep(1000);
+
 
 
 

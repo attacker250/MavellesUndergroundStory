@@ -4,7 +4,7 @@
 #include <string>
 #include "Inventory.h"
 #include "Battle.h"
-#include "Items.h"
+#include "Consumables.h"
 
 
 
@@ -20,12 +20,13 @@ public:
 	int xmov = 0;
 	int ymov = 0;
 	const int maxInvSize = 5;
+	int dmgModifier = 0;
 	static Inventory playerInventory;
 	
 
 	bool move() override;
 	void learnAtk(std::string atkName);
-	
+	void consumeItem(std::string typeItem, int effectiveness, int itemIndex);
 	Player() {
 		icon = 'P';
 		atkList.push_back("TestAttack1");

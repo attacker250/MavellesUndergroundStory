@@ -1,8 +1,10 @@
 {
-  "Healing": {
-    "Bread": {
-      "Restoration": 25,
-      "Description": "Its bread (wow)"
+  "Healing": [
+    {
+      "Name": "Bread",
+      "Effectiveness": 25,
+      "Description": "Its bread (wow)",
+      "Durability": 1
     }
-  }
+  ]
 }

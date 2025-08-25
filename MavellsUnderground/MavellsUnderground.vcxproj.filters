@@ -60,13 +60,7 @@
     <ClCompile Include="Cutscenes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ItemData.json">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Items.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Healing.cpp">
+    <ClCompile Include="Consumables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,6 +78,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="MoveData.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ItemData.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -130,10 +127,7 @@
     <ClInclude Include="Cutscenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Healing.h">
+    <ClInclude Include="Consumables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
