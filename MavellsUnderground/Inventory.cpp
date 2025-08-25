@@ -1,9 +1,20 @@
 #include "Inventory.h"
-
+#include "Player.h"
 
 
 void Inventory::addItem(std::string itemName){
 	storage.push_back(itemName);
+}
+
+void Inventory::consumeItem(int itemID)
+{
+	if (consumableStorage[itemID]->itemType == "Healing") {
+		Player::hp += consumableStorage[itemID]->itemEffectiveness;
+	}
+	else if (consumableStorage[itemID]->itemType == "Buff") {
+		Player::dmgModifier += consumableStorage[itemID]->itemEffectiveness;
+	}
+	consumableStorage[itemID]->consume(1);
 }
 
 //checks if item is in storage. If its in storage remove it and return true. (CAN BE USED FOR TRADERS/KEYS)

@@ -140,6 +140,7 @@
     <ClCompile Include="Consumables.cpp" />
     <ClCompile Include="MavellsUnderground.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerInventoryScreen.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="TestEnemyClass.cpp" />
     <ClCompile Include="Trader.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Consumables.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerInventoryScreen.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="TestEnemyClass.h" />
     <ClInclude Include="Trader.h" />

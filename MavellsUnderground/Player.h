@@ -15,12 +15,12 @@ class Player: public Entity
 public:
 	//store name of items as string then access the item json data
 
-	const int maxHp = 300;
-	int hp = maxHp;
+	const static int maxHp = 300;
+	static int hp;
 	int xmov = 0;
 	int ymov = 0;
 	const int maxInvSize = 5;
-	int dmgModifier = 0;
+	static int dmgModifier;
 	static Inventory playerInventory;
 	//bool inCombat = false;
 

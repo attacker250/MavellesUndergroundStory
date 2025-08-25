@@ -4,6 +4,8 @@
 std::string Entity::currentRoom = "Room1";
 std::string Entity::currentPlace = "Cave1";
 
+
+
 //updates the position and icon of obj on board
 void Entity::updatePos(int movetox, int movetoy){
 	mapData[y][x] = ' ';

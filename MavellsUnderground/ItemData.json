@@ -4,32 +4,37 @@
       "Name": "Bread",
       "Effectiveness": 25,
       "Description": "Its bread (wow)",
-      "Durability": 1
+      "Durability": 1,
+      "Lore": "Hi"
     },
     {
       "Name": "Fart",
       "Effectiveness": 5,
       "Description": "A stinky fart (eww)",
-      "Durability": 3
+      "Durability": 3,
+      "Lore": "Bye"
     },
     {
       "Name": "Meat",
       "Effectiveness": 50,
       "Description": "Its meat (yum)",
-      "Durability": 1
+      "Durability": 1,
+      "Lore": "Sad"
     },
     {
       "Name": "Potion",
       "Effectiveness": 100,
       "Description": "A magical potion (ahh)",
-      "Durability": 1
-      
+      "Durability": 1,
+      "Lore": "Happy"
+
     },
     {
       "Name": "Elixir",
       "Effectiveness": 200,
       "Description": "A magical elixir (woah)",
-      "Durability": 1
+      "Durability": 1,
+      "Lore": "Ooga"
     }
   ]
 }

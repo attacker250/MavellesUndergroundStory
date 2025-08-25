@@ -25,6 +25,7 @@
 #include "Room.h"
 #include "Consumables.h"
 #include "Trader.h"
+#include "PlayerInventoryScreen.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -311,6 +312,9 @@ int main() {
 	Player player;
 	Trading trading;
 	Cutscenes cutscenes;
+	PlayerInventoryScreen playerInventory;
+	
+
 
 
 	game.resetRooms();
@@ -322,6 +326,11 @@ int main() {
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
 	player.currentPlace = "Cave";
+	Consumables* item1 = new Consumables("Healing", 0);
+	player.playerInventory.consumableStorage.push_back(item1);
+	Consumables* item2 = new Consumables("Healing", 1);
+	player.playerInventory.consumableStorage.push_back(item2);
+	//player.playerInventory.consumableStorage.push_back()
 
 	std::vector<Entity*> EntityList;
 
@@ -446,13 +455,15 @@ int main() {
 		if (game.curScreenState == CUTSCENE) {
 			cutscenes.PlayScene();
 		}
+		if (game.curScreenState == INVENTORY) {
+			playerInventory.inventorySelection();
+		}
 		
 			//std::cout << MapJson["TestMaps"].;
 
 
 			//;
-		Effects::
-			ClearScreen();
+		Effects::ClearScreen();
 	}
 	
 		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {

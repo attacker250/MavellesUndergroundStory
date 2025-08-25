@@ -43,3 +43,10 @@ void Effects::ShowConsoleCursor(bool showFlag)
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+
+void Effects::fitBox(int boxwidth,std::string text)
+{
+    for (int i = 0; i < (boxwidth - text.size()); i++) {
+        std::cout << ' ';
+    }
+}

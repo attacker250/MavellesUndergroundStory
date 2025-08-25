@@ -7,7 +7,8 @@
 
 
 Inventory Player::playerInventory;
-
+int Player::hp = maxHp;
+int Player::dmgModifier = 0;
 
 bool Player::move(){
     if (_kbhit()){
@@ -43,10 +44,10 @@ bool Player::move(){
                 break;
             case ('u'):
                 learnAtk("FIRE");
-
-                    
-                
                 break;
+            case ('E'):
+            case ('e'):
+                curScreenState = INVENTORY;
         }
         if (mapData[y + ymov][x + xmov] == ' ') {
             updatePos(x + xmov, y + ymov);

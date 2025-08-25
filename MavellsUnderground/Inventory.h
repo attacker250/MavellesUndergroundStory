@@ -9,6 +9,7 @@ public:
 	std::vector<std::string> storage;
 	std::vector <Consumables*> consumableStorage;
 	void addItem(std::string itemName);
+	void consumeItem(int itemIndex);
 	bool removeItem(std::string itemName);
 	int coins = 0;
 };
