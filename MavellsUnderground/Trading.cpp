@@ -25,13 +25,17 @@ void Trading::TradeSystem() {
 	system("cls");
 	PrintTrade();
 	std::cout << "\n";
-	for (int a = 1; a < 6; a++)
+	int width = 36;
+	for (int a = 0; a < 5; a++)
 	{
 		std::cout << '|';
-		std::cout << '[' << a << ']';
-		std::cout << "Test item";
+		std::cout << '[' << a + 1 << ']';
 
-		for (int j = 0; j < 27; j++)
+		Consumables* item1 = new Consumables("Healing", a);
+		PlayerData->playerInventory.consumableStorage.push_back(item1);
+		std::cout << item1->name; //:D
+
+		for ( int i = 0; i < width - PlayerData->playerInventory.consumableStorage[a]->name.length(); i++)
 		{
 			std::cout << ' ';
 		}
@@ -91,6 +95,11 @@ void Trading::TradeSystem() {
 		PrintTrade();
 		return;
 	}
+}
+
+void Trading::fetchPlayerData(Player* player)
+{
+	PlayerData = player;
 }
 
 void Trading::TradeMenu() {

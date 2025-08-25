@@ -5,6 +5,31 @@
       "Effectiveness": 25,
       "Description": "Its bread (wow)",
       "Durability": 1
+    },
+    {
+      "Name": "Fart",
+      "Effectiveness": 5,
+      "Description": "A stinky fart (eww)",
+      "Durability": 3
+    },
+    {
+      "Name": "Meat",
+      "Effectiveness": 50,
+      "Description": "Its meat (yum)",
+      "Durability": 1
+    },
+    {
+      "Name": "Potion",
+      "Effectiveness": 100,
+      "Description": "A magical potion (ahh)",
+      "Durability": 1
+      
+    },
+    {
+      "Name": "Elixir",
+      "Effectiveness": 200,
+      "Description": "A magical elixir (woah)",
+      "Durability": 1
     }
   ]
 }

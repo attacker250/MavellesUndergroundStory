@@ -1,12 +1,2 @@
-﻿  Barrel.cpp
-  Battle.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Battle.cpp(51,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Cutscenes.cpp
-  Enemy.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Game.cpp
-  MavellsUnderground.cpp
-  Player.cpp
-  Generating Code...
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(65,1): warning C4715: 'returnRoomIndex': not all control paths return a value
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  Trading.cpp
+  MavellsUnderground.vcxproj -> C:\Users\lenovo\Desktop\Mavelles Underground\MavellesUndergroundStory\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
