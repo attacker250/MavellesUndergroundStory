@@ -83,6 +83,12 @@
     <None Include="ItemData.json">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Animations\Dialogue.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Animations\Fonts.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
