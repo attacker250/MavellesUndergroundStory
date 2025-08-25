@@ -146,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Animations\Cutscenes.json" />
+    <None Include="Animations\Dialogue.json" />
+    <None Include="Animations\Fonts.json" />
     <None Include="ButtonData\ButtonData.json" />
     <None Include="EntityData\EntityData.json" />
     <None Include="ItemData.json" />

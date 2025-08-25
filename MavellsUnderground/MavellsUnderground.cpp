@@ -263,8 +263,6 @@ int main() {
 
 	placeList.push_back("Cave");
 
-
-
 	std::vector<Room*> roomList;
 
 
@@ -281,16 +279,6 @@ int main() {
 			createRoom(roomList, placeList[i], txt);
 		}
 	}
-	//createRoom(roomList, "Cave", "Room1");
-	//createRoom(roomList, "Cave", "Room2");
-
-	//for (int i = 0; i < MapJson.size(); i++) {
-	//	for (int f = 0; f < MapJson[i].size(); f++) {
-	//		std::cout << MapJson[i] << ' ' << MapJson[i][f];
-	//		createRoom(roomList, MapJson[i], MapJson[i][f]);
-	//	}
-	//}
-
 
 	enum ScreenState {
 		MAP_RENDER,
@@ -331,7 +319,25 @@ int main() {
 	std::vector<Entity*> EntityList;
 
 	InitGame(game, player, EntityList, "Nill", roomList);
-	//EntityList.push_back(new Barrel);
+
+	//Maximize window
+	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
+	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
+
+	//set font to default (16
+	CONSOLE_FONT_INFOEX cfi;
+
+	GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 0;                   // Width of each character in the font
+	cfi.dwFontSize.Y = 16;
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	wcscpy_s(cfi.FaceName, L"Consolas"); // Choose your font
+
+	//fullscreen
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 
 	while (true) {
 		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
@@ -378,12 +384,10 @@ int main() {
 					//in json, specify the door position range. Then store what door the plaayer when through
 				}
 			}
-			//std::cout << 
 			std::string Map;
 			for (int i = 0; i < ROWS; i++) {
 				for (int j = 0; j < COLUMNS; j++) {
 					Map += game.mapData[i][j];
-					//std::cout << MapData[i][j];
 				}
 				Map += "\n";
 			}
@@ -403,9 +407,7 @@ int main() {
 					battle.BattleMenu(game.curScreenState);
 					std::cout << '\n' << game.curScreenState;
 				}
-			}
-				//std::cout << "Battle\n";
-			
+			}			
 		}
 		if (game.curScreenState == INVENTORY) {
 			for (int i = 0; i < player.playerInventory.storage.size(); i++) {
@@ -419,7 +421,7 @@ int main() {
 			trading.TradeMenu();
 		}
 		if (game.curScreenState == CUTSCENE) {
-			cutscenes.startScene();
+			cutscenes.PlayScene();
 		}
 		
 			//std::cout << MapJson["TestMaps"].;
