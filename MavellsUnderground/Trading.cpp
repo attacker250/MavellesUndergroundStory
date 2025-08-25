@@ -2,22 +2,11 @@
 
 //trading
 void Trading::PrintTrade() {
-	const int width = 41;
-	const int height = 12;
-	const int inner = 39;
-	for (int i = 0; i < 41; i++) {
-		std::cout << '_';
-	}
-	std::cout << "\n";
-	for (int i = 0; i < height; i++) {
-		std::cout << '|';
-		for (int j = 0; j < inner; j++) {
-			std::cout << ' ';
-		}
-		std::cout << '|' << std::endl;
-	}
-	for (int i = 0; i < width; i++) {
-		std::cout << '-';
+	
+
+	TraderData->portrait;
+	for (int i = 0; i < TraderData->portrait.size(); i++) {
+		std::cout << TraderData->portrait[i] << std::endl;
 	}
 }
 
@@ -30,7 +19,6 @@ void Trading::TradeSystem() {
 	{
 		std::cout << '|';
 		std::cout << '[' << a + 1 << ']';
-
 		Consumables* item1 = new Consumables("Healing", a);
 		PlayerData->playerInventory.consumableStorage.push_back(item1);
 		std::cout << item1->name; //:D
@@ -97,12 +85,13 @@ void Trading::TradeSystem() {
 	}
 }
 
-void Trading::fetchPlayerData(Player* player)
+void Trading::fetchPlayerData(Player* player, Trader* trader)
 {
+	TraderData = trader;
 	PlayerData = player;
 }
 
-void Trading::TradeMenu() {
+void Trading::TradeMenu(int& curScreenState) {
 	PrintTrade();
 
 	std::cout << "\n";

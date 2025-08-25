@@ -142,6 +142,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="TestEnemyClass.cpp" />
+    <ClCompile Include="Trader.cpp" />
     <ClCompile Include="Trading.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <None Include="ItemData.json" />
     <None Include="MapData\MapData.json" />
     <None Include="MoveData.json" />
+    <None Include="TraderData\TraderData.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barrel.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="TestEnemyClass.h" />
+    <ClInclude Include="Trader.h" />
     <ClInclude Include="Trading.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

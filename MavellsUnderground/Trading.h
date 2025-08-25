@@ -5,15 +5,19 @@
 #include "Effects.h"
 #include "Game.h"
 #include "Player.h"
+#include <fstream>
+#include "json.hpp"
+#include "Trader.h"
 
 class Trading : public Game
 {
 
 public:
     Player* PlayerData;
+    Trader* TraderData;
     void PrintTrade();
-    void TradeMenu();
+    void TradeMenu(int& curScreenState);
     void TradeSystem();
-    void fetchPlayerData(Player* player);
+    void fetchPlayerData(Player* player, Trader* trader);
 };
 

@@ -9,5 +9,8 @@ public:
 
 	void interact() override;
 	Enemy();
+	~Enemy(){
+		mapData[y][x] = ' ';
+	}
 };
 

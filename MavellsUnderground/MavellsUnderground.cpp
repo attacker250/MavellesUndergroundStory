@@ -24,6 +24,7 @@
 #include "Door.h"
 #include "Room.h"
 #include "Consumables.h"
+#include "Trader.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -198,8 +199,14 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList.push_back(door);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
+				case 'S':
+					Trader * trader;
+					trader = new Trader;
+					EntityList.push_back(trader);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
 
 				}
+
 
 
 			}
@@ -354,6 +361,12 @@ int main() {
 				int PlayerIntendedY = player.y + player.ymov;
 				for (int i = 1; i < EntityList.size(); i++) {
 					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
+						if (game.mapData[PlayerIntendedY][PlayerIntendedX] == 'E'){
+							if (EntityList[i]->hp <= 0){
+								delete EntityList[i];
+								EntityList.erase(EntityList.begin() + i);
+							}
+						}
 						EntityList[i]->interact();
 						checkClearCondition(EntityList);
 						break;
@@ -418,7 +431,14 @@ int main() {
 			game.learnScreen();
 		}
 		if (game.curScreenState == TRADING) {
-			trading.TradeMenu();
+			for (int i = 1; i < EntityList.size(); i++) {
+				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
+					trading.fetchPlayerData(static_cast<Player*>(EntityList[0]), static_cast<Trader*>(EntityList[i]));
+					trading.TradeMenu(game.curScreenState);
+					std::cout << '\n' << game.curScreenState;
+				}
+			}
+
 		}
 		if (game.curScreenState == CUTSCENE) {
 			cutscenes.PlayScene();

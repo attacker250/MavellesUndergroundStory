@@ -6,6 +6,7 @@
 #include <ctime>
 #include "Enemy.h"
 #include "Inventory.h"
+#include "Game.h"
 
 #include <fstream>
 #include "json.hpp"
@@ -172,8 +173,13 @@ void Battle::AttackList() {
         typewriter(txt, 20, 40);
         Sleep(500);
         system("cls");
-        PrintBattle();
-        EnemyTurn();
+        if (battleEnemy->hp > 0) {
+            PrintBattle();
+            EnemyTurn();
+        }
+        else{
+            Game::curScreenState = MAP_RENDER;
+        }
 
     }
     else {

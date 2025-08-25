@@ -22,7 +22,7 @@ public:
 	const int maxInvSize = 5;
 	int dmgModifier = 0;
 	static Inventory playerInventory;
-	
+	//bool inCombat = false;
 
 	bool move() override;
 	void learnAtk(std::string atkName);
