@@ -361,12 +361,7 @@ int main() {
 				int PlayerIntendedY = player.y + player.ymov;
 				for (int i = 1; i < EntityList.size(); i++) {
 					if ((EntityList[i]->x == PlayerIntendedX) && (EntityList[i]->y == PlayerIntendedY)) {
-						if (game.mapData[PlayerIntendedY][PlayerIntendedX] == 'E'){
-							if (EntityList[i]->hp <= 0){
-								delete EntityList[i];
-								EntityList.erase(EntityList.begin() + i);
-							}
-						}
+
 						EntityList[i]->interact();
 						checkClearCondition(EntityList);
 						break;
@@ -419,8 +414,16 @@ int main() {
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
 					std::cout << '\n' << game.curScreenState;
+					if (battle.stillbattle == false) {
+						game.curScreenState = MAP_RENDER;
+						delete EntityList[i];
+						EntityList.erase(EntityList.begin() + i);
+
+					}
 				}
-			}			
+				
+			}
+			
 		}
 		if (game.curScreenState == INVENTORY) {
 			for (int i = 0; i < player.playerInventory.storage.size(); i++) {

@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Effects.h"
 #include <string>
+#include <vector>
+#include "Battle.h"
 
 class Battle : public Effects
 {
@@ -28,6 +30,7 @@ public:
 	static std::string atkLearn;
 	Entity *battleEnemy;
 	Entity* battlePlayer;
+	std::vector<Entity*> entityListBattle;
 	//std::string atkList[4];
 	
 

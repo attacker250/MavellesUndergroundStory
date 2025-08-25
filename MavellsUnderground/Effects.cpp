@@ -13,7 +13,7 @@ void Effects::typewriter(std::string text, int delay, int maxChar) {
         }
         else {
             Sleep(delay);
-            Beep(800, 40);
+            //Beep(800, 40);
         }
 
         charCount++;

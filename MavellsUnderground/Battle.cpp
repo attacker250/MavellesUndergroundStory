@@ -60,8 +60,12 @@ void Battle::EnemyTurn()
 }
 void Battle::initBattle(Entity *enemy, Entity* player)
 {
+    stillbattle = true;
     battleEnemy = enemy;
     battlePlayer = player;
+    //for (int i = 0; i < entityList.size(); i++) {
+    //    entityListBattle.push_back(entityList[i]);
+    //}
     //for (int i = 0; i < player->atkList; i++) {
     //    atkList[i] = player->atkList[atkListSize];
     //}
@@ -148,7 +152,7 @@ void Battle::AttackList() {
     }
     std::cout << "[" << battlePlayer->atkList.size() + 1 << "]" << " Back" << std::endl;
     int getbtn = static_cast<int>(_getch()) - 49;
-    Beep(1080, 300);
+    //Beep(1080, 300);
 
     if (battlePlayer->atkList.size() == getbtn) {
         system("cls");
@@ -178,7 +182,8 @@ void Battle::AttackList() {
             EnemyTurn();
         }
         else{
-            Game::curScreenState = MAP_RENDER;
+            
+            stillbattle = false;
         }
 
     }
@@ -204,7 +209,7 @@ void Battle::BattleMenu(int& curScreenState) {
 	std::string attempt = "You attempted to run.";
     int randNumber = rand() % 2 + 1;
     if (getbtn) {
-        Beep(1080, 300);
+        //Beep(1080, 300);
         switch (getbtn) {
         case '1':
             system("cls");

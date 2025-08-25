@@ -1,7 +1,7 @@
 {
   "TestAttack1": {
     "Type": "Fire",
-    "Damage": 200,
+    "Damage": 300,
     "Description": "Imbues the sword with fire magic and slashes at the enemy.",
     "Action": "You set the sword ablaze and slash forward"
   }
