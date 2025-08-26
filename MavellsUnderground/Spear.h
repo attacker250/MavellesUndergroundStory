@@ -11,7 +11,8 @@ public:
 	void setPlayerAttacks() override;
 
 	Spear() {
-		inUse = true;
+		name = "Spear";
+		description = "A cold-bloodstained spear";
 	}
 };
 

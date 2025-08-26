@@ -33,7 +33,7 @@ Enemy::Enemy(std::string map) {
 	//int enemyIndex = 1;
 
 
-	std::string enemyIndex = std::to_string(rand() % EnemyJson[map].size());
+	std::string enemyIndex = std::to_string(rand() % (EnemyJson[map].size()-1));
 	hp = EnemyJson[map][enemyIndex]["HP"];
 		//std::cout << hp;
 	name = EnemyJson[map][enemyIndex]["Name"];

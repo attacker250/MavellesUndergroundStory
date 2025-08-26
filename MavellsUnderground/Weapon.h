@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 
 #include "Enemy.h"
 
@@ -14,5 +14,7 @@ public:
 	virtual void move4(Enemy* enemy);
 	virtual void setPlayerAttacks();
 	bool inUse = false;
+	std::string name = "";
+	std::string description = "";
 };
 

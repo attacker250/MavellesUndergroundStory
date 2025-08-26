@@ -25,6 +25,7 @@ public:
         TRADING,
         MENU,
 		LEARNATK,
+        EQUIPMENT,
 
         MAXSCREENSTATE,
     };

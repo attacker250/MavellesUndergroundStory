@@ -3,6 +3,7 @@
 
 void Weapon::move1(Enemy* enemy)
 {
+
 }
 
 void Weapon::move2(Enemy* enemy)

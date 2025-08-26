@@ -12,6 +12,8 @@ public:
 
 	Sword() {
 		inUse = true;
+		name = "Sword";
+		description = "A fine iron sword";
 	}
 };
 

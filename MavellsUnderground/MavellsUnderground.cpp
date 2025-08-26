@@ -29,7 +29,7 @@
 #include "PlayerInventoryScreen.h"
 #include "Weapon.h"
 #include "Sword.h"
-
+#include "Equipment.h"
 //SceneHeaders
 #include "Battle.h"
 #include "Trading.h"
@@ -299,6 +299,7 @@ int main() {
 		TRADING,
 		MENU,
 		LEARNATK,
+		EQUIPMENT,
 
 		MAXSCREENSTATE
 
@@ -316,7 +317,7 @@ int main() {
 	Trading trading;
 	Cutscenes cutscenes;
 	PlayerInventoryScreen playerInventory;
-	
+	Equipment equipment;
 
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
@@ -345,22 +346,26 @@ int main() {
 	InitGame(game, player, EntityList, "Nill", roomList);
 
 
+
+	
 	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
 	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
 	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
 
-	
-
+	//Set the encoding format of the console
 	SetConsoleOutputCP(CP_UTF8);
-
+	
 	//fullscreen
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 
 	while (true) {
+		//What is this
 		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
 		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
+		
 		if (game.curScreenState == MAP_RENDER) {
+			//I genuinely don't know if constantly setting the font size is a good idea to be honest
 			cutscenes.ZoomIn();
 
 			//print out map
@@ -383,20 +388,21 @@ int main() {
 					auto setter = MapJson[player.currentPlace][player.currentRoom];
 					//Second pos must be the larger value
 
+					//Check if the position of the doors and set the data acoordingly
 					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
-									
+								
+								//
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
-								
+								//Update the Room destination
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
 
 								
 								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
-								//system("cls");
 								break;
 							}
 						}
@@ -469,6 +475,9 @@ int main() {
 		}
 		if (game.curScreenState == INVENTORY) {
 			playerInventory.inventorySelection();
+		}
+		if (game.curScreenState == EQUIPMENT) {
+			equipment.equipmentSelection();
 		}
 		
 			//std::cout << MapJson["TestMaps"].;
