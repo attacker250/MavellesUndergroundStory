@@ -1,4 +1,7 @@
 #include "Effects.h"
+void Effects::changeColor(int desiredColor) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), desiredColor);
+}
 
 void Effects::typewriter(std::string text, int delay, int maxChar) {
     int charCount = 0;

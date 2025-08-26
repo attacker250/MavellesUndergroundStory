@@ -2,6 +2,8 @@
 #include "Battle.h"
 #include <fstream>
 #include "json.hpp"
+#include <ctime>
+
 
 
 
@@ -11,8 +13,8 @@ void Enemy::interact() {
 	Battle::battleHp = hp;
 }
 
-Enemy::Enemy() {
-	
+Enemy::Enemy(std::string map) {
+	icon = 'E';
 	srand(time(0));
 	std::ifstream fEnemydata("EntityData/EntityData.json");
 	auto EnemyJson = nlohmann::json::parse(fEnemydata);
@@ -31,22 +33,22 @@ Enemy::Enemy() {
 	//int enemyIndex = 1;
 
 
-	std::string enemyIndex = std::to_string(1);
-	hp = EnemyJson["TestMaps"][enemyIndex]["HP"];
+	std::string enemyIndex = std::to_string(rand() % (EnemyJson[map].size()-1));
+	hp = EnemyJson[map][enemyIndex]["HP"];
 		//std::cout << hp;
-	name = EnemyJson["TestMaps"][enemyIndex]["Name"];
+	name = EnemyJson[map][enemyIndex]["Name"];
        //std::cout << name;
-	type = EnemyJson["TestMaps"][enemyIndex]["Type"];
+	type = EnemyJson[map][enemyIndex]["Type"];
 	
-	for (int i = 0; i < EnemyJson["TestMaps"][enemyIndex]["Portrait"].size(); i++) {
+	for (int i = 0; i < EnemyJson[map][enemyIndex]["Portrait"].size(); i++) {
 		std::string row = "";
-		row += EnemyJson["TestMaps"][enemyIndex]["Portrait"][i];
+		row += EnemyJson[map][enemyIndex]["Portrait"][i];
 		
 		portrait.push_back(row);
 	}
 		//std::cout << type;
-	for (int f = 0; f < EnemyJson["TestMaps"][enemyIndex]["Attacks"].size(); f++){
-		atkList.push_back(EnemyJson["TestMaps"][enemyIndex]["Attacks"][f]["NAME"]);
+	for (int f = 0; f < EnemyJson[map][enemyIndex]["Attacks"].size(); f++){
+		atkList.push_back(EnemyJson[map][enemyIndex]["Attacks"][f]["NAME"]);
 		//attacks[i];
 	}
 	

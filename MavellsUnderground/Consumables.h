@@ -10,6 +10,7 @@ public:
 	std::string itemType;
 	int itemEffectiveness = 0;
 	int itemDurability = 0;
+	int itemValue = 0;
 	bool broken = 0;
 	Consumables(std::string type, int itemID);
 	void consume(int consumeAmt);

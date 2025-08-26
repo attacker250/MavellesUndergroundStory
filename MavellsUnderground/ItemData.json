@@ -5,6 +5,7 @@
       "Effectiveness": 25,
       "Description": "Its bread (wow)",
       "Durability": 1,
+      "Value":5,
       "Lore": "Hi"
     },
     {
@@ -12,6 +13,7 @@
       "Effectiveness": 5,
       "Description": "A stinky fart (eww)",
       "Durability": 3,
+      "Value": 0,
       "Lore": "Bye"
     },
     {
@@ -19,6 +21,7 @@
       "Effectiveness": 50,
       "Description": "Its meat (yum)",
       "Durability": 1,
+      "Value": 10,
       "Lore": "Sad"
     },
     {
@@ -26,6 +29,7 @@
       "Effectiveness": 100,
       "Description": "A magical potion (ahh)",
       "Durability": 1,
+      "Value": 15,
       "Lore": "Happy"
 
     },
@@ -34,6 +38,7 @@
       "Effectiveness": 200,
       "Description": "A magical elixir (woah)",
       "Durability": 1,
+      "Value": 25,
       "Lore": "Ooga"
     }
   ]

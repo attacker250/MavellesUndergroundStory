@@ -69,6 +69,21 @@
     <ClCompile Include="PlayerInventoryScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wingblade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MapData\MapData.json">
@@ -89,13 +104,15 @@
     <None Include="ItemData.json">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Animations\Dialogue.json">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Animations\Fonts.json">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="TraderData\TraderData.json" />
+    <None Include="TraderData\TraderData.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Animations\Dialogue.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -147,6 +164,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerInventoryScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wingblade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

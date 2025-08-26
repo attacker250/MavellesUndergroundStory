@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-
+std::vector<std::string> Player::atkList;
 Inventory Player::playerInventory;
 int Player::hp = maxHp;
 int Player::dmgModifier = 0;
@@ -48,6 +48,10 @@ bool Player::move(){
             case ('E'):
             case ('e'):
                 curScreenState = INVENTORY;
+                break;
+            case ('Q'):
+            case ('q'):
+                curScreenState = EQUIPMENT;
         }
         if (mapData[y + ymov][x + xmov] == ' ') {
             updatePos(x + xmov, y + ymov);

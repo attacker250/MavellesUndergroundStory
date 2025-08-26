@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Inventory.h"
 #include "Game.h"
+#include "Player.h"
 
 #include <fstream>
 #include "json.hpp"
@@ -113,7 +114,7 @@ void Battle::ItemList() {
 
     int getbtn = static_cast<int>(_getch()) - 49;
 
-    if (static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size() == getbtn) {
+    if (battlePlayer->playerInventory.consumableStorage.size() == getbtn) {
         system("cls");
         PrintBattle();
     }
@@ -122,20 +123,20 @@ void Battle::ItemList() {
         typewriter(txt, 20, 40);
         std::cout << '\n';
         typewriter(battlePlayer->playerInventory.consumableStorage[getbtn]->description, 20, 60);
-        //if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
-        //    std::cout << (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
-        //    (static_cast<Player*>(battlePlayer))->hp += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
-        //    std::cout << (static_cast<Player*>(battlePlayer))->hp;
-        //}
-        //else if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Buff") {
-        //    (static_cast<Player*>(battlePlayer))->dmgModifier += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
-        //}
-        //(static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->consume(1);
-        //for (int i = 0; i < (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.size(); i++) {
-        //    if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[i]->broken) {
-        //        (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.erase((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.begin() + i);
-        //    }
-        //}
+        if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
+            std::cout << (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+            (static_cast<Player*>(battlePlayer))->hp += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+            std::cout << (static_cast<Player*>(battlePlayer))->hp;
+        }
+        else if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Buff") {
+            (static_cast<Player*>(battlePlayer))->dmgModifier += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+        }
+        (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->consume(1);
+        for (int i = 0; i < (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.size(); i++) {
+            if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[i]->broken) {
+                (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.erase((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.begin() + i);
+            }
+        }
         battlePlayer->consumeItem(battlePlayer->playerInventory.consumableStorage[getbtn]->itemType, battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
         Sleep(1000);
         system("cls");
@@ -159,22 +160,45 @@ void Battle::AttackList() {
         PrintBattle();
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0){
+        
         std::ifstream fAtkData("MoveData.json");
         auto AtkJson = nlohmann::json::parse(fAtkData);
 
         std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
         typewriter(txt, 20, 40);
         std::cout << '\n';
-        Sleep(500);
-        txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
-        typewriter(txt, 20, 40);
+        for (int i = 0; i < battlePlayer->playerInventory.weaponStorage.size(); i++) {
+            if (battlePlayer->playerInventory.weaponStorage[i]->inUse) {
+                switch (getbtn + 1) {
+                case 1:
+                    battlePlayer->playerInventory.weaponStorage[i]->move1(battleEnemy);
+                    break;
+
+                case 2:
+                    battlePlayer->playerInventory.weaponStorage[i]->move2(battleEnemy);
+                    break;
+
+                case 3:
+                    battlePlayer->playerInventory.weaponStorage[i]->move3(battleEnemy);
+                    break;
+
+                case 4:
+                    battlePlayer->playerInventory.weaponStorage[i]->move4(battleEnemy);
+                    break;
+                }
+            }
+        }
+        //Sleep(500);
+        //txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
+        //typewriter(txt, 20, 40);
         Sleep(500);
         std::cout << '\n';
-        int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();
-        txt = "It dealt " + std::to_string(dmg) + " damage! \n";
-        battleEnemy->hp -= dmg;
+       /* int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();*/
+      /*  txt = "It dealt " + std::to_string(dmg) + " damage! \n";*/
+        
+        //battleEnemy->hp -= dmg;
         //txt += " damage!";
-        typewriter(txt, 20, 40);
+       // typewriter(txt, 20, 40);
         Sleep(500);
         system("cls");
         if (battleEnemy->hp > 0) {
@@ -184,6 +208,7 @@ void Battle::AttackList() {
         else{
             
             stillbattle = false;
+
         }
 
     }
@@ -242,8 +267,7 @@ void Battle::BattleMenu(int& curScreenState) {
                 system("cls");
 
                 PrintBattle();
-               //  BattleMode();
-                BattleMenu(curScreenState);
+                EnemyTurn();
                
 			}
             break;

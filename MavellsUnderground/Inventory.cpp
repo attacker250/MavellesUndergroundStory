@@ -1,5 +1,5 @@
 #include "Inventory.h"
-#include "Player.h"
+
 
 
 void Inventory::addItem(std::string itemName){
@@ -8,12 +8,12 @@ void Inventory::addItem(std::string itemName){
 
 void Inventory::consumeItem(int itemID)
 {
-	if (consumableStorage[itemID]->itemType == "Healing") {
-		Player::hp += consumableStorage[itemID]->itemEffectiveness;
-	}
-	else if (consumableStorage[itemID]->itemType == "Buff") {
-		Player::dmgModifier += consumableStorage[itemID]->itemEffectiveness;
-	}
+	//if (consumableStorage[itemID]->itemType == "Healing") {
+	//	Player::hp += consumableStorage[itemID]->itemEffectiveness;
+	//}
+	//else if (consumableStorage[itemID]->itemType == "Buff") {
+	//	Player::dmgModifier += consumableStorage[itemID]->itemEffectiveness;
+	//}
 	consumableStorage[itemID]->consume(1);
 }
 

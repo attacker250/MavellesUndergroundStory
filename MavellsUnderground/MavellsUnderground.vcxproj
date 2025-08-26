@@ -134,6 +134,7 @@
     <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -142,9 +143,13 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInventoryScreen.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Spear.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TestEnemyClass.cpp" />
     <ClCompile Include="Trader.cpp" />
     <ClCompile Include="Trading.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Wingblade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Animations\Cutscenes.json" />
@@ -165,6 +170,7 @@
     <ClInclude Include="Effects.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Button.h" />
@@ -172,9 +178,13 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInventoryScreen.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Spear.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="TestEnemyClass.h" />
     <ClInclude Include="Trader.h" />
     <ClInclude Include="Trading.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Wingblade.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

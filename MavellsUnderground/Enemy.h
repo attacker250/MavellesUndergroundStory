@@ -8,7 +8,7 @@ class Enemy : public Entity
 public:
 
 	void interact() override;
-	Enemy();
+	Enemy(std::string map);
 	~Enemy(){
 		/*mapData[y][x] = ' ';*/
 		

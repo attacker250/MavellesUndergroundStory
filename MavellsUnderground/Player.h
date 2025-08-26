@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include "Inventory.h"
-#include "Battle.h"
+
 #include "Consumables.h"
 
 
@@ -22,6 +22,7 @@ public:
 	const int maxInvSize = 5;
 	static int dmgModifier;
 	static Inventory playerInventory;
+	static std::vector<std::string> atkList;
 	//bool inCombat = false;
 
 	bool move() override;
@@ -30,6 +31,8 @@ public:
 	Player() {
 		icon = 'P';
 		atkList.push_back("TestAttack1");
+		playerInventory.coins = 100;
+
 	}
 };
 

@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <windows.h>
+#include <ctime>
 
 
 //Entity headers
@@ -26,7 +27,9 @@
 #include "Consumables.h"
 #include "Trader.h"
 #include "PlayerInventoryScreen.h"
-
+#include "Weapon.h"
+#include "Sword.h"
+#include "Equipment.h"
 //SceneHeaders
 #include "Battle.h"
 #include "Trading.h"
@@ -170,9 +173,9 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
 				case 'E':
-					TestEnemyClass * testenemy;
-					testenemy = new TestEnemyClass;
-					EntityList.push_back(testenemy);
+					Enemy * enemy;
+					enemy = new Enemy(player.currentPlace);
+					EntityList.push_back(enemy);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
 				case '+':
@@ -264,7 +267,7 @@ void createRoom(std::vector<Room*> &roomList, std::string place, std::string roo
 
 
 int main() {
-
+	srand(time(0));
 
 	std::vector<std::string> placeList;
 	std::vector<std::string> itemTypeList;
@@ -296,6 +299,7 @@ int main() {
 		TRADING,
 		MENU,
 		LEARNATK,
+		EQUIPMENT,
 
 		MAXSCREENSTATE
 
@@ -313,14 +317,17 @@ int main() {
 	Trading trading;
 	Cutscenes cutscenes;
 	PlayerInventoryScreen playerInventory;
-	
-
-
+	Equipment equipment;
 
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
-
+	Sword* sword;
+	sword = new Sword;
+	std::vector<Weapon*> weaponsList;
+	weaponsList.push_back(sword);
+	//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
+	//weaponsList[0]->setPlayerAttacks();
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
@@ -332,33 +339,34 @@ int main() {
 	player.playerInventory.consumableStorage.push_back(item2);
 	//player.playerInventory.consumableStorage.push_back()
 
+
+
 	std::vector<Entity*> EntityList;
 
 	InitGame(game, player, EntityList, "Nill", roomList);
 
+
+
+	
+	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
 	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
 	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
 
-	//set font to default (16
-	CONSOLE_FONT_INFOEX cfi;
-
-	GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;                   // Width of each character in the font
-	cfi.dwFontSize.Y = 16;
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
-	wcscpy_s(cfi.FaceName, L"Consolas"); // Choose your font
-
+	//Set the encoding format of the console
+	SetConsoleOutputCP(CP_UTF8);
+	
 	//fullscreen
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 
 	while (true) {
+		//What is this
 		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
 		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
+		
 		if (game.curScreenState == MAP_RENDER) {
+			//I genuinely don't know if constantly setting the font size is a good idea to be honest
+			cutscenes.ZoomIn();
 
 			//print out map
 
@@ -380,20 +388,21 @@ int main() {
 					auto setter = MapJson[player.currentPlace][player.currentRoom];
 					//Second pos must be the larger value
 
+					//Check if the position of the doors and set the data acoordingly
 					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
-
+								
+								//
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
-								
+								//Update the Room destination
 								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
 
 								
 								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
-								//system("cls");
 								break;
 							}
 						}
@@ -419,14 +428,23 @@ int main() {
 		if (game.curScreenState == BATTLE) {
 			for (int i = 1; i < EntityList.size(); i++) {
 				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
-					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[0]));
+					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[i]));
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
-					std::cout << '\n' << game.curScreenState;
-					if (battle.stillbattle == false) {
+					//std::cout << '\n' << game.curScreenState;
+					if (battle.stillbattle == false && EntityList[i]->hp <= 0) {
+						for (int i = 0; i < 2; i++) {
+							int randDrop = rand() % game.itemList.size();
+							Consumables* consumable;
+							consumable = new Consumables(game.itemList[randDrop].itemType,game.itemList[randDrop].itemID);
+							player.playerInventory.consumableStorage.push_back(consumable);
+							std::cout << "\nYou obtained " << consumable->name << '!';
+							Sleep(1000);
+						}
 						game.curScreenState = MAP_RENDER;
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);
+						
 
 					}
 				}
@@ -457,6 +475,9 @@ int main() {
 		}
 		if (game.curScreenState == INVENTORY) {
 			playerInventory.inventorySelection();
+		}
+		if (game.curScreenState == EQUIPMENT) {
+			equipment.equipmentSelection();
 		}
 		
 			//std::cout << MapJson["TestMaps"].;

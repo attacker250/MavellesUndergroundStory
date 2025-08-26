@@ -4,6 +4,7 @@
 #include "Consumables.h"
 #include "Effects.h"
 
+
 class Game : public Effects
 {
 public:
@@ -24,6 +25,7 @@ public:
         TRADING,
         MENU,
 		LEARNATK,
+        EQUIPMENT,
 
         MAXSCREENSTATE,
     };
@@ -58,7 +60,6 @@ public:
     static char mapData[ROWS][COLUMNS];
     static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
-
 
 
     //Game() {
