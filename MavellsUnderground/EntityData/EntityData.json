@@ -3,7 +3,7 @@
     "Icon": "T",
     "Type": "Test"
   },
-  "TestMaps": {
+  "Cave": {
     "0": {
       "Name": "Slime",
       "Type": "WATER",

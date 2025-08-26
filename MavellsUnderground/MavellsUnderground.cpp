@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <windows.h>
+#include <ctime>
 
 
 //Entity headers
@@ -172,9 +173,9 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
 				case 'E':
-					TestEnemyClass * testenemy;
-					testenemy = new TestEnemyClass;
-					EntityList.push_back(testenemy);
+					Enemy * enemy;
+					enemy = new Enemy(player.currentPlace);
+					EntityList.push_back(enemy);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
 				case '+':
@@ -266,7 +267,7 @@ void createRoom(std::vector<Room*> &roomList, std::string place, std::string roo
 
 
 int main() {
-
+	srand(time(0));
 
 	std::vector<std::string> placeList;
 	std::vector<std::string> itemTypeList;
@@ -431,11 +432,20 @@ int main() {
 					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[i]));
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
-					std::cout << '\n' << game.curScreenState;
-					if (battle.stillbattle == false && EntityList[i]->hp == 0) {
+					//std::cout << '\n' << game.curScreenState;
+					if (battle.stillbattle == false && EntityList[i]->hp <= 0) {
+						for (int i = 0; i < 2; i++) {
+							int randDrop = rand() % game.itemList.size();
+							Consumables* consumable;
+							consumable = new Consumables(game.itemList[randDrop].itemType,game.itemList[randDrop].itemID);
+							player.playerInventory.consumableStorage.push_back(consumable);
+							std::cout << "\nYou obtained " << consumable->name << '!';
+							Sleep(1000);
+						}
 						game.curScreenState = MAP_RENDER;
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);
+						
 
 					}
 				}

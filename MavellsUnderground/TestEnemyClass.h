@@ -6,9 +6,9 @@ class TestEnemyClass : public Enemy
 {
 public:
 
-	TestEnemyClass(){
-		hp = 300;
-		icon = 'E';
-	}
+	//TestEnemyClass(){
+	//	hp = 300;
+	//	icon = 'E';
+	//}
 };
 
