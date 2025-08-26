@@ -2,7 +2,6 @@
 #include "Enemy.h"
 #include "Windows.h"
 #include "conio.h"
-#include "Entity.h"
 #include "Player.h"
 #include "Effects.h"
 #include <string>
@@ -28,9 +27,10 @@ public:
 	bool stillbattle = false;
 	//static std::string atkList[atkListSize];
 	static std::string atkLearn;
-	Entity *battleEnemy;
-	Entity* battlePlayer;
-	std::vector<Entity*> entityListBattle;
+	Player* battlePlayer;
+	Enemy *battleEnemy;
+
+	//std::vector<Entity*> entityListBattle;
 	//std::string atkList[4];
 	
 
@@ -40,7 +40,7 @@ public:
 	void PrintBattle();
 	void BattleMenu(int& curScreenState);
 	void EnemyTurn();
-	void initBattle(Entity* enemy, Entity* player);
+	void initBattle(Enemy* enemy, Player* player);
 
 };
 

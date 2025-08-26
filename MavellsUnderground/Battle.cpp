@@ -58,7 +58,7 @@ void Battle::EnemyTurn()
     Sleep(300);
     system("cls");
 }
-void Battle::initBattle(Entity *enemy, Entity* player)
+void Battle::initBattle(Enemy *enemy, Player* player)
 {
     stillbattle = true;
     battleEnemy = enemy;
@@ -91,7 +91,7 @@ void Battle::BattleMode() {
     }
     else {
         std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
-        std::cout << "Your HP:" << (static_cast<Player*>(battlePlayer))->hp << '\n';
+        std::cout << "Your HP:" << battlePlayer->hp << '\n';
         std::cout << "[1] Attack" << std::endl;
         std::cout << "[2] Items" << std::endl;
         std::cout << "[3] Run" << std::endl;
@@ -103,12 +103,12 @@ void Battle::BattleMode() {
 void Battle::ItemList() {
     std::cout << "\n";
 
-    for (int i = 0; i < static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size(); i++) {
-        std::cout << '[' + std::to_string(i + 1) + "] " + static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage[i]->name << '\n';
+    for (int i = 0; i < battlePlayer->playerInventory.consumableStorage.size(); i++) {
+        std::cout << '[' + std::to_string(i + 1) + "] " + battlePlayer->playerInventory.consumableStorage[i]->name << '\n';
 
     }
 
-    std::cout << '[' + std::to_string(static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size() + 1) + "] Back \n";
+    std::cout << '[' + std::to_string(battlePlayer->playerInventory.consumableStorage.size() + 1) + "] Back \n";
     //std::cout << "[4] Back" << std::endl;
 
     int getbtn = static_cast<int>(_getch()) - 49;
@@ -121,7 +121,7 @@ void Battle::ItemList() {
         std::string txt = "You chose " + (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->name + '!';
         typewriter(txt, 20, 40);
         std::cout << '\n';
-        typewriter((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->description, 20, 60);
+        typewriter(battlePlayer->playerInventory.consumableStorage[getbtn]->description, 20, 60);
         //if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
         //    std::cout << (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
         //    (static_cast<Player*>(battlePlayer))->hp += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
@@ -136,7 +136,7 @@ void Battle::ItemList() {
         //        (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.erase((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.begin() + i);
         //    }
         //}
-        (static_cast<Player*>(battlePlayer))->consumeItem((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType, (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
+        battlePlayer->consumeItem(battlePlayer->playerInventory.consumableStorage[getbtn]->itemType, battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
         Sleep(1000);
         system("cls");
         PrintBattle();

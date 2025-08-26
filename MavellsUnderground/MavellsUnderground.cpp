@@ -419,7 +419,7 @@ int main() {
 		if (game.curScreenState == BATTLE) {
 			for (int i = 1; i < EntityList.size(); i++) {
 				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
-					battle.initBattle(EntityList[i], EntityList[0]);
+					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[0]));
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
 					std::cout << '\n' << game.curScreenState;
