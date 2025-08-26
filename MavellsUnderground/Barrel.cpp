@@ -9,18 +9,6 @@ Barrel::Barrel() {
 
 
 void Barrel::interact() {
-	//for (int i = 0 ; i < barrelinventory.storage.size(); i++) {
-	//	Player::playerInventory.storage.push_back(barrelinventory.storage[i]);
-	//}
-	//for (int i = 0; i < Player::playerInventory.storage.size(); i++){
-	//	std::cout << Player::playerInventory.storage[i] << " ";
-	//}
-	//curScreenState = TRADING;
-
-	//curScreenState = CUTSCENE;
-	//Cutscenes::InteractionNo = interactions;
-	//Cutscenes::key = "Barrel";
-	//interactions++;
 	Consumables* newConsumable;
 	curScreenState = TRADING;
 	for (int i = 0; i < 5; i++) {
@@ -28,6 +16,11 @@ void Barrel::interact() {
 		Player::playerInventory.consumableStorage.push_back(newConsumable);
 	}
 
+	Sword* sword;
+	sword = new Sword;
+	sword->setPlayerAttacks();
+
+	Player::playerInventory.weaponStorage.push_back(sword);
 	//std::cout << "BARREL INTERACT";
 		
 }

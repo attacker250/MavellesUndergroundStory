@@ -184,20 +184,21 @@ void Battle::AttackList() {
 
                 case 4:
                     battlePlayer->playerInventory.weaponStorage[i]->move4(battleEnemy);
+                    break;
                 }
             }
         }
-        Sleep(500);
-        txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
-        typewriter(txt, 20, 40);
+        //Sleep(500);
+        //txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
+        //typewriter(txt, 20, 40);
         Sleep(500);
         std::cout << '\n';
-        int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();
-        txt = "It dealt " + std::to_string(dmg) + " damage! \n";
+       /* int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();*/
+      /*  txt = "It dealt " + std::to_string(dmg) + " damage! \n";*/
         
-        battleEnemy->hp -= dmg;
+        //battleEnemy->hp -= dmg;
         //txt += " damage!";
-        typewriter(txt, 20, 40);
+       // typewriter(txt, 20, 40);
         Sleep(500);
         system("cls");
         if (battleEnemy->hp > 0) {

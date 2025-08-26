@@ -325,8 +325,8 @@ int main() {
 	sword = new Sword;
 	std::vector<Weapon*> weaponsList;
 	weaponsList.push_back(sword);
-	player.playerInventory.weaponStorage.push_back(weaponsList[0]);
-	weaponsList[0]->setPlayerAttacks();
+	//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
+	//weaponsList[0]->setPlayerAttacks();
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
