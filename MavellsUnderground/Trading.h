@@ -17,7 +17,11 @@ public:
     Trader* TraderData;
     void PrintTrade();
     void TradeMenu(int& curScreenState);
-    void TradeSystem();
+    void sellSystem();
     void fetchPlayerData(Player* player, Trader* trader);
+    void buyingScreen();
+    void printBorder();
+    const int tradeUIWidth = 40;
+   
 };
 

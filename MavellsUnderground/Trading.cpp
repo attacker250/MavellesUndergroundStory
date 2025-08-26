@@ -8,32 +8,30 @@ void Trading::PrintTrade() {
 	for (int i = 0; i < TraderData->portrait.size(); i++) {
 		std::cout << TraderData->portrait[i] << std::endl;
 	}
+	std::cout << "You have : $" << std::to_string(PlayerData->playerInventory.coins) << '\n';
 }
 
-void Trading::TradeSystem() {
+void Trading::sellSystem() {
 	system("cls");
 	PrintTrade();
 	std::cout << "\n";
-	int width = 36;
-	for (int a = 0; a < 5; a++)
+	const int width = 36;
+	for (int i = 0; i < PlayerData->playerInventory.consumableStorage.size(); i++)
 	{
-		std::cout << '|';
-		std::cout << '[' << a + 1 << ']';
-		Consumables* item1 = new Consumables("Healing", a);
-		PlayerData->playerInventory.consumableStorage.push_back(item1);
-		std::cout << item1->name; //:D
+		std::cout << "|[" << i + 1 << ']';
 
-		for ( int i = 0; i < width - PlayerData->playerInventory.consumableStorage[a]->name.length(); i++)
-		{
-			std::cout << ' ';
-		}
+		//Consumables* item1 = new Consumables("Healing", a);
+		//PlayerData->playerInventory.consumableStorage.push_back(item1);
+		std::string txt = PlayerData->playerInventory.consumableStorage[i]->name + "   Value: " + std::to_string(PlayerData->playerInventory.consumableStorage[i]->itemValue); //:D
+		std::cout << txt;
+		fitBox(width, txt);
 
 		std::cout << '|' << std::endl;
 	}
 
-	std::cout << '|' << '[' << 6 << ']';
+	std::cout << '|' << '[' << std::to_string(PlayerData->playerInventory.consumableStorage.size() + 1) << ']';
 	std::cout << "Back";
-	for (int e = 0; e < 32; e++)
+	for (int e = 0; e < width - 4; e++)
 	{
 		std::cout << ' ';
 	}
@@ -45,43 +43,21 @@ void Trading::TradeSystem() {
 		std::cout << '-';
 	}
 
-	char getbtn = static_cast<char>(_getch());
-	switch (getbtn) {
-	case '1':
-		std::cout << "\nYou have selected item 1.";
-		Sleep(2000);
+	int getbtn = static_cast<int>(_getch()) - 49;
+	if (PlayerData->playerInventory.consumableStorage.size() == getbtn) {
 		system("cls");
 		PrintTrade();
-		break;
-	case '2':
-		std::cout << "\nYou have selected item 2.";
-		Sleep(2000);
-		system("cls");
-		PrintTrade();
-		break;
-	case '3':
-		std::cout << "\nYou have selected item 3.";
-		Sleep(2000);
-		system("cls");
-		PrintTrade();
-		break;
-	case '4':
-		std::cout << "\nYou have selected item 4.";
-		Sleep(2000);
-		system("cls");
-		PrintTrade();
-		break;
-	case '5':
-		std::cout << "\nYou have selected item 5.";
-		Sleep(2000);
-		system("cls");
-		PrintTrade();
-		break;
-	case '6':
-		std::cout << "\nYou have selected Back.";
-		system("cls");
-		PrintTrade();
-		return;
+
+	}
+	else if (getbtn < PlayerData->playerInventory.consumableStorage.size() && getbtn >= 0) {
+		PlayerData->playerInventory.coins += PlayerData->playerInventory.consumableStorage[getbtn]->itemValue;
+		TraderData->traderInventory.consumableStorage.push_back(PlayerData->playerInventory.consumableStorage[getbtn]);
+		std::cout << "\nYou sold " << PlayerData->playerInventory.consumableStorage[getbtn]->name << "!\n";
+		PlayerData->playerInventory.consumableStorage.erase(PlayerData->playerInventory.consumableStorage.begin() + getbtn);
+		Sleep(1000);
+	}
+	else {
+		sellSystem();
 	}
 }
 
@@ -91,35 +67,80 @@ void Trading::fetchPlayerData(Player* player, Trader* trader)
 	PlayerData = player;
 }
 
+void Trading::buyingScreen()
+{
+	system("cls"); 
+	PrintTrade();
+	printBorder();
+	for (int i = 0; i < TraderData->traderInventory.consumableStorage.size(); i++) {
+		//std::cout << TraderData->traderInventory.consumableStorage[i]->name << '\n';
+		std::string text = "|[" + std::to_string(i + 1) + ']' + TraderData->traderInventory.consumableStorage[i]->name + "   Value:" + std::to_string(TraderData->traderInventory.consumableStorage[i]->itemValue);
+		std::cout << text;
+		for (int f = 0; f < tradeUIWidth - text.length(); f++) {
+			std::cout << ' ';
+		}
+		std::cout << "|\n";
+		
+	}
+	std::cout << "|[" << std::to_string(TraderData->traderInventory.consumableStorage.size() + 1) << "]Back\n";
+	printBorder();
+	int getItem = static_cast<int>(_getch()) - 49;
+	if (TraderData->traderInventory.consumableStorage.size() == getItem) {
+		system("cls");
+		PrintTrade();
+		
+	}
+	else if (getItem < TraderData->traderInventory.consumableStorage.size() && getItem >= 0) {
+		if (PlayerData->playerInventory.coins >= TraderData->traderInventory.consumableStorage[getItem]->itemValue) {
+			PlayerData->playerInventory.coins -= TraderData->traderInventory.consumableStorage[getItem]->itemValue;
+			PlayerData->playerInventory.consumableStorage.push_back(TraderData->traderInventory.consumableStorage[getItem]);
+			std::cout << "You purchased " << TraderData->traderInventory.consumableStorage[getItem]->name << "!\n";
+			TraderData->traderInventory.consumableStorage.erase(TraderData->traderInventory.consumableStorage.begin() + getItem);
+		}
+		else {
+			std::cout << "Insufficient coins! (You're broke!)";
+		}
+		Sleep(1000);
+		
+	}
+	else {
+		buyingScreen();
+	}
+	
+//	Sleep(500);
+	
+}
+
+void Trading::printBorder()
+{
+	for (int i = 0; i < tradeUIWidth + 1; i++) {
+		std::cout << '-';
+	}
+	std::cout << '\n';
+}
+
+
 void Trading::TradeMenu(int& curScreenState) {
 	PrintTrade();
-
-	std::cout << "\n";
-	std::cout << '|';
-	std::cout << '[' << 1 << ']';
-	std::cout << "Trade";
-	for (int j = 0; j < 31; j++) {
+	std::cout << "\n|[1]Buy";
+	for (int j = 0; j < 33; j++) {
 		std::cout << ' ';
 	}
-	std::cout << '|' << std::endl;
-	std::cout << '|';
-	std::cout << '[' << 2 << ']';
-	std::cout << "Talk";
+	std::cout << "\n|[2]Sell";
 	for (int j = 0; j < 32; j++) {
 		std::cout << ' ';
 	}
-	std::cout << '|' << std::endl;
-
-	std::cout << '|';
-	std::cout << '[' << 3 << ']';
-	std::cout << "Back";
+	std::cout << "\n|[3]Talk";
+	for (int j = 0; j < 32; j++) {
+		std::cout << ' ';
+	}
+	std::cout << "\n|[4]Back";
 	for (int e = 0; e < 32; e++)
 	{
 		std::cout << ' ';
 
 	}
-	std::cout << '|';
-	std::cout << "\n";
+	std::cout << "|\n";
 
 
 	for (int i = 0; i < 41; i++) {
@@ -127,16 +148,23 @@ void Trading::TradeMenu(int& curScreenState) {
 	}
 	std::cout << "\n";
 
+	//work on this when you integrate the dialogue + cutscene system
+	
 	std::string dialogue = "Hello traveller! Welcome to my humble shop. I sell all sorts of cool weapons here.";
 	std::string dialogue2 = "Please, don't hesitate to look around! Anything caught your eye?";
 	char getbtn = static_cast<char>(_getch());
+
 	if (getbtn) {
 		switch (getbtn) {
 		case '1':
-			std::cout << "You have selected Trade.\n";
-			TradeSystem();
+		//	std::cout << "You have selected Sell.\n";
+			buyingScreen();
 			break;
 		case '2':
+			std::cout << "You have selected Sell.\n";
+			sellSystem();
+			break;
+		case '3':
 			std::cout << "You have selected Talk.\n";
 			system("cls");
 			PrintTrade();
@@ -150,7 +178,7 @@ void Trading::TradeMenu(int& curScreenState) {
 			system("cls");
 			PrintTrade();
 			break;
-		case '3':
+		case '4':
 			std::cout << "You have selected Back.\n";
 			//go back to the map
 			curScreenState = MAP_RENDER;

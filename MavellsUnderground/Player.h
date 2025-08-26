@@ -31,6 +31,7 @@ public:
 	Player() {
 		icon = 'P';
 		atkList.push_back("TestAttack1");
+		playerInventory.coins = 100;
 
 	}
 };
