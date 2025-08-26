@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Inventory.h"
 #include "Game.h"
+#include "Player.h"
 
 #include <fstream>
 #include "json.hpp"
@@ -113,7 +114,7 @@ void Battle::ItemList() {
 
     int getbtn = static_cast<int>(_getch()) - 49;
 
-    if (static_cast<Player*>(battlePlayer)->playerInventory.consumableStorage.size() == getbtn) {
+    if (battlePlayer->playerInventory.consumableStorage.size() == getbtn) {
         system("cls");
         PrintBattle();
     }
@@ -159,12 +160,33 @@ void Battle::AttackList() {
         PrintBattle();
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0){
+        
         std::ifstream fAtkData("MoveData.json");
         auto AtkJson = nlohmann::json::parse(fAtkData);
 
         std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
         typewriter(txt, 20, 40);
         std::cout << '\n';
+        for (int i = 0; i < battlePlayer->playerInventory.weaponStorage.size(); i++) {
+            if (battlePlayer->playerInventory.weaponStorage[i]->inUse) {
+                switch (getbtn + 1) {
+                case 1:
+                    battlePlayer->playerInventory.weaponStorage[i]->move1(battleEnemy);
+                    break;
+
+                case 2:
+                    battlePlayer->playerInventory.weaponStorage[i]->move2(battleEnemy);
+                    break;
+
+                case 3:
+                    battlePlayer->playerInventory.weaponStorage[i]->move3(battleEnemy);
+                    break;
+
+                case 4:
+                    battlePlayer->playerInventory.weaponStorage[i]->move4(battleEnemy);
+                }
+            }
+        }
         Sleep(500);
         txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];
         typewriter(txt, 20, 40);
@@ -172,6 +194,7 @@ void Battle::AttackList() {
         std::cout << '\n';
         int dmg = AtkJson[battlePlayer->atkList[getbtn]]["Damage"].get<int>();
         txt = "It dealt " + std::to_string(dmg) + " damage! \n";
+        
         battleEnemy->hp -= dmg;
         //txt += " damage!";
         typewriter(txt, 20, 40);

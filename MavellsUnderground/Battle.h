@@ -24,10 +24,11 @@ public:
 	};
 	static int battleHp;
 	const static int atkListSize = 3;
+	Player* battlePlayer;
 	bool stillbattle = false;
 	//static std::string atkList[atkListSize];
 	static std::string atkLearn;
-	Player* battlePlayer;
+	
 	Enemy *battleEnemy;
 
 	//std::vector<Entity*> entityListBattle;

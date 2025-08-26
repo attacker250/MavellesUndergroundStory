@@ -11,6 +11,7 @@ Consumables::Consumables(std::string type, int itemID) {
 	description = ItemJson[type][itemID]["Description"];
 	itemDurability = ItemJson[type][itemID]["Durability"];
 	itemEffectiveness = ItemJson[type][itemID]["Effectiveness"];
+	itemValue = ItemJson[type][itemID]["Value"];
 	itemType = type;
 	broken = false;
 }

@@ -26,6 +26,8 @@
 #include "Consumables.h"
 #include "Trader.h"
 #include "PlayerInventoryScreen.h"
+#include "Weapon.h"
+#include "Sword.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -315,12 +317,15 @@ int main() {
 	PlayerInventoryScreen playerInventory;
 	
 
-
-
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
-
+	Sword* sword;
+	sword = new Sword;
+	std::vector<Weapon*> weaponsList;
+	weaponsList.push_back(sword);
+	player.playerInventory.weaponStorage.push_back(weaponsList[0]);
+	weaponsList[0]->setPlayerAttacks();
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
@@ -332,10 +337,14 @@ int main() {
 	player.playerInventory.consumableStorage.push_back(item2);
 	//player.playerInventory.consumableStorage.push_back()
 
+
+
 	std::vector<Entity*> EntityList;
 
 	InitGame(game, player, EntityList, "Nill", roomList);
 
+
+	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
 	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
 	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
@@ -383,7 +392,7 @@ int main() {
 					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
-
+									
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
 								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
@@ -419,11 +428,11 @@ int main() {
 		if (game.curScreenState == BATTLE) {
 			for (int i = 1; i < EntityList.size(); i++) {
 				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
-					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[0]));
+					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[i]));
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
 					std::cout << '\n' << game.curScreenState;
-					if (battle.stillbattle == false) {
+					if (battle.stillbattle == false && EntityList[i]->hp == 0) {
 						game.curScreenState = MAP_RENDER;
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);

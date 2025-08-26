@@ -4,6 +4,7 @@
 #include "Consumables.h"
 #include "Effects.h"
 
+
 class Game : public Effects
 {
 public:
@@ -58,7 +59,6 @@ public:
     static char mapData[ROWS][COLUMNS];
     static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
-
 
 
     //Game() {

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-
+std::vector<std::string> Player::atkList;
 Inventory Player::playerInventory;
 int Player::hp = maxHp;
 int Player::dmgModifier = 0;
