@@ -1,24 +1,28 @@
 {
   "Barrel": {
     "Cave": {
-      "Room1": [
-        [
-          [
-            "Hi.This is me testing my disgusting dialogue system.",
-            "So,this system is for me to try and make a system!",
-            "After this line, it will be scene 2" 
-          ],
-          [
-            "Welcome to Scene 2.\nThis should hopefully add a layer of entertainemnt",
-            "Lets go and win."
-          ]
-
-
-
-        ]
-      ]
+      "Room1": {
+        "First": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "Is this a barrel?\nWhat is it doing here?",
+              "Oh, it looks terrible. Well, at least I know why it’s in here."
+            ]
+          },
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "A sword?",
+              "I suppose I’ll use it."
+            ]
+          },
+          {
+            "Type": "Empty"
+          }
+        ],
+        "Second":[]
+      }
     }
-
-
   }
 }

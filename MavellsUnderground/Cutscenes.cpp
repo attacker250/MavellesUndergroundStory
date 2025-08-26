@@ -4,41 +4,148 @@
 #include "json.hpp"
 #include <fstream>
 #include "conio.h"
+#include <Windows.h>
 
 std::string Cutscenes::key;
-int Cutscenes::InteractionNo;
+std::string Cutscenes::InteractionKey;
+
+Cutscenes::Cutscenes() {
+    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    wcscpy_s(cfi.FaceName, L"Consolas"); // Choose your font
+
+
+   
+}
+
+
+void Cutscenes::ZoomOut() {
+
+    cfi.dwFontSize.X = 0.5;                   // Width of each character in the font
+    cfi.dwFontSize.Y = 3;
+
+
+
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
+}
+
+void Cutscenes::ZoomIn() {
+
+    cfi.dwFontSize.X = 0;                   // Width of each character in the font
+    cfi.dwFontSize.Y = 23;
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+}
 
 void Cutscenes::PlayScene() {
-	std::ifstream fCutscenedata("Animations/Cutscenes.json");
-	auto CutsceneJson = nlohmann::json::parse(fCutscenedata);
-	std::string currentRoom = Player::currentRoom;
-	std::string currentPlace = Player::currentPlace;
-
-	std::string image;
-
-	if (i < CutsceneJson[key][currentPlace][currentRoom][SceneNo][InteractionNo].size()-1) {
-		i++;	
-	}
-	else {
-		i = 0;
-	}
-	std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionNo][SceneNo][i].get<std::string>();
-	Sleep(10);
-
-	//if (_kbhit) {
-	//	char input = _getch();
-	//	if (input == '\n') {
-	//		SceneNo++;
-	//	}
-	//}
 
 
+    std::string currentRoom = Player::currentRoom;
+    std::string currentPlace = Player::currentPlace;
+
+
+
+    //Keep the Animation Playing
+    if (i < FrameSize) {
+        i++;
+    }
+    else {
+        i = 0;
+    }
+    std::cout << AsciiPrint("------------------------------");
+
+    if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Text") {
+        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Dialogue"][Dialogue].size();
+        FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"].size() - 1;
+        std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"][i].get<std::string>();
+        std::cout << AsciiPrint("------------------------------");
+        std::cout << AsciiPrint(DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Dialogue"][Dialogue].get<std::string>());
+    }
+    if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Choice") {
+        FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"].size() - 1;
+        std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"][i].get<std::string>();
+        std::cout << AsciiPrint("------------------------------");
+        std::cout << AsciiPrint(DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["TopText"].get<std::string>());
+        for (int i = 0; i < DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Choice"].size(); i++) {
+            std::cout << AsciiPrint("[" + std::to_string(i + 1) + "]" + DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Choice"][i].get<std::string>());
+        }
+        dialogueSetSize = 1;
+    }
+    if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Branch") {
+        FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice].size() - 1;
+        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][Dialogue].size();
+        std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][i].get<std::string>();
+        std::cout << AsciiPrint("------------------------------");
+        std::cout << AsciiPrint(DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][Dialogue].get<std::string>());
+    }
+    if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Empty") {
+        //Make it so that they can only leave when the anim is done
+        dialogueSetSize = 0;
+        FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"].size() - 1;
+        std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"][i].get<std::string>();
+
+
+    }
+    if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] != "Choice") {
+        std::cout << AsciiPrint("------------------------------\n->Enter");
+    }
+    else {
+        std::cout << AsciiPrint("------------------------------");
+    }
+    
+    //Handle Input
+    if (_kbhit()) {
+        char getbtn = static_cast<char>(_getch());
+        if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Choice") {
+            int hi = (getbtn - '0');
+            if (hi < DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Choice"].size() + 1 && hi > 0) {
+                dialogueChoice = hi - 1;
+                SceneNo++;
+                i = 0;
+                Dialogue = 0;
+                system("cls");
+            }
+        }
+        if (getbtn == '\r' && DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] != "Choice") {
+            if (SceneNo == DialogueJson[key][currentPlace][currentRoom][InteractionKey].size() - 1 && Dialogue == dialogueSetSize) {
+                //End of the cutscene (Return to home screen)[for now]
+                i = 0;
+                SceneNo = 0;
+                Dialogue = 0;
+                dialogueSetSize = 0;
+                dialogueChoice = 0;
+                FrameSize = 0;
+                
+                Player::curScreenState = Player::ScreenState::MAP_RENDER;
+
+                cfi.dwFontSize.X = 0;                   // Width of each character in the font
+                cfi.dwFontSize.Y = 23;
+                SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+                system("cls");
+            }
+            //change scene
+            else if (Dialogue == dialogueSetSize) {
+                SceneNo++;
+                Dialogue = 0;
+                i = 0;
+                system("cls");
+            }
+            else {
+                //Progress Dialouge
+                Dialogue++;
+                system("cls");
+            }
+        }
+    }
+	Sleep(50);
 
 }
 
 std::string Cutscenes::AsciiPrint(std::string input) {
-    std::ifstream fFontdata("Animations/Fonts.json");
-    auto FontJson = nlohmann::json::parse(fFontdata);
 
     std::string words;
     std::vector<std::string>split;

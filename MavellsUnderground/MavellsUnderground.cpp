@@ -350,17 +350,9 @@ int main() {
 	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
 	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
 
-	//set font to default (16
-	CONSOLE_FONT_INFOEX cfi;
+	
 
-	GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;                   // Width of each character in the font
-	cfi.dwFontSize.Y = 16;
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
-	wcscpy_s(cfi.FaceName, L"Consolas"); // Choose your font
+	SetConsoleOutputCP(CP_UTF8);
 
 	//fullscreen
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
@@ -369,6 +361,7 @@ int main() {
 		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
 		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
 		if (game.curScreenState == MAP_RENDER) {
+			cutscenes.ZoomIn();
 
 			//print out map
 

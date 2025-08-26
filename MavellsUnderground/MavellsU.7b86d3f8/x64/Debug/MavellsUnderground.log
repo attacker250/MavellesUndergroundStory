@@ -1,3 +1,9 @@
-﻿  Enemy.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\Enemy.cpp(18,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  Cutscenes.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(28,24): warning C4244: '=': conversion from 'double' to 'SHORT', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(62,123): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(63,108): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(69,108): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(79,126): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(80,139): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\Cutscenes.cpp(88,108): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  MavellsUnderground.vcxproj -> C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
