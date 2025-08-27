@@ -71,6 +71,7 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 		int nextY = y;
 		int minDistance = 999;
 
+
 		for (int i = 0; i < directionCount; i++) {
 			int newRow = nextY + direction[i][0];
 			int newCol = nextX + direction[i][1];
@@ -86,7 +87,9 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 				}
 			}
 		}
-		updatePos(nextX, nextY);
+		if (mapData[nextY][nextX] == ' ') {
+			updatePos(nextX, nextY);
+		}
 
 		//update position
 		x = nextX;
