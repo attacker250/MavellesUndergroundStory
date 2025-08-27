@@ -23,6 +23,8 @@ public:
 	std::string name = "none";
 	std::string type = "none";
 	
+	//For Legend
+	std::string desc;
 
 	//Screen Visual
 	char icon = ' ';

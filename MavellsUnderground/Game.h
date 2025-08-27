@@ -13,6 +13,7 @@ public:
         std::string itemType = "";
         int itemID = 0;
     };
+    bool gameQuit = false;
 
     enum mapDimensions {
         ROWS = 13,
@@ -60,6 +61,10 @@ public:
         char icon;
         std::string hi;
     };
+
+    //Thoughts
+    static std::string key;
+    static std::string InteractionKey;
 
     static char mapData[ROWS][COLUMNS];
     static bool enteredRm[SECTORS][ROOMS];

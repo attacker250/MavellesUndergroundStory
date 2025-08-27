@@ -14,7 +14,7 @@ public:
 
 	void ZoomOut();
 	void ZoomIn();
-	void PlayScene();
+	bool PlayScene();
 
 	std::string AsciiPrint(std::string input);
 

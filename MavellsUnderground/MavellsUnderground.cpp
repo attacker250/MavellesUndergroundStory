@@ -299,10 +299,6 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 
 	}
-
-	//
-	// 
-	// game.checkMap();
 	size = enemyList.size();
 }
 
@@ -311,6 +307,10 @@ void checkClearCondition(std::vector<Entity*>& EntityList) {
 	std::string Place = Entity::currentPlace;
 	std::ifstream fButtondata("ButtonData/ButtonData.json");
 	auto ButtonJson = nlohmann::json::parse(fButtondata);
+
+	std::ifstream fMapdata("MapData/MapData.json");
+	auto MapJson = nlohmann::json::parse(fMapdata);
+
 	int active = 0;
 	//check how many buttons are active
 	for (int i = 0; i < EntityList.size(); i++) {
@@ -318,6 +318,33 @@ void checkClearCondition(std::vector<Entity*>& EntityList) {
 			active++;
 		}
 	}
+	
+	if (MapJson[Entity::currentPlace][Entity::currentRoom]["RoomType"] == "Fight") {
+		int counter = 0;
+		for (int i = 0; i < EntityList.size(); i++) {
+			if (EntityList[i]->icon == 'E') {
+				counter++;
+			}
+		}
+		if (counter == 0) {
+			//PLEASE I BEG,STUFF THIS IN A FUNCTION
+			for (int i = 0; i < EntityList.size(); i++) {
+				if (EntityList[i]->type == "Door") {
+					EntityList[i]->alive = false;
+					EntityList[i]->interact();
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < EntityList.size(); i++) {
+				if (EntityList[i]->type == "Door") {
+					EntityList[i]->alive = true;
+					EntityList[i]->interact();
+				}
+			}
+		}
+	}
+
 	//Handle Buttons
 	if (ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")) {
 		if (ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
@@ -358,16 +385,20 @@ int main() {
 	std::vector<std::string> placeList;
 	std::vector<std::string> itemTypeList;
 
-	placeList.push_back("Cave");
 
 	std::vector<Room*> roomList;
 
+	placeList.push_back("Cave");
 
 
-
+	//Json load
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 
+	std::ifstream fDialoguedata("Animations/Dialogue.json");
+	auto DialogueJson = nlohmann::json::parse(fDialoguedata);
+
+	//???
 	for (int i = 0; i < placeList.size(); i++) {
 		for (int f = 0; f < MapJson[placeList[i]].size(); f++) {
 			std::string txt = "";
@@ -381,6 +412,7 @@ int main() {
 
 	ShowCursor(FALSE);
 
+	//Ready all important stuff
 	Game game;
 	Battle battle;
 	Player player;
@@ -389,6 +421,7 @@ int main() {
 	PlayerInventoryScreen playerInventory;
 	Equipment equipment;
 
+	//???
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
@@ -411,13 +444,16 @@ int main() {
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
 	player.currentPlace = "Cave";
+
 	Consumables* item1 = new Consumables("Healing", 0);
 	player.playerInventory.consumableStorage.push_back(item1);
 	Consumables* item2 = new Consumables("Healing", 1);
 	player.playerInventory.consumableStorage.push_back(item2);
 	//player.playerInventory.consumableStorage.push_back()
 
-
+	//init the thought path
+	game.key = "Thoughts";
+	game.InteractionKey = "Intro";
 
 	std::vector<Entity*> EntityList;
 	std::vector<Enemy*> EnemyList;
@@ -432,19 +468,39 @@ int main() {
 	//Set the encoding format of the console
 	SetConsoleOutputCP(CP_UTF8);
 
+	//Set the max size or something (Cutscenes break if you don't Zoom out first)
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	cutscenes.ZoomOut();
+
+	//Intro Splash Screen
+
+	//cutscenes.ZoomIn();
+	//std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/";
+	////Doing a zoomin here kills it for some reason
+	//Sleep(3000);
+	//system("cls");
+	//std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
+	//Sleep(3000);
+	//system("cls");
+	//std::cout << "Dedicated to Group 10";
+	//Sleep(3000);
+	//system("cls");
 	//fullscreen
-	//SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 	//system("pause");
 	_running = true;
 
+	//make a func for this
+	double old_time = time(0);
+	//put this in game
+	int dialog = 0;
 
+	while (game.gameQuit == false) {
 
-
-	while (game.curScreenState != MAIN_MENU) {
-
-		//What is this
-
-
+		//What is 
+		if (game.curScreenState == MAIN_MENU) {
+			cutscenes.ZoomIn();
+			game.mainMenuScrn();
+		}
 		if (game.curScreenState == MAP_RENDER) {
 			//if (Game::curScreenState == MAP_RENDER) {
 			//	for (int i = 0; i < EnemyList.size(); i++) {
@@ -524,6 +580,40 @@ int main() {
 
 			std::cout << Map;
 
+			//Legend System
+			//today, i commit crimes because i have no mental pseverance any more
+			std::cout << "Legend:\n";
+			std::vector<char> check;
+			std::vector<std::string> desc;
+			check.push_back('P');
+			desc.push_back("You");
+			for (int i = 1; i < EntityList.size(); i++) {
+				for (int d = 0; d < check.size(); d++) {
+					if (EntityList[i]->icon == check[d]) {
+						break;
+					}
+					else if (d == check.size() - 1){
+						check.push_back(EntityList[i]->icon);
+						desc.push_back(EntityList[i]->desc);
+					}
+				}
+			}
+			for (int d = 0; d < check.size(); d++) {
+				std::cout << check[d] << ":" << desc[d] << "\n";
+			}
+			
+			//Thoughts System
+			std::cout << "Thoughts:";
+			if (time(0) - old_time == 2 && DialogueJson[game.key][player.currentPlace][player.currentRoom].contains(game.InteractionKey)) {
+				//Timer
+				old_time = time(0);
+				std::cout << DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"][dialog].get<std::string>();
+				//make it so if it doesnt have the key, it plays a random thought
+				if (dialog < DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"].size() - 1) {
+					dialog++;
+				}
+			}
+
 			if (game.curScreenState != MAP_RENDER) {
 				system("cls");
 			}
@@ -536,8 +626,10 @@ int main() {
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
 					//std::cout << '\n' << game.curScreenState;
+					//Battle over
 					if (battle.stillbattle == false && EntityList[i]->hp <= 0) {
 						for (int i = 0; i < 2; i++) {
+							//Loot drop
 							int randDrop = rand() % game.itemList.size();
 							Consumables* consumable;
 							consumable = new Consumables(game.itemList[randDrop].itemType, game.itemList[randDrop].itemID);
@@ -554,6 +646,7 @@ int main() {
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);
 
+						checkClearCondition(EntityList);
 
 					}
 				}
@@ -561,6 +654,7 @@ int main() {
 			}
 
 		}
+		//???????????????????????????? WHY DO WE HAVE TWO OF THESE????????
 		if (game.curScreenState == INVENTORY) {
 			for (int i = 0; i < player.playerInventory.storage.size(); i++) {
 				std::cout << player.playerInventory.storage[i];
@@ -579,9 +673,7 @@ int main() {
 			}
 
 		}
-		if (game.curScreenState == CUTSCENE) {
-			cutscenes.PlayScene();
-		}
+		//??????????????????
 		if (game.curScreenState == INVENTORY) {
 			playerInventory.inventorySelection();
 		}
@@ -595,6 +687,8 @@ int main() {
 		//;
 		Effects::ClearScreen();
 	}
+
+	//Assuming this is the clean up
 	for (int i = 0; i < roomList.size(); i++) {
 		for (int f = 0; f < roomList[i]->entityRoomSave.size(); f++) {
 			if (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]) != nullptr) {
@@ -637,7 +731,6 @@ int main() {
 		_enemyThread.join(); //be joined
 	}
 	system("cls");
-	game.mainMenuScrn();
 	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
 	_CrtDumpMemoryLeaks();

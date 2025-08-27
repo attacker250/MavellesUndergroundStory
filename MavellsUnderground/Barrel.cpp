@@ -3,9 +3,11 @@
 #include <iostream>
 #include "Cutscenes.h"
 #include "Spear.h"
+#include "Effects.h"
 
 Barrel::Barrel() {
 	icon = 'B';
+	desc = "A barrel";
 }
 
 
@@ -15,8 +17,13 @@ void Barrel::interact() {
 		Cutscenes::InteractionKey = "First";
 		Cutscenes zoom;
 		zoom.ZoomOut();
-		//firstInteraction = true;
 		curScreenState = CUTSCENE;
+		while (!zoom.PlayScene())Effects::ClearScreen();
+		system("cls");
+		curScreenState = MAP_RENDER;
+
+
+		//firstInteraction = true;
 	}
 	
 

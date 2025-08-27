@@ -1,4 +1,26 @@
 {
+  "Thoughts": {
+    "Cave": {
+      "Room1": {
+        "Intro": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "This place… Is there a way out…?      ",
+              "There has to be… how else am I here?  ",
+              "... I can’t remember… it’s all fuzzy… ",
+              "Okay, okay, deep breaths… er…         ",
+              "...                                   ",
+              "Right, right… My name, it’s…          ",
+              "...                                   ",
+              "Why… why can’t I remember my own name…?",
+              "I… have to get out of here first. I can worry about it later…"
+            ]
+          }
+        ]
+      }
+    }
+  },
   "Barrel": {
     "Cave": {
       "Room1": {
@@ -21,8 +43,33 @@
             "Type": "Empty"
           }
         ],
-        "Second":[]
+        "Second": []
+      }
+    }
+  },
+  "Intro": {
+    "Cave": {
+      "Room1": {
+        "Intro": [
+          {
+            "Type": "Empty"
+          }
+        ]
+      }
+    }
+  },
+
+  "Trader": {
+    "Cave": {
+      "Room4": {
+        "Intro": [
+          {
+            "Type": "Empty"
+          }
+        ]
       }
     }
   }
+
 }
+   

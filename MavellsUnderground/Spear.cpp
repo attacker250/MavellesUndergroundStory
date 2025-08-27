@@ -5,7 +5,7 @@ int Spear::move1(Enemy* enemy)
 {
     //enemy->hp -= 100;
     std::cout << "Poke";
-    return 100;
+    return 11100;
 }
 
 int Spear::move2(Enemy* enemy)

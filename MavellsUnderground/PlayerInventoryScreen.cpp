@@ -2,10 +2,26 @@
 
 #include "conio.h"
 #include "Game.h"
+#include "Player.h"
 
-void PlayerInventoryScreen::printInventory()
-{
+void PlayerInventoryScreen::printInventory(){
+
 	system("cls");
+	//print out header
+	for (int i = 0; i < inventoryWidth + 2; i++) {
+		std::cout << '-';
+	}
+	std::cout << "\n|";
+	std::cout << "Inventory Menu";
+	fitBox(inventoryWidth, "Inventory Menu");
+	std::cout << "|\n|";
+	std::string thingy;
+	thingy += "HP:";
+	thingy += std::to_string(Player::hp);
+	std::cout << thingy;
+	fitBox(inventoryWidth, thingy);
+	std::cout << "|\n";
+
 	for (int i = 0; i < inventoryWidth + 2; i++) {
 		std::cout << '-';
 	}
@@ -34,7 +50,16 @@ void PlayerInventoryScreen::printInventory()
 	}
 	std::cout << '\n';
 	if (selectedObj != Player::playerInventory.consumableStorage.size()) {
-		std::cout << Player::playerInventory.consumableStorage[selectedObj]->description;
+		std::cout << "|Description:";
+		fitBox(inventoryWidth, "|Description:");
+		std::cout << " |\n";
+		std::cout << "|" << Player::playerInventory.consumableStorage[selectedObj]->description;
+		fitBox(inventoryWidth, Player::playerInventory.consumableStorage[selectedObj]->description);
+		std::cout << "|\n|";
+		for (int i = 0; i < inventoryWidth; i++) {
+			std::cout << '-';
+		}
+		std::cout << "|";
 	}
 }
 
@@ -65,13 +90,13 @@ void PlayerInventoryScreen::inventorySelection()
 		}
 	}
 
-	std::cout << selectedObj << ' ' << Player::playerInventory.consumableStorage.size() << "HIII";
+	//std::cout << selectedObj << ' ' << Player::playerInventory.consumableStorage.size() << "HIII";
 	if (selectedObj < 0) {
 		selectedObj = Player::playerInventory.consumableStorage.size();
 	}
 	else if (selectedObj > Player::playerInventory.consumableStorage.size()) {
 		selectedObj = 0;
-		std::cout << selectedObj << ' ' << Player::playerInventory.consumableStorage.size();
+		//std::cout << selectedObj << ' ' << Player::playerInventory.consumableStorage.size();
 	}
 	
 

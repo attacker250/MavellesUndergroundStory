@@ -15,6 +15,7 @@ void Enemy::interact() {
 
 Enemy::Enemy(std::string map) {
 	icon = 'E';
+	desc = "\"Kill or Be Killed.\"";
 	srand(time(0));
 	std::ifstream fEnemydata("EntityData/EntityData.json");
 	auto EnemyJson = nlohmann::json::parse(fEnemydata);

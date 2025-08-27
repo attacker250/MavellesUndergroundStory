@@ -9,6 +9,13 @@ void Equipment::printEquipment()
 	for (int i = 0; i < inventoryWidth + 2; i++) {
 		std::cout << '-';
 	}
+	std::cout << "\n|";
+	std::cout << "Equipment Menu";
+	fitBox(inventoryWidth, "Equipment Menu");
+	std::cout << "|\n";
+	for (int i = 0; i < inventoryWidth + 2; i++) {
+		std::cout << '-';
+	}
 	std::cout << '\n';
 	for (int i = 0; i < Player::playerInventory.weaponStorage.size(); i++) {
 		if (Player::playerInventory.weaponStorage[i]->inUse == true) {
@@ -39,7 +46,16 @@ void Equipment::printEquipment()
 	}
 	std::cout << '\n';
 	if (selectedObj != Player::playerInventory.weaponStorage.size()) {
-		std::cout << Player::playerInventory.weaponStorage[selectedObj]->description;
+		std::cout << "|Description:";
+		fitBox(inventoryWidth, "|Description:");
+		std::cout << " |\n";
+		std::cout << "|" << Player::playerInventory.weaponStorage[selectedObj]->description;
+		fitBox(inventoryWidth, Player::playerInventory.weaponStorage[selectedObj]->description);
+		std::cout << "|\n|";
+		for (int i = 0; i < inventoryWidth; i++) {
+			std::cout << '-';
+		}
+		std::cout << "|";
 	}
 }
 
@@ -72,7 +88,8 @@ void Equipment::equipmentSelection()
 		}
 	}
 
-	std::cout << selectedObj << ' ' << Player::playerInventory.weaponStorage.size() << "HIII";
+	//make it so that the player can see the attack list in desc with their respective damage and stuff
+	//std::cout << selectedObj << ' ' << Player::playerInventory.weaponStorage.size() << "HIII";
 	if (selectedObj < 0) {
 		selectedObj = Player::playerInventory.weaponStorage.size();
 	}

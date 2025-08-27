@@ -8,7 +8,7 @@ public:
 	Door(){
 		icon = '=';
 		type = "Door";
-
+		desc = "The way out.Blocked";
 	}
 	int doorLvl = 0;
 	bool opened = false;

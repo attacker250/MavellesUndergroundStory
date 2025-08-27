@@ -6,8 +6,12 @@
 #include "Windows.h"
 #include "Room.h"
 #include "Battle.h"
+#include "Cutscenes.h"
 
 //std::vector<Weapon*> Game::weaponList;
+std::string Game::key;
+std::string Game::InteractionKey;
+
 
 Consumables Game::returnItem(std::string type, int itemID) {
 	Consumables obj(type, itemID);
@@ -18,6 +22,7 @@ Consumables Game::returnItem(std::string type, int itemID) {
 
 char Game::mapData[ROWS][COLUMNS];
 
+//int Game::curScreenState = MAIN_MENU;
 int Game::curScreenState = MAP_RENDER;
 
 
@@ -61,9 +66,66 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 }
 
-void Game::mainMenuScrn()
-{
-	std::cout << "hi";
+void Game::mainMenuScrn(){
+	system("cls");
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_GREEN);
+	std::string main[11] =
+	{ "     _    _    _ _   _ _____  ____ _     _              ",
+	 "    / `  |  ` / | ` | | ____|/ ___| |   / `                 ",
+	 "   / _ ` | |`/| |  `| |  __| `___`| |  / _ `                  ",
+	 "  / ___ `| |  | | |`  | |___ ___) | | / ___ `              ",
+	 " /_/   `_`_|_ |_|_| `_|_____|____/|_|/_/___`_` ____   _____  ",
+	 "   / `  |  _ ` `   / / ____|| ` | |_   _| | | |  _ ` | ____| ",
+	 "  / _ ` | | | ` ` / /|  _|  |  `| | | | | | | | |_) ||  _|  ",
+	 " / ___ `| |_| |` V / | |___ | |`  |_| |_| |_| |  _ / | |___",
+	 "/_/   `_`____/  `_/  |_____||_| `_|_____|`___/|_| `_`|_____|   ",
+	 "                                                               ",
+	 "                                                               " };
+
+	std::string menu[2] = {
+	 "[1] Start New Game",
+	 "[2] Quit"
+	};
+
+
+
+
+
+	for (int i = 0; i < 5; i++) {
+		std::cout << main[i] << std::endl;
+	}
+	SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_RED);
+	for (int i = 5; i < 9; i++) {
+		std::cout << main[i] << std::endl;
+	}
+	SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
+	for (int i = 9; i < 11; i++) {
+		std::cout << main[i] << std::endl;
+	}
+	for (int i = 0; i < 2; i++) {
+		std::cout << menu[i] << std::endl;
+	}
+
+	//press any key to start the game
+	char getbtn = _getch();
+	//clear starting screen and render map
+	int getbtnNumber = (getbtn - '0');
+	if (getbtnNumber == 1) {
+		Cutscenes::key = "Intro";
+		Cutscenes::InteractionKey = "Intro";
+		system("cls");
+		Cutscenes playIntro;
+		curScreenState = CUTSCENE;
+		playIntro.ZoomOut();
+		while (!playIntro.PlayScene())Effects::ClearScreen();
+		system("cls");
+		playIntro.ZoomIn();
+		curScreenState = MAP_RENDER;
+	}
+	else if (getbtnNumber == 2) {
+		gameQuit = true;
+	}
 }
 
 //void Game::getWeaponList(std::vector<Weapon*> weaponsList)

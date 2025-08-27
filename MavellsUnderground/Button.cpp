@@ -3,6 +3,7 @@ int Button::maxId = 0;
 
 Button::Button(){
 	icon = '-';
+	desc = "A button";
 	maxId++;
 	id = maxId;
 }

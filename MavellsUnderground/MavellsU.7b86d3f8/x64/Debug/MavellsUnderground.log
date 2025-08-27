@@ -1,14 +1,4 @@
-﻿  MavellsUnderground.cpp
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267: 'argument': conversion from 'size_t' to 'const _Ty', possible loss of data
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         with
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         [
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:             _Ty=int
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         ]
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(306,23): warning C4267: 'argument': conversion from 'size_t' to 'const _Ty', possible loss of data
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(306,23): warning C4267:         with
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(306,23): warning C4267:         [
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(306,23): warning C4267:             _Ty=int
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(306,23): warning C4267:         ]
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(356,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(129,1): warning C4715: 'returnRoomIndex': not all control paths return a value
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  Button.cpp
+  Door.cpp
+  Generating Code...
+  MavellsUnderground.vcxproj -> C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
