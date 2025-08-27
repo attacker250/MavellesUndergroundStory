@@ -8,7 +8,7 @@
 
 class Barrel: public Entity {
 	public:
-		Inventory barrelinventory;
+		//Inventory barrelinventory;
 		Barrel();
 		void interact();
 		//Check what stage of interaction

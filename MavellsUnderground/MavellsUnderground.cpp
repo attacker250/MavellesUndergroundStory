@@ -43,7 +43,7 @@
 std::thread _enemyThread;
 std::atomic<bool> _running{ false };
 std::atomic<int> size{ 0 };
-bool inGame = true;
+//bool inGame = true;
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
 //		for (int j = 0; j < 40; j++){
@@ -604,22 +604,39 @@ int main() {
 				for (int r = 0; r < (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage.size(); r++) {
 					delete (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage[r];
 				}
+				(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.clear();
+				(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage.clear();
 			}
 			delete roomList[i]->entityRoomSave[f];
 		}
 		roomList[i]->entityRoomSave.clear();
 		delete roomList[i];
+		
 	}
 	roomList.clear();
 	for (int i = 0; i < player.playerInventory.consumableStorage.size(); i++) {
 		delete player.playerInventory.consumableStorage[i];
 	}
-	
+	//for (int i = 0; i < player.playerInventory.weaponStorage.size(); i++) {
+	//	delete player.playerInventory.weaponStorage[i];
+	//}
 
+	for (int i = 0; i < weaponsList.size(); i++) {
+		delete weaponsList[i];
+	}
+	EnemyList.clear();
+	weaponsList.clear();
+	player.playerInventory.consumableStorage.clear();
+	player.playerInventory.weaponStorage.clear();
+
+
+
+	_running = false;
+	loadingScrn();
 	if (_enemyThread.joinable()) { //check if can be joined or detached
 		_enemyThread.join(); //be joined
-
 	}
+	system("cls");
 	game.mainMenuScrn();
 	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 

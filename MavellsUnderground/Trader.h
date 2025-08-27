@@ -15,7 +15,7 @@ public:
 	Inventory traderInventory;
 	std::vector<Weapon*> weaponList;
 	Trader(std::vector<Weapon*> weaponsList);
-	void interact();
+	void interact() override;
 	const int traderInvSize = 5;
 };
 
