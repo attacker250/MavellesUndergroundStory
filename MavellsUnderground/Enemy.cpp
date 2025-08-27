@@ -82,9 +82,12 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 					minDistance = dist;
 					nextY = newRow;
 					nextX = newCol;
+					
 				}
 			}
 		}
+		updatePos(nextX, nextY);
+
 		//update position
 		x = nextX;
 		y = nextY;
@@ -106,9 +109,9 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 
 		//prevent from out of the board
 		if (newRow >= 0 && newRow < boardHeight && newCol >= 0 && newCol < boardWidth && mapData[newRow][newCol] == ' ') {
-			y = newRow;
-			x = newCol;
-			updatePos(x, y);
+			//y = newRow;
+			//x = newCol;
+			updatePos(newCol, newRow);
 		}
 	}
 }

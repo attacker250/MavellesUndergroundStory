@@ -1,7 +1,4 @@
-// MavellsUnderground.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
-//Input
 #include <iostream>
 #include "conio.h"
 
@@ -45,6 +42,7 @@
 
 std::thread _enemyThread;
 std::atomic<bool> _running{ false };
+std::atomic<int> size{ 0 };
 bool inGame = true;
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
@@ -62,41 +60,54 @@ enum boarddimensions {
 	ROWS = 13
 };
 
-void enemyLoop(std::vector<Entity*> entityList) {
+enum ScreenState {
+	MAP_RENDER,
+	BATTLE,
+	INVENTORY,
+	CUTSCENE,
+	TRADING,
+	MENU,
+	LEARNATK,
+	EQUIPMENT,
+
+	MAXSCREENSTATE
+
+};
+
+void enemyLoop(std::vector<Enemy*>& entityList, Player* player) {
+
 	while (_running) {
+		if (Game::curScreenState == MAP_RENDER) {
+			for (int i = 0; i < size; i++) {
+				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
+				//std::cout << entityList.size();
+				entityList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
 
-		for (int i = 0; i < entityList.size(); i++) {
-			entityList[i]->nextMove(entityList[0]->x, entityList[0]->y, ROWS, COLUMNS);
+				const int userPosX = player->x;
+				const int userPosY = player->y;
+				const int enemyPosY = entityList[i]->x;
+				const int enemyPosX = entityList[i]->y;
 
-			const int userPosX = entityList[0]->x;
-			const int userPosY = entityList[0]->y;
-			const int enemyPosY = entityList[i]->x;
-			const int enemyPosX = entityList[i]->y;
+				int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
 
-			int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
+				// collision test - stop before the same position
+				if (distanceToUser <= 2) {
+					entityList[i]->interact();
+				}
 
-			// collision test - stop before the same position
-			if (distanceToUser <= 1) {
-				entityList[i]->interact();
+				//int sleepMs = 100;
+
 			}
-
-			int sleepMs = 1000;
-			if (distanceToUser <= 5) {
-				sleepMs = 500;
-			}
-			else if (distanceToUser <= 10) {
-				sleepMs = 750;
-			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
 		}
-		
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
 	}
 }
 
 
 std::vector<Weapon*> weaponsList;
 
-int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
+int returnRoomIndex(std::string place, std::string room, std::vector<Room*>& roomList) {
 	//gets the room index of the rm thats called "place" and "map" is in list
 	//std::cout << roomList.size();
 	for (int i = 0; i < roomList.size(); i++) {
@@ -109,7 +120,7 @@ int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roo
 	//return 0;
 }
 
-bool checkIn(std::string place, std::string room, std::vector<Room*> &roomList) {
+bool checkIn(std::string place, std::string room, std::vector<Room*>& roomList) {
 	//checks if a room thats called "place" and "map" is in list
 	for (int i = 0; i < roomList.size(); i++) {
 		if (roomList[i]->room == room && roomList[i]->place == place) {
@@ -119,11 +130,9 @@ bool checkIn(std::string place, std::string room, std::vector<Room*> &roomList) 
 	return false;
 }
 
-void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door, std::vector<Room*>& roomList) {
-	enum boarddimensions {
-		COLUMNS = 40,
-		ROWS = 13
-	};
+
+void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door, std::vector<Room*>& roomList, std::vector<Enemy*>& enemyList) {
+
 
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
@@ -136,21 +145,41 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	}
 	//sets the rooms objects onto the screen
 	EntityList.clear();
+
+	//stop previous enemy thread
+	_running = false;
+	if (_enemyThread.joinable()) {
+		_enemyThread.join();
+	}
+
+	enemyList.clear();
+
 	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
 		for (int i = 0; i < roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave.size(); i++) {
 			EntityList.push_back(roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->entityRoomSave[i]);
+			if (dynamic_cast<Enemy*>(EntityList[i]) != nullptr) {
+				enemyList.push_back(static_cast<Enemy*>(EntityList[i]));
+				//size = enemyList.size();
+			}
 		}
-
 	}
 
+	size = enemyList.size();
 
-	
+	//start new enemy thread
+	_running = true;
+	_enemyThread = std::thread(enemyLoop, std::ref(enemyList), &player);
+	//_running = false;
+
+
+
+
 	//game.checkMap();
 	auto Data = MapJson[player.currentPlace][player.RoomDestination];
 	//system("pause");
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
 
-	
+
 	//game.checkMap();
 	if (door != "Nill") {
 		if (player.y < Data[door]["FirstPos"][1]) {
@@ -165,7 +194,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		else if (player.x > Data[door]["SecondPos"][0]) {
 			player.x = Data[door]["SecondPos"][0];
 		}
-		
+
 		//check where the door is (is it at the top,bottom,left or right of the room)
 		if (Data[door]["FirstPos"][0] == Data[door]["SecondPos"][0]) {
 			//proves that the room is either right or left. then check which one it is based on room width
@@ -215,8 +244,11 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 				case 'E':
 					Enemy * enemy;
 					enemy = new Enemy(player.currentPlace);
+					enemyList.push_back(enemy);
 					EntityList.push_back(enemy);
+
 					EntityList[EntityList.size() - 1]->spawn(f, i);
+
 					break;
 				case '+':
 					Button * activeBtn;
@@ -255,40 +287,42 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 			}
 		}
-		
+
 
 	}
+
 	//
 	// 
 	// game.checkMap();
+	size = enemyList.size();
 }
 
-void checkClearCondition(std::vector<Entity*>& EntityList){
+void checkClearCondition(std::vector<Entity*>& EntityList) {
 	std::string Room = Entity::currentRoom;
 	std::string Place = Entity::currentPlace;
 	std::ifstream fButtondata("ButtonData/ButtonData.json");
 	auto ButtonJson = nlohmann::json::parse(fButtondata);
 	int active = 0;
 	//check how many buttons are active
-	for (int i = 0; i < EntityList.size(); i++){
-		if(EntityList[i]->icon == '+'){
+	for (int i = 0; i < EntityList.size(); i++) {
+		if (EntityList[i]->icon == '+') {
 			active++;
 		}
 	}
 	//Handle Buttons
-	if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")){
-		if(ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
+	if (ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")) {
+		if (ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
 			//stuff it in a function
 			//check through the list and see if its a door.
 			//if it is, make it dead and have interact decide what to do
 			for (int i = 0; i < EntityList.size(); i++) {
 				if (EntityList[i]->type == "Door") {
 					EntityList[i]->alive = false;
-					EntityList[i]->interact();	
+					EntityList[i]->interact();
 				}
 			}
 		}
-		else{
+		else {
 			for (int i = 0; i < EntityList.size(); i++) {
 				if (EntityList[i]->type == "Door") {
 					EntityList[i]->alive = true;
@@ -301,7 +335,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 
 }
 
-void createRoom(std::vector<Room*> &roomList, std::string place, std::string room) {
+void createRoom(std::vector<Room*>& roomList, std::string place, std::string room) {
 	//creates room with the identifiers "place" and "room
 	Room* newroom = new Room(place, room);
 	roomList.push_back(newroom);
@@ -334,19 +368,6 @@ int main() {
 		}
 	}
 
-	enum ScreenState {
-		MAP_RENDER,
-		BATTLE,
-		INVENTORY,
-		CUTSCENE,
-		TRADING,
-		MENU,
-		LEARNATK,
-		EQUIPMENT,
-
-		MAXSCREENSTATE
-
-	};
 
 
 	ShowCursor(FALSE);
@@ -367,14 +388,14 @@ int main() {
 	spear = new Spear;
 	Wingblade* wingblade;
 	wingblade = new Wingblade;
-	
+
 	weaponsList.push_back(spear);
 	weaponsList.push_back(wingblade);
 
 
-//	game.getWeaponList(weaponsList);
-	//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
-	//weaponsList[0]->setPlayerAttacks();
+	//	game.getWeaponList(weaponsList);
+		//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
+		//weaponsList[0]->setPlayerAttacks();
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
@@ -389,12 +410,10 @@ int main() {
 
 
 	std::vector<Entity*> EntityList;
+	std::vector<Enemy*> EnemyList;
 
-	InitGame(game, player, EntityList, "Nill", roomList);
+	InitGame(game, player, EntityList, "Nill", roomList, EnemyList);
 
-
-
-	
 	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
 	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
@@ -402,22 +421,42 @@ int main() {
 
 	//Set the encoding format of the console
 	SetConsoleOutputCP(CP_UTF8);
-	
+
 	//fullscreen
 	//SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-	system("pause");
-	_enemyThread = std::thread(enemyLoop, EntityList);
-	if (_enemyThread.joinable()) { //check if can be joined or detached
-		_enemyThread.join(); //be joined
-	}
-	
+	//system("pause");
+	_running = true;
+
+
+
 
 	while (true) {
+
 		//What is this
-		player.rmIndex = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
-		player.placeIndex = static_cast<int>(player.currentPlace[player.currentPlace.length() - 1]) - 49;
-		
+
+
 		if (game.curScreenState == MAP_RENDER) {
+			//if (Game::curScreenState == MAP_RENDER) {
+			//	for (int i = 0; i < EnemyList.size(); i++) {
+			//		//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
+			//		EnemyList[i]->nextMove(player.x, player.y, ROWS, COLUMNS);
+
+			//		const int userPosX = player.x;
+			//		const int userPosY = player.y;
+			//		const int enemyPosY = EnemyList[i]->x;
+			//		const int enemyPosX = EnemyList[i]->y;
+
+			//		int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
+
+			//		// collision test - stop before the same position
+			//		if (distanceToUser <= 2) {
+			//			EnemyList[i]->interact();
+			//		}
+
+			//		//int sleepMs = 100;
+
+			//	}
+			//}
 			//I genuinely don't know if constantly setting the font size is a good idea to be honest
 			cutscenes.ZoomIn();
 
@@ -445,21 +484,21 @@ int main() {
 					for (int i = 1; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
-									//
-									roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
-									roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
+								//
+								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
+								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
-									//Update the Room destination
+								//Update the Room destination
+								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
+								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
+								//check if the destination has "Place"
+								if (setter["Door" + std::to_string(i)].contains("Place")) {
 									player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
-									player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
-									//check if the destination has "Place"
-									if(setter["Door" + std::to_string(i)].contains("Place")){
-										player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
-									}
-								
-									InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
-									break;
 								}
+
+								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList);
+								break;
+							}
 						}
 					}
 					//in json, specify the door position range. Then store what door the plaayer when through
@@ -491,21 +530,26 @@ int main() {
 						for (int i = 0; i < 2; i++) {
 							int randDrop = rand() % game.itemList.size();
 							Consumables* consumable;
-							consumable = new Consumables(game.itemList[randDrop].itemType,game.itemList[randDrop].itemID);
+							consumable = new Consumables(game.itemList[randDrop].itemType, game.itemList[randDrop].itemID);
 							player.playerInventory.consumableStorage.push_back(consumable);
 							std::cout << "\nYou obtained " << consumable->name << '!';
 							Sleep(1000);
 						}
 						game.curScreenState = MAP_RENDER;
+						for (int f = 0; f < EnemyList.size(); f++) {
+							if (EnemyList[i]->hp <= 0) {
+								EnemyList.erase(EnemyList.begin() + f);
+							}
+						}
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);
-						
+
 
 					}
 				}
-				
+
 			}
-			
+
 		}
 		if (game.curScreenState == INVENTORY) {
 			for (int i = 0; i < player.playerInventory.storage.size(); i++) {
@@ -534,15 +578,18 @@ int main() {
 		if (game.curScreenState == EQUIPMENT) {
 			equipment.equipmentSelection();
 		}
-		
-			//std::cout << MapJson["TestMaps"].;
+
+		//std::cout << MapJson["TestMaps"].;
 
 
-			//;
+		//;
 		Effects::ClearScreen();
 	}
-	
-		//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
+	if (_enemyThread.joinable()) { //check if can be joined or detached
+		_enemyThread.join(); //be joined
+
+	}
+	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
 	_CrtDumpMemoryLeaks();
 	return 0;
