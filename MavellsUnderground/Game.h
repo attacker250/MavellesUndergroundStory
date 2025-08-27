@@ -27,6 +27,7 @@ public:
         MENU,
 		LEARNATK,
         EQUIPMENT,
+        MAIN_MENU,
 
         MAXSCREENSTATE,
     };
@@ -43,6 +44,7 @@ public:
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew);
     void MapEdit(int xpos, int ypos, char changeto);
+    void mainMenuScrn();
    // void getWeaponList(std::vector<Weapon*> weaponsList);
     Game();
     

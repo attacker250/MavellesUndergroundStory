@@ -61,6 +61,11 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 }
 
+void Game::mainMenuScrn()
+{
+	std::cout << "hi";
+}
+
 //void Game::getWeaponList(std::vector<Weapon*> weaponsList)
 //{
 //	for (int i = 0; i < weaponsList.size(); i++) {

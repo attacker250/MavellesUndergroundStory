@@ -2,28 +2,32 @@
 #include "Player.h"
 
 
-void Sword::move1(Enemy* enemy)
+int Sword::move1(Enemy* enemy)
 {
-	enemy->hp -= 100;
+	//enemy->hp -= 100;
 	std::cout << "HIT";
+	return 100;
 }
 
-void Sword::move2(Enemy* enemy)
+int Sword::move2(Enemy* enemy)
 {
-	enemy->hp -= 50;
+	//enemy->hp -= 50;
 	std::cout << "BONK!";
+	return 50;
 }
 
-void Sword::move3(Enemy* enemy)
+int Sword::move3(Enemy* enemy)
 {
-	enemy->hp -= 30;
+	//enemy->hp -= 30;
 	std::cout << "KAPOW!!!";
+	return 30;
 }
 
-void Sword::move4(Enemy* enemy)
+int Sword::move4(Enemy* enemy)
 {
-	enemy->hp -= 40;
+	//enemy->hp -= 40;
 	std::cout << "SMACK!";
+	return 40;
 }
 
 void Sword::setPlayerAttacks()

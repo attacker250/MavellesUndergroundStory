@@ -1,21 +1,24 @@
 #include "Weapon.h"
 
 
-void Weapon::move1(Enemy* enemy)
+int Weapon::move1(Enemy* enemy)
 {
-
+	return 0;
 }
 
-void Weapon::move2(Enemy* enemy)
+int Weapon::move2(Enemy* enemy)
 {
+	return 0;
 }
 
-void Weapon::move3(Enemy* enemy)
+int Weapon::move3(Enemy* enemy)
 {
+	return 0;
 }
 
-void Weapon::move4(Enemy* enemy)
+int Weapon::move4(Enemy* enemy)
 {
+	return 0;
 }
 
 void Weapon::setPlayerAttacks()

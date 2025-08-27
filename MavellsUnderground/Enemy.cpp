@@ -62,10 +62,11 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 		//Chasing(when less than 7)
 		const int directionCount = 4;
 		const int direction[directionCount][2] = {
-			{-1,0},
+			
 			{1,0},
 			{0,-1},
-			{0,1}
+			{0,1},
+			{-1,0}
 		};
 		int nextX = x;
 		int nextY = y;
@@ -73,8 +74,9 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 
 
 		for (int i = 0; i < directionCount; i++) {
-			int newRow = nextY + direction[i][0];
-			int newCol = nextX + direction[i][1];
+			int newRow = y + direction[i][0];
+			int newCol = x + direction[i][1];
+			
 
 			//prevent from out of the board
 			if (newRow >= 0 && newRow < boardHeight && newCol >= 0 && newCol < boardWidth) {
@@ -92,8 +94,6 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 		}
 
 		//update position
-		x = nextX;
-		y = nextY;
 	}
 	else {
 		//random move

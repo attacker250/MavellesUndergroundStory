@@ -43,7 +43,7 @@ bool Player::move(){
                 learnAtk("FIRE");
                 break;
             case ('u'):
-                learnAtk("FIRE");
+                curScreenState = MAIN_MENU;
                 break;
             case ('E'):
             case ('e'):

@@ -12,7 +12,26 @@
 #include <fstream>
 #include "json.hpp"
 
+enum types {
+    FIRE,
+    WATER,
+    GRASS,
 
+    MAX_TYPES
+};
+enum ScreenState {
+    MAP_RENDER,
+    BATTLE,
+    INVENTORY,
+    CUTSCENE,
+    TRADING,
+    MENU,
+    LEARNATK,
+    EQUIPMENT,
+    MAIN_MENU,
+
+    MAXSCREENSTATE,
+};
 
 int Battle::battleHp = 0;
 
@@ -23,7 +42,10 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
         std::cout << '\n';
         
     }
+    std::cout << battleEnemy->type << '\n';
 }
+
+
  
 
 //input enemy damage here
@@ -37,6 +59,9 @@ void Battle::EnemyTurn()
     std::string enemymssg = "\nThe enemy used " + battleEnemy->atkList[chosenAtk] + "!"; //pass in enemydmg
     typewriter(enemymssg, 20, 50);
     battlePlayer->hp -= enemydmg;
+    if (battlePlayer->hp <= 0) {
+        Game::curScreenState = MAIN_MENU;
+    }
     Sleep(300);
     system("cls");
 }
@@ -153,24 +178,59 @@ void Battle::AttackList() {
         std::cout << '\n';
         for (int i = 0; i < battlePlayer->playerInventory.weaponStorage.size(); i++) {
             if (battlePlayer->playerInventory.weaponStorage[i]->inUse) {
+                int dmg = 0;
+                int playertype = 0;
+                int enemytype = 0;
                 switch (getbtn + 1) {
                 case 1:
-                    battlePlayer->playerInventory.weaponStorage[i]->move1(battleEnemy);
+                    dmg = battlePlayer->playerInventory.weaponStorage[i]->move1(battleEnemy);
                     break;
 
                 case 2:
-                    battlePlayer->playerInventory.weaponStorage[i]->move2(battleEnemy);
+                    dmg = battlePlayer->playerInventory.weaponStorage[i]->move2(battleEnemy);
                     break;
 
                 case 3:
-                    battlePlayer->playerInventory.weaponStorage[i]->move3(battleEnemy);
+                    dmg = battlePlayer->playerInventory.weaponStorage[i]->move3(battleEnemy);
                     break;
 
                 case 4:
-                    battlePlayer->playerInventory.weaponStorage[i]->move4(battleEnemy);
+                    dmg = battlePlayer->playerInventory.weaponStorage[i]->move4(battleEnemy);
                     break;
                 }
+                if (battlePlayer->playerInventory.weaponStorage[i]->type == "Fire") {
+                    playertype = FIRE;
+                }
+                else if (battlePlayer->playerInventory.weaponStorage[i]->type == "Water") {
+                    playertype = WATER;
+                }
+                else if (battlePlayer->playerInventory.weaponStorage[i]->type == "Grass") {
+                    playertype = GRASS;
+                }
+
+                if (battleEnemy->type == "Fire") {
+                    playertype = FIRE;
+                }
+                else if (battleEnemy->type == "Water") {
+                    playertype = WATER;
+                }
+                else if (battleEnemy->type == "Grass") {
+                    playertype = GRASS;
+                }
+                if ((playertype == enemytype + 1) || (playertype == FIRE && enemytype == GRASS)) {
+                    dmg *= 2;
+                    std::cout << "\nIt was super effective!\n";
+                }
+                else if ((playertype == enemytype - 1) || (playertype == GRASS && enemytype == FIRE)) {
+                    dmg /= 2;
+                    std::cout << "\nIt was not very effective!\n";
+                }
+                Sleep(1000);
+
+
+                battleEnemy->hp -= dmg;
             }
+            
         }
         //Sleep(500);
         //txt = AtkJson[battlePlayer->atkList[getbtn]]["Action"];

@@ -69,30 +69,38 @@ enum ScreenState {
 	MENU,
 	LEARNATK,
 	EQUIPMENT,
+	MAIN_MENU,
 
-	MAXSCREENSTATE
-
+	MAXSCREENSTATE,
 };
 
-void enemyLoop(std::vector<Enemy*>& entityList, Player* player) {
+void loadingScrn() {
+	system("cls");
+	std::cout << "Loading...";
+}
+
+void enemyLoop(std::vector<Enemy*>& enemyList, Player* player) {
 
 	while (_running) {
 		if (Game::curScreenState == MAP_RENDER) {
 			for (int i = 0; i < size; i++) {
 				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
 				//std::cout << entityList.size();
-				entityList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
+				enemyList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
 
 				const int userPosX = player->x;
 				const int userPosY = player->y;
-				const int enemyPosY = entityList[i]->x;
-				const int enemyPosX = entityList[i]->y;
+				const int enemyPosX = enemyList[i]->x;
+				const int enemyPosY = enemyList[i]->y;
 
 				int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
 
 				// collision test - stop before the same position
-				if (distanceToUser <= 2) {
-					entityList[i]->interact();
+				if (distanceToUser <= 1) {
+					player->xmov = enemyList[i]->x - player->x;
+					player->ymov = enemyList[i]->y - player->y;
+					enemyList[i]->interact();
+					
 				}
 
 				//int sleepMs = 100;
@@ -147,11 +155,12 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	EntityList.clear();
 
 	//stop previous enemy thread
+	loadingScrn();
 	_running = false;
 	if (_enemyThread.joinable()) {
 		_enemyThread.join();
 	}
-
+	system("cls");
 	enemyList.clear();
 
 	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
@@ -390,6 +399,7 @@ int main() {
 	wingblade = new Wingblade;
 
 	weaponsList.push_back(spear);
+	player.playerInventory.weaponStorage.push_back(spear);
 	weaponsList.push_back(wingblade);
 
 
@@ -430,7 +440,7 @@ int main() {
 
 
 
-	while (true) {
+	while (game.curScreenState != MAIN_MENU) {
 
 		//What is this
 
@@ -522,7 +532,7 @@ int main() {
 		if (game.curScreenState == BATTLE) {
 			for (int i = 1; i < EntityList.size(); i++) {
 				if ((EntityList[i]->x == player.xmov + player.x) && (EntityList[i]->y == player.ymov + player.y)) {
-					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[i]));
+					battle.initBattle(static_cast<Enemy*>(EntityList[i]), static_cast<Player*>(EntityList[0]));
 					battle.PrintBattle();
 					battle.BattleMenu(game.curScreenState);
 					//std::cout << '\n' << game.curScreenState;
@@ -585,10 +595,32 @@ int main() {
 		//;
 		Effects::ClearScreen();
 	}
+	for (int i = 0; i < roomList.size(); i++) {
+		for (int f = 0; f < roomList[i]->entityRoomSave.size(); f++) {
+			if (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]) != nullptr) {
+				for (int r = 0; r < (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.size(); r++) {
+					delete (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage[r];
+				}
+				for (int r = 0; r < (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage.size(); r++) {
+					delete (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage[r];
+				}
+			}
+			delete roomList[i]->entityRoomSave[f];
+		}
+		roomList[i]->entityRoomSave.clear();
+		delete roomList[i];
+	}
+	roomList.clear();
+	for (int i = 0; i < player.playerInventory.consumableStorage.size(); i++) {
+		delete player.playerInventory.consumableStorage[i];
+	}
+	
+
 	if (_enemyThread.joinable()) { //check if can be joined or detached
 		_enemyThread.join(); //be joined
 
 	}
+	game.mainMenuScrn();
 	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
 	_CrtDumpMemoryLeaks();

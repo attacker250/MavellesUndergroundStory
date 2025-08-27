@@ -1,28 +1,32 @@
 #include "Spear.h"
 #include "Player.h"
 
-void Spear::move1(Enemy* enemy)
+int Spear::move1(Enemy* enemy)
 {
-    enemy->hp -= 100;
+    //enemy->hp -= 100;
     std::cout << "Poke";
+    return 100;
 }
 
-void Spear::move2(Enemy* enemy)
+int Spear::move2(Enemy* enemy)
 {
-    enemy->hp -= 50;
+    //enemy->hp -= 50;
     std::cout << "thrust";
+    return 50;
 }
 
-void Spear::move3(Enemy* enemy)
+int Spear::move3(Enemy* enemy)
 {
-    enemy->hp -= 30;
+//    enemy->hp -= 30;
     std::cout << "pointy!";
+    return 30;
 }
 
-void Spear::move4(Enemy* enemy)
+int Spear::move4(Enemy* enemy)
 {
-    enemy->hp -= 40;
+  //  enemy->hp -= 40;
     std::cout << "Spear Hit";
+    return 40;
 }
 
 void Spear::setPlayerAttacks()

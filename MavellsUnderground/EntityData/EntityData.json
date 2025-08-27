@@ -4,7 +4,7 @@
 
     "0": {
       "Name": "Scorpion",
-      "Type": "NONE",
+      "Type": "Grass",
       "HP": 50,
       "Portrait": [],
       "Attacks": [
@@ -25,7 +25,7 @@
 
     "1": {
       "Name": "Skeleton",
-      "Type": "NONE",
+      "Type": "Water",
       "HP": 80,
       "Portrait": [],
       "Attacks": [

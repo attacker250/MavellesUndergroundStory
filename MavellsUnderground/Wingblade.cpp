@@ -1,27 +1,31 @@
 #include "Wingblade.h"
 
-void Wingblade::move1(Enemy* enemy)
+int Wingblade::move1(Enemy* enemy)
 {
-	enemy->hp -= 30;
+	//enemy->hp -= 30;
 	std::cout << "Wingslash";
+	return 30;
 }
 
-void Wingblade::move2(Enemy* enemy)
+int Wingblade::move2(Enemy* enemy)
 {
-	enemy->hp -= 20;
+	//enemy->hp -= 20;
 	std::cout << "Air cutter";
+	return 20;
 }
 
-void Wingblade::move3(Enemy* enemy)
+int Wingblade::move3(Enemy* enemy)
 {
-	enemy->hp -= 50;
+	//enemy->hp -= 50;
 	std::cout << "Slash";
+	return 50;
 }
 
-void Wingblade::move4(Enemy* enemy)
+int Wingblade::move4(Enemy* enemy)
 {
-	enemy->hp - 10;
+	//enemy->hp - 10;
 	std::cout << "Air stuff idk";
+	return 10;
 }
 
 void Wingblade::setPlayerAttacks()
