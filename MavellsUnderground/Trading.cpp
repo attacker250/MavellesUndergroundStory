@@ -82,14 +82,25 @@ void Trading::buyingScreen()
 		std::cout << "|\n";
 		
 	}
-	std::cout << "|[" << std::to_string(TraderData->traderInventory.consumableStorage.size() + 1) << "]Back\n";
+	for (int i = 0; i < TraderData->traderInventory.weaponStorage.size(); i++) {
+		//std::cout << TraderData->traderInventory.consumableStorage[i]->name << '\n';
+		std::string text = "|[" + std::to_string(i + TraderData->traderInventory.consumableStorage.size() + 1) + ']' + TraderData->traderInventory.weaponStorage[i]->name + "   Value:" + std::to_string(TraderData->traderInventory.weaponStorage[i]->itemValue);
+		std::cout << text;
+		for (int f = 0; f < tradeUIWidth - text.length(); f++) {
+			std::cout << ' ';
+		}
+		std::cout << "|\n";
+
+	}
+	std::cout << "|[" << std::to_string(TraderData->traderInventory.consumableStorage.size() + TraderData->traderInventory.weaponStorage.size() + 1) << "]Back\n";
 	printBorder();
 	int getItem = static_cast<int>(_getch()) - 49;
-	if (TraderData->traderInventory.consumableStorage.size() == getItem) {
+	if (TraderData->traderInventory.consumableStorage.size() + TraderData->traderInventory.weaponStorage.size() == getItem) {
 		system("cls");
 		PrintTrade();
 		
 	}
+
 	else if (getItem < TraderData->traderInventory.consumableStorage.size() && getItem >= 0) {
 		if (PlayerData->playerInventory.coins >= TraderData->traderInventory.consumableStorage[getItem]->itemValue) {
 			PlayerData->playerInventory.coins -= TraderData->traderInventory.consumableStorage[getItem]->itemValue;
@@ -102,6 +113,20 @@ void Trading::buyingScreen()
 		}
 		Sleep(1000);
 		
+	}
+	else if (getItem < TraderData->traderInventory.consumableStorage.size() + TraderData->traderInventory.weaponStorage.size() && getItem >= 0) {
+		getItem -= TraderData->traderInventory.consumableStorage.size();
+		if (PlayerData->playerInventory.coins >= TraderData->traderInventory.weaponStorage[getItem]->itemValue) {
+			PlayerData->playerInventory.coins -= TraderData->traderInventory.weaponStorage[getItem]->itemValue;
+			PlayerData->playerInventory.weaponStorage.push_back(TraderData->traderInventory.weaponStorage[getItem]);
+			std::cout << "You purchased " << TraderData->traderInventory.weaponStorage[getItem]->name << "!\n";
+			TraderData->traderInventory.weaponStorage.erase(TraderData->traderInventory.weaponStorage.begin() + getItem);
+		}
+		else {
+			std::cout << "Insufficient coins! (You're broke!)";
+		}
+		Sleep(1000);
+
 	}
 	else {
 		buyingScreen();
@@ -122,24 +147,29 @@ void Trading::printBorder()
 
 void Trading::TradeMenu(int& curScreenState) {
 	PrintTrade();
+	printBorder();
 	std::cout << "\n|[1]Buy";
 	for (int j = 0; j < 33; j++) {
 		std::cout << ' ';
 	}
+	std::cout << '|';
 	std::cout << "\n|[2]Sell";
 	for (int j = 0; j < 32; j++) {
 		std::cout << ' ';
 	}
+	std::cout << '|';
 	std::cout << "\n|[3]Talk";
 	for (int j = 0; j < 32; j++) {
 		std::cout << ' ';
 	}
+	std::cout << '|';
 	std::cout << "\n|[4]Back";
 	for (int e = 0; e < 32; e++)
 	{
 		std::cout << ' ';
 
 	}
+	std::cout << '|';
 	std::cout << "|\n";
 
 
@@ -186,7 +216,7 @@ void Trading::TradeMenu(int& curScreenState) {
 			system("cls");
 			break;
 		default:
-			std::cout << "Invalid selection. Please choose 1, 2, or 3.\n";
+			//std::cout << "Invalid selection. Please choose 1, 2, or 3.\n";
 			system("cls");
 			PrintTrade();
 			break;

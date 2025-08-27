@@ -30,6 +30,8 @@
 #include "Weapon.h"
 #include "Sword.h"
 #include "Equipment.h"
+#include "Spear.h"
+#include "Wingblade.h"
 //SceneHeaders
 #include "Battle.h"
 #include "Trading.h"
@@ -54,7 +56,7 @@
 //	return false;
 //}
 
-
+std::vector<Weapon*> weaponsList;
 
 int returnRoomIndex(std::string place, std::string room, std::vector<Room*> &roomList) {
 	//gets the room index of the rm thats called "place" and "map" is in list
@@ -203,9 +205,9 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList.push_back(door);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 					break;
-				case 'S':
+				case 'T':
 					Trader * trader;
-					trader = new Trader;
+					trader = new Trader(weaponsList);
 					EntityList.push_back(trader);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 
@@ -233,7 +235,7 @@ void checkClearCondition(std::vector<Entity*>& EntityList){
 			active++;
 		}
 	}
-	//std::cout << active << '\n';
+	//Handle Buttons
 	if(ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")){
 		if(ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
 			//stuff it in a function
@@ -322,10 +324,17 @@ int main() {
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
-	Sword* sword;
-	sword = new Sword;
-	std::vector<Weapon*> weaponsList;
-	weaponsList.push_back(sword);
+
+	Spear* spear;
+	spear = new Spear;
+	Wingblade* wingblade;
+	wingblade = new Wingblade;
+	
+	weaponsList.push_back(spear);
+	weaponsList.push_back(wingblade);
+
+
+//	game.getWeaponList(weaponsList);
 	//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
 	//weaponsList[0]->setPlayerAttacks();
 
@@ -389,22 +398,24 @@ int main() {
 					//Second pos must be the larger value
 
 					//Check if the position of the doors and set the data acoordingly
-					for (int i = 0; i < setter["DoorCount"] + 1; i++) {
+					for (int i = 1; i < setter["DoorCount"] + 1; i++) {
 						if (setter["Door" + std::to_string(i)]["FirstPos"][0] <= PlayerIntendedX && setter["Door" + std::to_string(i)]["SecondPos"][0] >= PlayerIntendedX) {
 							if (setter["Door" + std::to_string(i)]["FirstPos"][1] <= PlayerIntendedY && setter["Door" + std::to_string(i)]["SecondPos"][1] >= PlayerIntendedY) {
-								
-								//
-								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
-								roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
+									//
+									roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
+									roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomSaveLayout(game.mapData);
 
-								//Update the Room destination
-								player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
-								player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
-
+									//Update the Room destination
+									player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
+									player.currentRoom = setter["Door" + std::to_string(i)]["Destination"];
+									//check if the destination has "Place"
+									if(setter["Door" + std::to_string(i)].contains("Place")){
+										player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
+									}
 								
-								InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
-								break;
-							}
+									InitGame(game, player, EntityList, "Door" + std::to_string(i),roomList);
+									break;
+								}
 						}
 					}
 					//in json, specify the door position range. Then store what door the plaayer when through

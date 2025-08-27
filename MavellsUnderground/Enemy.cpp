@@ -53,3 +53,61 @@ Enemy::Enemy(std::string map) {
 	}
 	
 }
+
+void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
+{
+	int distanceToUser = abs(y - playerY) + abs(x - playerX);
+	//bool running
+	if (distanceToUser <= 7) {
+		//Chasing(when less than 7)
+		const int directionCount = 4;
+		const int direction[directionCount][2] = {
+			{-1,0},
+			{1,0},
+			{0,-1},
+			{0,1}
+		};
+		int nextX = x;
+		int nextY = y;
+		int minDistance = 999;
+
+		for (int i = 0; i < directionCount; i++) {
+			int newRow = nextY + direction[i][0];
+			int newCol = nextX + direction[i][1];
+
+			//prevent from out of the board
+			if (newRow >= 0 && newRow < boardHeight && newCol >= 0 && newCol < boardWidth) {
+				int dist = abs(playerY - newRow) + abs(playerX - newCol);
+				if (dist < minDistance) {
+					minDistance = dist;
+					nextY = newRow;
+					nextX = newCol;
+				}
+			}
+		}
+		//update position
+		x = nextX;
+		y = nextY;
+	}
+	else {
+		//random move
+		int dir = rand() % 4;
+		int dRow = 0, dCol = 0;
+
+		switch (dir) {
+		case 0:dRow = -1; break;// up
+		case 1:dRow = 1; break;// down
+		case 2:dCol = -1; break;// left
+		case 3:dCol = 1; break;// right
+		}
+
+		int newRow = y + dRow;
+		int newCol = x + dCol;
+
+		//prevent from out of the board
+		if (newRow >= 0 && newRow < boardHeight && newCol >= 0 && newCol < boardWidth && mapData[newRow][newCol] == ' ') {
+			y = newRow;
+			x = newCol;
+		}
+	}
+}

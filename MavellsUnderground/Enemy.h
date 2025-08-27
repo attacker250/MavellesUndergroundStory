@@ -3,12 +3,27 @@
 #include <string>
 #include <vector>
 
+
+enum EnemyState {
+	Patrol,
+	Chase,
+	Return
+};
+
 class Enemy : public Entity
 {
+	int patrolMove = 1;
+	int patrolCounter = 0;
+	int patrolMax = 5;
+
+
 public:
 
+	//bool move() override;
+	void nextMove(int x, int y, int boardHeight, int boardWidth);
 	void interact() override;
 	Enemy(std::string map);
+	//void nextMove(Player* userPos, int boardHeight, int boardWidth);
 	~Enemy(){
 		/*mapData[y][x] = ' ';*/
 		

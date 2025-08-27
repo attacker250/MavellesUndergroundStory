@@ -7,7 +7,7 @@
 class Effects
 {
 public:
-	void changeColor(int desiredColor);
+	static void changeColor(int desiredColor);
 	void typewriter(std::string text, int delay, int maxChar);
 	static void ClearScreen();
 	static void ShowConsoleCursor(bool showFlag);

@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 
+
 class Weapon
 {
 public:
@@ -13,6 +14,7 @@ public:
 	virtual void move3(Enemy* enemy);
 	virtual void move4(Enemy* enemy);
 	virtual void setPlayerAttacks();
+	int itemValue = 0;
 	bool inUse = false;
 	std::string name = "";
 	std::string description = "";

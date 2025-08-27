@@ -7,6 +7,8 @@
 #include "Room.h"
 #include "Battle.h"
 
+//std::vector<Weapon*> Game::weaponList;
+
 Consumables Game::returnItem(std::string type, int itemID) {
 	Consumables obj(type, itemID);
 	return obj;
@@ -58,6 +60,13 @@ void Game::MapEdit(int xpos, int ypos, char changeto){
 
 
 }
+
+//void Game::getWeaponList(std::vector<Weapon*> weaponsList)
+//{
+//	for (int i = 0; i < weaponsList.size(); i++) {
+//		weaponList.push_back(weaponsList[i]);
+//	}
+//}
 
 Game::Game()
 {

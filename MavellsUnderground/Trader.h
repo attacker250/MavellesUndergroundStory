@@ -4,6 +4,8 @@
 #include "json.hpp"
 #include "Trader.h"
 #include "Inventory.h"
+#include <vector>
+#include "Weapon.h"
 
 
 class Trader : public Entity
@@ -11,7 +13,8 @@ class Trader : public Entity
 
 public:
 	Inventory traderInventory;
-	Trader();
+	std::vector<Weapon*> weaponList;
+	Trader(std::vector<Weapon*> weaponsList);
 	void interact();
 	const int traderInvSize = 5;
 };

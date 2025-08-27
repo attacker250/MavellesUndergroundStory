@@ -12,6 +12,7 @@ public:
 	void setPlayerAttacks() override;
 
 	Wingblade() {
+		itemValue = 60;
 		name = "Wingblade";
 		description = "A pair of wings with serrated edges";
 	}

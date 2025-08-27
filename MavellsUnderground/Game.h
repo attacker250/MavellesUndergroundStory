@@ -5,6 +5,7 @@
 #include "Effects.h"
 
 
+
 class Game : public Effects
 {
 public:
@@ -42,6 +43,7 @@ public:
     char getPos(int xpos, int ypos);
     void LoadMap(std::string Map, std::string room, char roomData[ROWS][COLUMNS], bool ifNew);
     void MapEdit(int xpos, int ypos, char changeto);
+   // void getWeaponList(std::vector<Weapon*> weaponsList);
     Game();
     
     void learnScreen();
@@ -60,6 +62,7 @@ public:
     static char mapData[ROWS][COLUMNS];
     static bool enteredRm[SECTORS][ROOMS];
     static int curScreenState;
+
 
 
     //Game() {

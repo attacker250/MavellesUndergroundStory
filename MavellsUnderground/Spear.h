@@ -13,6 +13,7 @@ public:
 	Spear() {
 		name = "Spear";
 		description = "A cold-bloodstained spear";
+		itemValue = 30;
 	}
 };
 
