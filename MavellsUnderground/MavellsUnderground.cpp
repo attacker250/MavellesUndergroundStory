@@ -397,8 +397,8 @@ int main() {
 	
 	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
-	HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
-	ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
+	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
+	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
 
 	//Set the encoding format of the console
 	SetConsoleOutputCP(CP_UTF8);
@@ -406,10 +406,11 @@ int main() {
 	//fullscreen
 	//SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 	system("pause");
+	_enemyThread = std::thread(enemyLoop, EntityList);
 	if (_enemyThread.joinable()) { //check if can be joined or detached
 		_enemyThread.join(); //be joined
 	}
-	_enemyThread = std::thread(enemyLoop, EntityList);
+	
 
 	while (true) {
 		//What is this
