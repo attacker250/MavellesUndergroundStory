@@ -8,6 +8,9 @@
 #include <vector>
 #include "Battle.h"
 
+#include "json.hpp"
+#include <fstream>
+
 class Battle : public Effects
 {
 public:
@@ -22,26 +25,38 @@ public:
 
 		MAXSCREENSTATE,
 	};
+	
+	//Misc
 	static int battleHp;
 	const static int atkListSize = 3;
 	Player* battlePlayer;
+	
+	
+	//Check if player is still in battle
 	bool stillbattle = false;
-	//static std::string atkList[atkListSize];
+
+	//Useless
 	static std::string atkLearn;
-	
-	Enemy *battleEnemy;
 
-	//std::vector<Entity*> entityListBattle;
-	//std::string atkList[4];
-	
+	//Get Enemy
+	Enemy* battleEnemy;
 
+	//Way to handle if the player is still fighting
 	void BattleMode();
+	
+	//
 	void AttackList();
+
 	void ItemList();
 	void PrintBattle();
 	void BattleMenu(int& curScreenState);
 	void EnemyTurn();
 	void initBattle(Enemy* enemy, Player* player);
+
+	//Enemy attack Data
+	std::ifstream fAtkData{ "MoveData.json" };
+    nlohmann::json AtkJson = nlohmann::json::parse(fAtkData);
+
 
 };
 

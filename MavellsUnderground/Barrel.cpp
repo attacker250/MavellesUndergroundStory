@@ -10,14 +10,14 @@ Barrel::Barrel() {
 
 
 void Barrel::interact() {
-	//Cutscenes::key = "Barrel";
-	//if (!firstInteraction) {
-	//	Cutscenes::InteractionKey = "First";
-	//	Cutscenes zoom;
-	//	zoom.ZoomOut();
-	//	//firstInteraction = true;
-	//	curScreenState = CUTSCENE;
-	//}
+	Cutscenes::key = "Barrel";
+	if (!firstInteraction) {
+		Cutscenes::InteractionKey = "First";
+		Cutscenes zoom;
+		zoom.ZoomOut();
+		//firstInteraction = true;
+		curScreenState = CUTSCENE;
+	}
 	
 
 	//Give items based on Entity Data(PLEASE)
@@ -29,11 +29,11 @@ void Barrel::interact() {
 	//	Player::playerInventory.consumableStorage.push_back(newConsumable);
 	//}
 
-	Spear* sword;
-	sword = new Spear;
-	//sword->setPlayerAttacks();
+	//Spear* sword;
+	//sword = new Spear;
+	////sword->setPlayerAttacks();
 
-	Player::playerInventory.weaponStorage.push_back(sword);
+	//Player::playerInventory.weaponStorage.push_back(sword);
 	//std::cout << "BARREL INTERACT";
 		
 }

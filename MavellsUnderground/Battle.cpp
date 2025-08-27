@@ -17,24 +17,6 @@
 int Battle::battleHp = 0;
 
 void Battle::PrintBattle() { //to be replaced with enemy ASCII
-   /* const int width = 41;
-    const int height = 12;
-    const int inner = 39;
-    for (int i = 0; i < 41; i++) {
-        std::cout << '_';
-    }
-    std::cout << "\n";
-    for (int i = 0; i < height; i++) {
-        std::cout << '|';
-        for (int j = 0; j < inner; j++) {
-            std::cout << ' ';
-        }
-        std::cout << '|' << std::endl;
-    }
-    for (int i = 0; i < width; i++) {
-        std::cout << '-';
-    }*/
-    //char size = battleEnemy->portrait.size()
     for (int i = 0; i < battleEnemy->portrait.size(); i++) {
 
 		std::cout << battleEnemy->portrait[i];
@@ -47,8 +29,7 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
 //input enemy damage here
 void Battle::EnemyTurn()
 {
-    std::ifstream fEnemydata("EntityData/EntityData.json");
-    auto EnemyJson = nlohmann::json::parse(fEnemydata);
+
     Sleep(300);
     srand(time(0));
     int chosenAtk = rand() % battleEnemy->atkList.size();
@@ -76,10 +57,13 @@ void Battle::BattleMode() {
 	//to be changed to enemy class hp
 	std::string WinMessage = "You Won!";
 	
+    //Check if enemy defeated
 	if (battleHp <= 0) {
 		stillbattle = false;
         typewriter(WinMessage, 40, 50);
 	}
+
+    //On first enter
     if (stillbattle == false) {
         std::cout << "\n";
         std::string Encounter = "You encountered a wild " + battleEnemy->name + '!';
@@ -90,6 +74,7 @@ void Battle::BattleMode() {
         PrintBattle();
         BattleMode();
     }
+    //Print menu
     else {
         std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
         std::cout << "Your HP:" << battlePlayer->hp << '\n';
@@ -119,22 +104,22 @@ void Battle::ItemList() {
         PrintBattle();
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0) {
-        std::string txt = "You chose " + (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->name + '!';
+        std::string txt = "You chose " + battlePlayer->playerInventory.consumableStorage[getbtn]->name + '!';
         typewriter(txt, 20, 40);
         std::cout << '\n';
         typewriter(battlePlayer->playerInventory.consumableStorage[getbtn]->description, 20, 60);
-        if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
-            std::cout << (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
-            (static_cast<Player*>(battlePlayer))->hp += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
-            std::cout << (static_cast<Player*>(battlePlayer))->hp;
+        if (battlePlayer->playerInventory.consumableStorage[getbtn]->itemType == "Healing") {
+            std::cout << battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+            battlePlayer->hp += battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+            std::cout << battlePlayer->hp;
         }
-        else if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemType == "Buff") {
-            (static_cast<Player*>(battlePlayer))->dmgModifier += (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
+        else if (battlePlayer->playerInventory.consumableStorage[getbtn]->itemType == "Buff") {
+            battlePlayer->dmgModifier += battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness;
         }
-        (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[getbtn]->consume(1);
-        for (int i = 0; i < (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.size(); i++) {
-            if ((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage[i]->broken) {
-                (static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.erase((static_cast<Player*>(battlePlayer))->playerInventory.consumableStorage.begin() + i);
+        battlePlayer->playerInventory.consumableStorage[getbtn]->consume(1);
+        for (int i = 0; i < battlePlayer->playerInventory.consumableStorage.size(); i++) {
+            if (battlePlayer->playerInventory.consumableStorage[i]->broken) {
+                battlePlayer->playerInventory.consumableStorage.erase(battlePlayer->playerInventory.consumableStorage.begin() + i);
             }
         }
         battlePlayer->consumeItem(battlePlayer->playerInventory.consumableStorage[getbtn]->itemType, battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
@@ -161,8 +146,7 @@ void Battle::AttackList() {
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0){
         
-        std::ifstream fAtkData("MoveData.json");
-        auto AtkJson = nlohmann::json::parse(fAtkData);
+
 
         std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
         typewriter(txt, 20, 40);

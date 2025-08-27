@@ -32,7 +32,7 @@ Enemy::Enemy(std::string map) {
 	// system("pause");
 	//int enemyIndex = 1;
 
-
+	 
 	std::string enemyIndex = std::to_string(rand() % (EnemyJson[map].size()-1));
 	hp = EnemyJson[map][enemyIndex]["HP"];
 		//std::cout << hp;
@@ -108,6 +108,7 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 		if (newRow >= 0 && newRow < boardHeight && newCol >= 0 && newCol < boardWidth && mapData[newRow][newCol] == ' ') {
 			y = newRow;
 			x = newCol;
+			updatePos(x, y);
 		}
 	}
 }

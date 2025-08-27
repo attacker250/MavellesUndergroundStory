@@ -11,6 +11,7 @@ class Barrel: public Entity {
 		Inventory barrelinventory;
 		Barrel();
 		void interact();
+		//Check what stage of interaction
 		bool firstInteraction = false ;
 };
 	

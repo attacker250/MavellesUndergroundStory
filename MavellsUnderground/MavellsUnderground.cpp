@@ -43,7 +43,9 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
-
+std::thread _enemyThread;
+std::atomic<bool> _running{ false };
+bool inGame = true;
 //bool checkmove(char Mapdata[12][40], int Newy, int NewX, int ROWS, int COLS){
 //	for (int i = 0; i < 12; i++){
 //		for (int j = 0; j < 40; j++){
@@ -55,6 +57,42 @@
 //	}
 //	return false;
 //}
+enum boarddimensions {
+	COLUMNS = 40,
+	ROWS = 13
+};
+
+void enemyLoop(std::vector<Entity*> entityList) {
+	while (_running) {
+
+		for (int i = 0; i < entityList.size(); i++) {
+			entityList[i]->nextMove(entityList[0]->x, entityList[0]->y, ROWS, COLUMNS);
+
+			const int userPosX = entityList[0]->x;
+			const int userPosY = entityList[0]->y;
+			const int enemyPosY = entityList[i]->x;
+			const int enemyPosX = entityList[i]->y;
+
+			int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
+
+			// collision test - stop before the same position
+			if (distanceToUser <= 1) {
+				entityList[i]->interact();
+			}
+
+			int sleepMs = 1000;
+			if (distanceToUser <= 5) {
+				sleepMs = 500;
+			}
+			else if (distanceToUser <= 10) {
+				sleepMs = 750;
+			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
+		}
+		
+	}
+}
+
 
 std::vector<Weapon*> weaponsList;
 
@@ -217,6 +255,8 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 
 			}
 		}
+		
+
 	}
 	//
 	// 
@@ -269,6 +309,7 @@ void createRoom(std::vector<Room*> &roomList, std::string place, std::string roo
 
 
 int main() {
+
 	srand(time(0));
 
 	std::vector<std::string> placeList;
@@ -307,10 +348,7 @@ int main() {
 
 	};
 
-	enum boarddimensions {
-		COLUMNS = 40,
-		ROWS = 13
-	};
+
 	ShowCursor(FALSE);
 
 	Game game;
@@ -359,14 +397,19 @@ int main() {
 	
 	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
 	//Maximize window
-	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
-	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
+	HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
+	ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
 
 	//Set the encoding format of the console
 	SetConsoleOutputCP(CP_UTF8);
 	
 	//fullscreen
-	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	//SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	system("pause");
+	if (_enemyThread.joinable()) { //check if can be joined or detached
+		_enemyThread.join(); //be joined
+	}
+	_enemyThread = std::thread(enemyLoop, EntityList);
 
 	while (true) {
 		//What is this

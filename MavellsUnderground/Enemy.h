@@ -20,7 +20,7 @@ class Enemy : public Entity
 public:
 
 	//bool move() override;
-	void nextMove(int x, int y, int boardHeight, int boardWidth);
+	void nextMove(int x, int y, int boardHeight, int boardWidth) override;
 	void interact() override;
 	Enemy(std::string map);
 	//void nextMove(Player* userPos, int boardHeight, int boardWidth);

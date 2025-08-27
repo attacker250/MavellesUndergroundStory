@@ -5,7 +5,7 @@
 Trader::Trader(std::vector<Weapon*> weaponsList)
 {
 	srand(time(0));
-	icon = 'S';
+	icon = 'T';
 	int ifWeaponInventory = rand() % 10;
 	std::cout << ifWeaponInventory;
 	//Sleep(3000);
