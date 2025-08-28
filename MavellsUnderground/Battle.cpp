@@ -42,7 +42,7 @@ void Battle::PrintBattle() { //to be replaced with enemy ASCII
         std::cout << '\n';
         
     }
-    std::cout << battleEnemy->type << '\n';
+    std::cout <<"Type: " << battleEnemy->type << '\n';
 }
 
 

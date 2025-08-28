@@ -21,10 +21,9 @@ void Barrel::interact() {
 		system("cls");
 		firstInteraction = true;
 		curScreenState = MAP_RENDER;
-	
+		//Give Sword
 
-
-		//firstInteraction = true;
+		Player::playerInventory.addWeapon("Sword");
 	}
 	
 

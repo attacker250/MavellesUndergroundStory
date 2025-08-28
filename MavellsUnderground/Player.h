@@ -28,6 +28,7 @@ public:
 	bool move() override;
 	void learnAtk(std::string atkName);
 	void consumeItem(std::string typeItem, int effectiveness, int itemIndex);
+
 	Player() {
 		icon = 'P';
 		atkList.push_back("TestAttack1");

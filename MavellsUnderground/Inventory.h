@@ -10,9 +10,14 @@ public:
 	std::vector<std::string> storage;
 	std::vector <Consumables*> consumableStorage;
 	std::vector<Weapon*> weaponStorage;
+	static std::vector<Weapon*> weaponList;
+
+	static void initWeaponList(std::vector<Weapon*> mainWeaponList);
 	void addItem(std::string itemName);
 	void consumeItem(int itemIndex);
 	bool removeItem(std::string itemName);
+	int getWeaponID(std::string weaponName);
+	void addWeapon(std::string weaponName);
 	int coins = 0;
 };
 

@@ -26,6 +26,7 @@
 #include "PlayerInventoryScreen.h"
 #include "Weapon.h"
 #include "Equipment.h"
+#include "Skeleton.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -287,7 +288,13 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					trader = new Trader(weaponsList);
 					EntityList.push_back(trader);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
-
+					break;
+				case 'S':
+					Skeleton * skeleton;
+					skeleton = new Skeleton;
+					EntityList.push_back(skeleton);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+				
 				}
 
 
@@ -426,9 +433,13 @@ int main() {
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
-	//Disapointment.
+	//ACCEPTANCE.
 	std::vector<std::string> weaponNames;
-	
+	for (auto& el : ItemJson["Weapons"].items()) {
+		weaponNames.push_back(el.key());	
+	}
+
+
 	for (int i = 0; i < weaponNames.size(); i++) {
 		Weapon* newWeapon;
 		newWeapon = new Weapon(weaponNames[i]);
@@ -436,18 +447,12 @@ int main() {
 	}
 
 
-
-
-	//	game.getWeaponList(weaponsList);
-		//player.playerInventory.weaponStorage.push_back(weaponsList[0]);
-		//weaponsList[0]->setPlayerAttacks();
+	Inventory::initWeaponList(weaponsList);
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
 	player.currentRoom = "Room1";
 	player.currentPlace = "Cave";
-
-	//player.playerInventory.consumableStorage.push_back()
 
 	//init the thought path
 	game.key = "Thoughts";
@@ -474,7 +479,7 @@ int main() {
 	cutscenes.ZoomIn();
 	std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/";
 	//Doing a zoomin here kills it for some reason
-	Sleep(3000);
+	Sleep(3500);
 	system("cls");
 	std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
 	Sleep(3000);
@@ -497,30 +502,15 @@ int main() {
 		if (game.curScreenState == MAIN_MENU) {
 			cutscenes.ZoomIn();
 			game.mainMenuScrn();
+			player.lastDoor = "Door1";
+			player.RoomDestination = "Room1";
+			player.currentRoom = "Room1";
+			player.currentPlace = "Cave";
+			game.key = "Thoughts";
+			game.InteractionKey = "Intro";
 			old_time = time(0);
 		}
 		if (game.curScreenState == MAP_RENDER) {
-			//if (Game::curScreenState == MAP_RENDER) {
-			//	for (int i = 0; i < EnemyList.size(); i++) {
-			//		//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
-			//		EnemyList[i]->nextMove(player.x, player.y, ROWS, COLUMNS);
-
-			//		const int userPosX = player.x;
-			//		const int userPosY = player.y;
-			//		const int enemyPosY = EnemyList[i]->x;
-			//		const int enemyPosX = EnemyList[i]->y;
-
-			//		int distanceToUser = abs(userPosX - enemyPosX) + abs(userPosY - enemyPosY);
-
-			//		// collision test - stop before the same position
-			//		if (distanceToUser <= 2) {
-			//			EnemyList[i]->interact();
-			//		}
-
-			//		//int sleepMs = 100;
-
-			//	}
-			//}
 			//I genuinely don't know if constantly setting the font size is a good idea to be honest
 			cutscenes.ZoomIn();
 

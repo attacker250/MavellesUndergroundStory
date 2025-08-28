@@ -46,6 +46,10 @@ void Equipment::printEquipment()
 	}
 	std::cout << '\n';
 	if (selectedObj != Player::playerInventory.weaponStorage.size()) {
+		std::string typeText = "|Type: " + Player::playerInventory.weaponStorage[selectedObj]->type + " ";
+		std::cout << typeText;
+		fitBox(inventoryWidth, typeText);
+		std::cout << "|\n";
 		std::cout << "|Description:";
 		fitBox(inventoryWidth, "|Description:");
 		std::cout << " |\n";

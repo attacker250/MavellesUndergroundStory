@@ -70,7 +70,22 @@
         ]
       }
     }
+  },
+  "Skeleton": {
+    "Cave": {
+      "Room1": {
+        "First": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "A skeleton?",
+              "Stars!",
+              "I better get out of here soon. I don’t want to end up like that."
+            ]
+          }
+        ]
+      }
+    }
   }
-
 }
    

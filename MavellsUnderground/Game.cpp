@@ -61,10 +61,6 @@ char Game::getPos(int x, int y){
 }
 
 
-void Game::MapEdit(int xpos, int ypos, char changeto){
-
-
-}
 
 void Game::mainMenuScrn(){
 	system("cls");
@@ -112,6 +108,9 @@ void Game::mainMenuScrn(){
 	//clear starting screen and render map
 	int getbtnNumber = (getbtn - '0');
 	if (getbtnNumber == 1) {
+
+
+
 		Cutscenes::key = "Intro";
 		Cutscenes::InteractionKey = "Intro";
 		system("cls");

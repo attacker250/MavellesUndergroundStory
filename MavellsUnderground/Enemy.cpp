@@ -3,8 +3,7 @@
 #include <fstream>
 #include "json.hpp"
 #include <ctime>
-
-
+#include "Player.h"
 
 
 //SET ENEMY HP FOR BATTLE RAHHH
@@ -20,21 +19,15 @@ Enemy::Enemy(std::string map) {
 	std::ifstream fEnemydata("EntityData/EntityData.json");
 	auto EnemyJson = nlohmann::json::parse(fEnemydata);
 
-	// system("cls");
-
-
-	// if (EnemyJson.contains("0")) {
-	// 	std::cout << EnemyJson.contains("0");
-	// }
-	// else {
-	// 	std::cout << EnemyJson.items();
-	// 	//std::cout << "hii";
-	// }
-	// system("pause");
-	//int enemyIndex = 1;
-
+	std::string enemyIndex;
+	//tutorial enemy
+	if (map == "Cave" && Player::currentRoom == "Room2") {
+		enemyIndex = "1";
+	}
+	else {
+		enemyIndex = std::to_string(rand() % (EnemyJson[map].size()-1));
+	}
 	 
-	std::string enemyIndex = std::to_string(rand() % (EnemyJson[map].size()-1));
 	hp = EnemyJson[map][enemyIndex]["HP"];
 		//std::cout << hp;
 	name = EnemyJson[map][enemyIndex]["Name"];

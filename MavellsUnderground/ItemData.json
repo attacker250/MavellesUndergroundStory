@@ -68,22 +68,22 @@
       "AttackList": [
         {
           "Name": "Slash",
-          "Damage": 100,
+          "Damage": 20,
           "Description": "You slash forward"
         },
         {
           "Name": "Cut",
-          "Damage": 50,
+          "Damage": 10,
           "Description": "You cut their hair"
         },
         {
           "Name": "Stab",
-          "Damage": 10  ,
+          "Damage": 40  ,
           "Description": "You stab yourself (and them)"
         },
         {
           "Name": "Plunge",
-          "Damage": 60,
+          "Damage": 50,
           "Description": "You plunged the spear into their chest"
 
         }

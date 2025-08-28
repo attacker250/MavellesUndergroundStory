@@ -143,6 +143,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInventoryScreen.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="TestEnemyClass.cpp" />
     <ClCompile Include="Trader.cpp" />
     <ClCompile Include="Trading.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInventoryScreen.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="TestEnemyClass.h" />
     <ClInclude Include="Trader.h" />
     <ClInclude Include="Trading.h" />

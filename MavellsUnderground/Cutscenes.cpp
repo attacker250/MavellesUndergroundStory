@@ -27,9 +27,6 @@ void Cutscenes::ZoomOut() {
 
     cfi.dwFontSize.X = 0.5;                   // Width of each character in the font
     cfi.dwFontSize.Y = 3;
-
-
-
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 
 }
@@ -57,7 +54,7 @@ bool Cutscenes::PlayScene() {
     std::cout << AsciiPrint("------------------------------");
 
     if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Text") {
-        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Dialogue"][Dialogue].size();
+        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Dialogue"].size() - 1;
         FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"].size() - 1;
         std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Frames"][i].get<std::string>();
         std::cout << AsciiPrint("------------------------------");
@@ -75,7 +72,7 @@ bool Cutscenes::PlayScene() {
     }
     if (DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Type"] == "Branch") {
         FrameSize = CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice].size() - 1;
-        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][Dialogue].size();
+        dialogueSetSize = DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice].size() - 1;
         std::cout << CutsceneJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][i].get<std::string>();
         std::cout << AsciiPrint("------------------------------");
         std::cout << AsciiPrint(DialogueJson[key][currentPlace][currentRoom][InteractionKey][SceneNo]["Branches"][dialogueChoice][Dialogue].get<std::string>());
@@ -119,8 +116,6 @@ bool Cutscenes::PlayScene() {
                 FrameSize = 0;
                 
                 return true;
-                //Player::curScreenState = Player::ScreenState::MAP_RENDER;
-
                 cfi.dwFontSize.X = 0;                   // Width of each character in the font
                 cfi.dwFontSize.Y = 23;
                 SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
@@ -177,7 +172,6 @@ std::string Cutscenes::AsciiPrint(std::string input) {
                 if (FontJson["Default"].contains(converter)) {
                     words += FontJson["Default"][converter][d];
                 }
-
             }
             words += "\n";
         }
