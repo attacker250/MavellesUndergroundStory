@@ -46,21 +46,33 @@ void Equipment::printEquipment()
 	}
 	std::cout << '\n';
 	if (selectedObj != Player::playerInventory.weaponStorage.size()) {
-		std::string typeText = "|Type: " + Player::playerInventory.weaponStorage[selectedObj]->type;
+		std::string typeText = "|Elemental Type: " + Player::playerInventory.weaponStorage[selectedObj]->type;
 		std::cout << typeText;
 		fitBox(inventoryWidth + 1, typeText);
 		std::cout << "|\n";
 		std::cout << "|Description:";
 		fitBox(inventoryWidth, "|Description:");
 		std::cout << " |\n";
-		std::cout << "|" << Player::playerInventory.weaponStorage[selectedObj]->description;
-		fitBox(inventoryWidth, Player::playerInventory.weaponStorage[selectedObj]->description);
+		std::cout << "|   " << Player::playerInventory.weaponStorage[selectedObj]->description;
+		fitBox(inventoryWidth-3, Player::playerInventory.weaponStorage[selectedObj]->description);
 		std::cout << "|\n|";
 		for (int i = 0; i < inventoryWidth; i++) {
 			std::cout << '-';
 		}
-		std::cout << "|";
+		std::cout << "|\n|Moves:";
+		for (int i = 0; i < Player::playerInventory.weaponStorage[selectedObj]->weaponAtk.size(); i++) {
+			std::cout << "\n|  [" << i+1 << "]" << Player::playerInventory.weaponStorage[selectedObj]->weaponAtk[i].name;
+			std::cout << "\n|    Description:" << Player::playerInventory.weaponStorage[selectedObj]->weaponAtk[i].description;
+			std::cout << "\n|    Damage:" << Player::playerInventory.weaponStorage[selectedObj]->weaponAtk[i].damage;
+		}
+
+		std::cout << "|\n|";
+		for (int i = 0; i < inventoryWidth; i++) {
+			std::cout << '-';
+		}
+		std::cout << "|\n";
 	}
+	std::cout << "->Enter to activate/equip";
 }
 
 void Equipment::equipmentSelection()

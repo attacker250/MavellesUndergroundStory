@@ -60,6 +60,8 @@ void PlayerInventoryScreen::printInventory(){
 			std::cout << '-';
 		}
 		std::cout << "|";
+		std::cout << "\n->Enter to activate/equip";
+
 	}
 }
 

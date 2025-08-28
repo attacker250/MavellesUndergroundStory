@@ -15,6 +15,7 @@ bool Player::move(){
         xmov = 0;
         ymov = 0;
         char getbtn = static_cast<char>(_getch());
+        bool verify = true;
         switch (getbtn) {
             case ('a'): 
             case ('A'):
@@ -43,7 +44,18 @@ bool Player::move(){
                 learnAtk("FIRE");
                 break;
             case ('u'):
-                curScreenState = MAIN_MENU;
+                system("cls");
+                std::cout << "Are You Sure You want to return to the main menu?\n              [Y]Yes              [N]No";
+                while (verify) {
+                    getbtn = _getch();
+                    if (getbtn == 'y' || getbtn == 'Y') {
+                        curScreenState = MAIN_MENU;
+                        break;
+                    }
+                    else if (getbtn == 'n' || getbtn == 'N') {
+                        verify = false;
+                    }
+                }
                 break;
             case ('E'):
             case ('e'):
