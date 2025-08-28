@@ -36,16 +36,58 @@
   ],
   "Weapons": {
     "Spear": {
+      "Description": "A cold-bloodstained spear",
+      "Element": "Fire",
       "AttackList": [
         {
-          "Name": "Attack",
-          "Damage": 1,
-          "eleemtn": "frie",
-          "Status": "Poision SHit"
+          "Name": "Poke",
+          "Damage": 100,
+          "Description": "You strike forward"
+        },
+        {
+          "Name": "Stab",
+          "Damage": 50,
+          "Description": "You pierce their soul (or smth)"
+        },
+        {
+          "Name": "Flourish",
+          "Damage": 0,
+          "Description": "You flourished your spear! (Gained an attack boost!)"
+        },
+        {
+          "Name": "Plunge",
+          "Damage": 60,
+          "Description": "You plunged the spear into their chest"
 
         }
-      ],
-      "Desc": "hi"
+      ]
+    },
+    "Sword": {
+      "Description": "A fine iron sword",
+      "Element": "Water",
+      "AttackList": [
+        {
+          "Name": "Slash",
+          "Damage": 100,
+          "Description": "You slash forward"
+        },
+        {
+          "Name": "Cut",
+          "Damage": 50,
+          "Description": "You cut their hair"
+        },
+        {
+          "Name": "Stab",
+          "Damage": 10  ,
+          "Description": "You stab yourself (and them)"
+        },
+        {
+          "Name": "Plunge",
+          "Damage": 60,
+          "Description": "You plunged the spear into their chest"
+
+        }
+      ]
     }
   }
 }

@@ -2,7 +2,6 @@
 #include "Player.h"
 #include <iostream>
 #include "Cutscenes.h"
-#include "Spear.h"
 #include "Effects.h"
 
 Barrel::Barrel() {
@@ -22,6 +21,7 @@ void Barrel::interact() {
 		system("cls");
 		firstInteraction = true;
 		curScreenState = MAP_RENDER;
+	
 
 
 		//firstInteraction = true;

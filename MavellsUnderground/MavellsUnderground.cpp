@@ -25,10 +25,8 @@
 #include "Trader.h"
 #include "PlayerInventoryScreen.h"
 #include "Weapon.h"
-#include "Sword.h"
 #include "Equipment.h"
-#include "Spear.h"
-#include "Wingblade.h"
+
 //SceneHeaders
 #include "Battle.h"
 #include "Trading.h"
@@ -398,6 +396,9 @@ int main() {
 	std::ifstream fDialoguedata("Animations/Dialogue.json");
 	auto DialogueJson = nlohmann::json::parse(fDialoguedata);
 
+	std::ifstream fItemdata("ItemData.json");
+	auto ItemJson = nlohmann::json::parse(fItemdata);
+
 	//???
 	for (int i = 0; i < placeList.size(); i++) {
 		for (int f = 0; f < MapJson[placeList[i]].size(); f++) {
@@ -426,13 +427,15 @@ int main() {
 	Effects::ShowConsoleCursor(false);
 
 	//Disapointment.
-	Spear* spear;
-	spear = new Spear;
-	Wingblade* wingblade;
-	wingblade = new Wingblade;
+	std::vector<std::string> weaponNames;
+	
+	for (int i = 0; i < weaponNames.size(); i++) {
+		Weapon* newWeapon;
+		newWeapon = new Weapon(weaponNames[i]);
+		weaponsList.push_back(newWeapon);
+	}
 
-	weaponsList.push_back(spear);
-	weaponsList.push_back(wingblade);
+
 
 
 	//	game.getWeaponList(weaponsList);
