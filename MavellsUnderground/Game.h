@@ -13,6 +13,7 @@ public:
         std::string itemType = "";
         int itemID = 0;
     };
+
     static bool gameQuit;
 
     enum mapDimensions {
@@ -38,7 +39,7 @@ public:
     };
     const static char roomCount = 2;
 	
-    std::vector<itemPath> itemList;
+    static std::vector<itemPath> itemList;
     bool testNew = false;
     std::vector<std::string> weaponAdd;
 

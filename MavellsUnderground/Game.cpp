@@ -8,10 +8,15 @@
 #include "Battle.h"
 #include "Cutscenes.h"
 
+
+
+
 //std::vector<Weapon*> Game::weaponList;
 std::string Game::key;
 std::string Game::InteractionKey;
+std::vector<Game::itemPath> Game::itemList;
 bool Game::gameQuit = false;
+
 
 Consumables Game::returnItem(std::string type, int itemID) {
 	Consumables obj(type, itemID);
@@ -22,8 +27,8 @@ Consumables Game::returnItem(std::string type, int itemID) {
 
 char Game::mapData[ROWS][COLUMNS];
 
-int Game::curScreenState = MAIN_MENU;
-//int Game::curScreenState = MAP_RENDER;
+//int Game::curScreenState = MAIN_MENU;
+int Game::curScreenState = MAP_RENDER;
 
 
 //char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];

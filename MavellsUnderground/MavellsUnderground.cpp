@@ -82,10 +82,8 @@ void enemyLoop(std::vector<Enemy*>& enemyList, Player* player) {
 
 	while (_running) {
 		if (Game::curScreenState == MAP_RENDER) {
+
 			for (int i = 0; i < size; i++) {
-				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
-				//std::cout << entityList.size();
-				enemyList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
 
 				const int userPosX = player->x;
 				const int userPosY = player->y;
@@ -99,8 +97,12 @@ void enemyLoop(std::vector<Enemy*>& enemyList, Player* player) {
 					player->xmov = enemyList[i]->x - player->x;
 					player->ymov = enemyList[i]->y - player->y;
 					enemyList[i]->interact();
-					
+
 				}
+				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
+				//std::cout << entityList.size();
+				enemyList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
+
 
 				//int sleepMs = 100;
 
@@ -623,21 +625,14 @@ int main() {
 							_enemyThread.join();
 						}
 						system("cls");
-						for (int i = 0; i < 2; i++) {
-							int randDrop = rand() % game.itemList.size();
-							Consumables* consumable;
-							consumable = new Consumables(game.itemList[randDrop].itemType, game.itemList[randDrop].itemID);
-							player.playerInventory.consumableStorage.push_back(consumable);
-							std::cout << "\nYou obtained " << consumable->name << '!';
-							Sleep(1000);
-						}
+						
 						game.curScreenState = MAP_RENDER;
 						for (int f = 0; f < EnemyList.size(); f++) {
 							if (EnemyList[f]->hp <= 0) {
 								EnemyList.erase(EnemyList.begin() + f);
 							}
 						}
-						delete EntityList[i];
+						delete static_cast<Enemy*>(EntityList[i]);
 						EntityList.erase(EntityList.begin() + i);
 
 						size--;

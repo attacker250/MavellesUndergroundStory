@@ -10,5 +10,6 @@ public:
 	int selectedObj = 0;
 	void printInventory();
 	void inventorySelection();
+
 };
 

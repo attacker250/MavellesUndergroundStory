@@ -13,6 +13,7 @@ Weapon::Weapon(std::string weaponName)
 	name = weaponName;
 	description = weaponJson["Weapons"][weaponName]["Description"];
 	type = weaponJson["Weapons"][weaponName]["Element"];
+	itemValue = weaponJson["Weapons"][weaponName]["Value"];
 	for (int i = 0; i < weaponJson["Weapons"][weaponName]["AttackList"].size(); i++) {
 		atkData attackData;
 		attackData.damage = weaponJson["Weapons"][weaponName]["AttackList"][i]["Damage"];

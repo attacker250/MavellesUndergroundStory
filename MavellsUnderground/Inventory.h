@@ -13,11 +13,17 @@ public:
 	static std::vector<Weapon*> weaponList;
 
 	static void initWeaponList(std::vector<Weapon*> mainWeaponList);
+
 	void addItem(std::string itemName);
-	void consumeItem(int itemIndex);
+	void addItem(int itemID);
+	
+	void consumeItem(int itemIndex, int& hp, int& dmgBuff);
 	bool removeItem(std::string itemName);
 	int getWeaponID(std::string weaponName);
+	int getConsumableID(std::string name);
 	void addWeapon(std::string weaponName);
+	
+
 	int coins = 0;
 };
 

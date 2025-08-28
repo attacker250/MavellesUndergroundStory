@@ -1,5 +1,5 @@
 #include "Inventory.h"
-
+#include "Game.h"
 
 std::vector<Weapon*> Inventory::weaponList;
 
@@ -11,17 +11,25 @@ void Inventory::initWeaponList(std::vector<Weapon*> mainWeaponList)
 }
 
 void Inventory::addItem(std::string itemName){
-	storage.push_back(itemName);
+	Consumables* consumable;
+	consumable = new Consumables(Game::itemList[getConsumableID(itemName)].itemType, Game::itemList[getConsumableID(itemName)].itemID);
+	consumableStorage.push_back(consumable);
 }
 
-void Inventory::consumeItem(int itemID)
+void Inventory::addItem(int itemID) {
+	Consumables* consumable;
+	consumable = new Consumables(Game::itemList[itemID].itemType, Game::itemList[itemID].itemID);
+	consumableStorage.push_back(consumable);
+}
+
+void Inventory::consumeItem(int itemID, int &hp, int &dmgBuff)
 {
-	//if (consumableStorage[itemID]->itemType == "Healing") {
-	//	Player::hp += consumableStorage[itemID]->itemEffectiveness;
-	//}
-	//else if (consumableStorage[itemID]->itemType == "Buff") {
-	//	Player::dmgModifier += consumableStorage[itemID]->itemEffectiveness;
-	//}
+	if (consumableStorage[itemID]->itemType == "Healing") {
+		hp += consumableStorage[itemID]->itemEffectiveness;
+	}
+	else if (consumableStorage[itemID]->itemType == "Buff") {
+		dmgBuff += consumableStorage[itemID]->itemEffectiveness;
+	}
 	consumableStorage[itemID]->consume(1);
 }
 
@@ -52,3 +60,19 @@ void Inventory::addWeapon(std::string weaponName)
 {
 	weaponStorage.push_back(weaponList[getWeaponID(weaponName)]);
 }
+
+
+int Inventory::getConsumableID(std::string name)
+{
+	int consumableIndex = 0;
+
+	for (int i = 0; i < Game::itemList.size(); i++) {
+		Consumables consumable(Game::itemList[i].itemType, Game::itemList[i].itemID);
+		if (consumable.name == name) {
+			consumableIndex = i;
+		}
+	}
+	return consumableIndex;
+}
+
+

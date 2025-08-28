@@ -78,7 +78,7 @@ void PlayerInventoryScreen::inventorySelection()
 		break;
 	case '\r':
 		if (selectedObj < Player::playerInventory.consumableStorage.size()){
-			Player::playerInventory.consumeItem(selectedObj);
+			Player::consumeItem(selectedObj);
 			if (Player::playerInventory.consumableStorage[selectedObj]->broken) {
 				delete Player::playerInventory.consumableStorage[selectedObj];
 				Player::playerInventory.consumableStorage.erase(Player::playerInventory.consumableStorage.begin() + selectedObj);
@@ -101,5 +101,3 @@ void PlayerInventoryScreen::inventorySelection()
 	
 
 }
-
-
