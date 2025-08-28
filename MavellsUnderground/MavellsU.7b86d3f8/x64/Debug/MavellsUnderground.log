@@ -1,2 +1,22 @@
-﻿  Game.cpp
-  MavellsUnderground.vcxproj -> C:\Users\doubl\OneDrive\Documents\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe
+﻿  MavellsUnderground.cpp
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267: 'argument': conversion from 'size_t' to 'const _Ty', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         with
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         [
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:             _Ty=int
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(176,23): warning C4267:         ]
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(302,23): warning C4267: 'argument': conversion from 'size_t' to 'const _Ty', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(302,23): warning C4267:         with
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(302,23): warning C4267:         [
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(302,23): warning C4267:             _Ty=int
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(302,23): warning C4267:         ]
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(383,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(492,18): warning C4244: 'initializing': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(502,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(610,20): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(667,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(673,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(684,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(690,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(695,19): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\MavellsUnderground.cpp(129,1): warning C4715: 'returnRoomIndex': not all control paths return a value
+  MavellsUnderground.vcxproj -> C:\Users\xxatt\OneDrive\Desktop\MavellesUndergroundStory\MavellsUnderground\x64\Debug\MavellsUnderground.exe

@@ -3,23 +3,15 @@
     {
       "Name": "Bread",
       "Effectiveness": 25,
-      "Description": "Its bread (wow)",
+      "Description": "Bread. Old with a hint of stale",
       "Durability": 1,
-      "Value":5,
+      "Value": 5,
       "Lore": "Hi"
-    },
-    {
-      "Name": "Fart",
-      "Effectiveness": 5,
-      "Description": "A stinky fart (eww)",
-      "Durability": 3,
-      "Value": 0,
-      "Lore": "Bye"
     },
     {
       "Name": "Meat",
       "Effectiveness": 50,
-      "Description": "Its meat (yum)",
+      "Description": "Meat...I hope its not from a monster...",
       "Durability": 1,
       "Value": 10,
       "Lore": "Sad"
@@ -27,7 +19,7 @@
     {
       "Name": "Potion",
       "Effectiveness": 100,
-      "Description": "A magical potion (ahh)",
+      "Description": "Red Goodness",
       "Durability": 1,
       "Value": 15,
       "Lore": "Happy"
@@ -36,10 +28,24 @@
     {
       "Name": "Elixir",
       "Effectiveness": 200,
-      "Description": "A magical elixir (woah)",
+      "Description": "Sharp Wellness",
       "Durability": 1,
       "Value": 25,
       "Lore": "Ooga"
     }
-  ]
+  ],
+  "Weapons": {
+    "Spear": {
+      "AttackList": [
+        {
+          "Name": "Attack",
+          "Damage": 1,
+          "eleemtn": "frie",
+          "Status": "Poision SHit"
+
+        }
+      ],
+      "Desc": "hi"
+    }
+  }
 }

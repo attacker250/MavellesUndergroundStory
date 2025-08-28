@@ -425,14 +425,13 @@ int main() {
 	game.resetRooms();
 	Effects::ShowConsoleCursor(false);
 
-
+	//Disapointment.
 	Spear* spear;
 	spear = new Spear;
 	Wingblade* wingblade;
 	wingblade = new Wingblade;
 
 	weaponsList.push_back(spear);
-	player.playerInventory.weaponStorage.push_back(spear);
 	weaponsList.push_back(wingblade);
 
 
@@ -445,10 +444,6 @@ int main() {
 	player.currentRoom = "Room1";
 	player.currentPlace = "Cave";
 
-	Consumables* item1 = new Consumables("Healing", 0);
-	player.playerInventory.consumableStorage.push_back(item1);
-	Consumables* item2 = new Consumables("Healing", 1);
-	player.playerInventory.consumableStorage.push_back(item2);
 	//player.playerInventory.consumableStorage.push_back()
 
 	//init the thought path
@@ -499,6 +494,7 @@ int main() {
 		if (game.curScreenState == MAIN_MENU) {
 			cutscenes.ZoomIn();
 			game.mainMenuScrn();
+			old_time = time(0);
 		}
 		if (game.curScreenState == MAP_RENDER) {
 			//if (Game::curScreenState == MAP_RENDER) {
@@ -562,6 +558,7 @@ int main() {
 								}
 
 								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList);
+								dialog = 0;
 								break;
 							}
 						}
@@ -662,12 +659,14 @@ int main() {
 				}
 
 			}
-
+			old_time = time(0);
 		}
 		//???????????????????????????? WHY DO WE HAVE TWO OF THESE????????
 
 		if (game.curScreenState == LEARNATK) {
 			game.learnScreen();
+			old_time = time(0);
+
 		}
 		if (game.curScreenState == TRADING) {
 			for (int i = 1; i < EntityList.size(); i++) {
@@ -677,15 +676,18 @@ int main() {
 					std::cout << '\n' << game.curScreenState;
 				}
 			}
-
+			old_time = time(0);
 
 		}
 		//??????????????????
 		if (game.curScreenState == INVENTORY) {
 			playerInventory.inventorySelection();
+			old_time = time(0);
+
 		}
 		if (game.curScreenState == EQUIPMENT) {
 			equipment.equipmentSelection();
+			old_time = time(0);
 		}
 
 		//std::cout << MapJson["TestMaps"].;

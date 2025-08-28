@@ -20,6 +20,7 @@ void Barrel::interact() {
 		curScreenState = CUTSCENE;
 		while (!zoom.PlayScene())Effects::ClearScreen();
 		system("cls");
+		firstInteraction = true;
 		curScreenState = MAP_RENDER;
 
 
