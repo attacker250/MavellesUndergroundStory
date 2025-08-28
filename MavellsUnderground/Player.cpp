@@ -11,6 +11,7 @@ int Player::hp = maxHp;
 int Player::dmgModifier = 0;
 
 bool Player::move(){
+    bool verify = true;
     if (_kbhit()){
         xmov = 0;
         ymov = 0;
@@ -38,12 +39,25 @@ bool Player::move(){
                 xmov++;
                 break;
 
-            case ('i'):
-                playerInventory.addItem("SWORD");
-                learnAtk("FIRE");
-                break;
+            //case ('i'):
+            //    playerInventory.addItem("SWORD");
+            //    learnAtk("FIRE");
+            //    break;
             case ('u'):
-                gameQuit = true;
+                system("cls");
+                std::cout << "Are You Sure You want to return to the main menu?\n              [Y]Yes              [N]No";
+                
+                while (verify) {
+                    //char verify = _getch();
+                    getbtn = _getch();
+                    if (getbtn == 'y' || getbtn == 'Y') {
+                        curScreenState = MAIN_MENU;
+                        break;
+                    }
+                    else if (getbtn == 'n' || getbtn == 'N') {
+                        verify = false;
+                    }
+                }
                 break;
             case ('E'):
             case ('e'):
