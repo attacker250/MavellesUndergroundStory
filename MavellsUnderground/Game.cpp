@@ -8,10 +8,15 @@
 #include "Battle.h"
 #include "Cutscenes.h"
 
+
+
+
 //std::vector<Weapon*> Game::weaponList;
 std::string Game::key;
 std::string Game::InteractionKey;
+std::vector<Game::itemPath> Game::itemList;
 bool Game::gameQuit = false;
+
 
 Consumables Game::returnItem(std::string type, int itemID) {
 	Consumables obj(type, itemID);

@@ -73,19 +73,17 @@ enum ScreenState {
 	MAXSCREENSTATE,
 };
 
-void loadingScrn(std::string addon = "") {
+void loadingScrn() {
 	system("cls");
-	std::cout << "Loading" + addon + "...";
+	std::cout << "Loading...";
 }
 
 void enemyLoop(std::vector<Enemy*>& enemyList, Player* player) {
 
 	while (_running) {
 		if (Game::curScreenState == MAP_RENDER) {
+
 			for (int i = 0; i < size; i++) {
-				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
-				//std::cout << entityList.size();
-				enemyList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
 
 				const int userPosX = player->x;
 				const int userPosY = player->y;
@@ -99,8 +97,12 @@ void enemyLoop(std::vector<Enemy*>& enemyList, Player* player) {
 					player->xmov = enemyList[i]->x - player->x;
 					player->ymov = enemyList[i]->y - player->y;
 					enemyList[i]->interact();
-					
+
 				}
+				//if (dynamic_cast<Enemy*>(entityList[i]) != nullptr) {
+				//std::cout << entityList.size();
+				enemyList[i]->nextMove(player->x, player->y, ROWS, COLUMNS);
+
 
 				//int sleepMs = 100;
 
@@ -138,7 +140,11 @@ bool checkIn(std::string place, std::string room, std::vector<Room*>& roomList) 
 }
 
 
-void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door, std::vector<Room*>& roomList, std::vector<Enemy*>& enemyList ,nlohmann::json MapJson) {
+void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std::string door, std::vector<Room*>& roomList, std::vector<Enemy*>& enemyList) {
+
+
+	std::ifstream fMapdata("MapData/MapData.json");
+	auto MapJson = nlohmann::json::parse(fMapdata);
 	game.LoadMap(player.currentPlace, player.RoomDestination, roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->roomData, roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom);
 	if (EntityList.size() > 0) {
 		for (int i = 1; i < EntityList.size(); i++) {
@@ -150,11 +156,12 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	EntityList.clear();
 
 	//stop previous enemy thread
-	loadingScrn(" maps");
+	loadingScrn();
 	_running = false;
 	if (_enemyThread.joinable()) {
 		_enemyThread.join();
 	}
+	system("cls");
 	enemyList.clear();
 
 	if (!roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
@@ -174,14 +181,14 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	_enemyThread = std::thread(enemyLoop, std::ref(enemyList), &player);
 	//_running = false;
 
-	
 
 
 
 	//game.checkMap();
-	nlohmann::json Data = MapJson[player.currentPlace][player.RoomDestination];
+	auto Data = MapJson[player.currentPlace][player.RoomDestination];
 	//system("pause");
 	//player.spawn(MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][0], MapJson["TestMaps"][player.lastVisitedRoom][player.lastDoor]["FirstPos"][1]);
+
 
 	//game.checkMap();
 	if (door != "Nill") {
@@ -221,7 +228,11 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 	else {
 		player.spawn(20, 6);
 	}
-	//Slows the loading process -> Change the system 
+	//game.checkMap();
+
+
+//	system("cls");
+
 	if (roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom) {
 		roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom = false;
 		EntityList.push_back(&player);
@@ -287,10 +298,14 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					EntityList[EntityList.size() - 1]->spawn(f, i);
 				
 				}
+
+
+
 			}
 		}
+
+
 	}
-	system("cls");
 	size = enemyList.size();
 }
 
@@ -374,28 +389,16 @@ int main() {
 
 	srand(time(0));
 
+	std::vector<std::string> placeList;
+	std::vector<std::string> itemTypeList;
 
 
-	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
-	//Maximize window
-	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
-	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
+	std::vector<Room*> roomList;
 
-	//Set the encoding format of the console
-	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-	SetConsoleOutputCP(CP_UTF8);
-	ShowCursor(FALSE);
+	placeList.push_back("Cave");
 
-	
-	//Set the max size or something (Cutscenes break if you don't Zoom out first)
 
 	//Json load
-
-
-	loadingScrn();
-	Game game;
-	game.cutscenes.ZoomOut();
-	loadingScrn();
 	std::ifstream fMapdata("MapData/MapData.json");
 	auto MapJson = nlohmann::json::parse(fMapdata);
 
@@ -404,71 +407,97 @@ int main() {
 
 	std::ifstream fItemdata("ItemData.json");
 	auto ItemJson = nlohmann::json::parse(fItemdata);
-	game.cutscenes.ZoomIn();
-	system("cls");
-	std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/\nCertain Screens may take a while to load even if there is no loading text\n[Press any Key to continue]";
-	char enter;
-	enter = _getch();
-	system("cls");
-	loadingScrn();
+
+	//???
+
+
+
+
+	ShowCursor(FALSE);
+
+	//Ready all important stuff
+	Game game;
 	Battle battle;
 	Player player;
 	Trading trading;
+	Cutscenes cutscenes;
 	PlayerInventoryScreen playerInventory;
 	Equipment equipment;
-
-	std::vector<std::string> placeList;
-	std::vector<std::string> itemTypeList;
-	std::vector<Room*> roomList;
-	placeList.push_back("Cave");
-
-
-	//???
-	for (int i = 0; i < placeList.size(); i++) {
-		for (int f = 0; f < MapJson[placeList[i]].size(); f++) {
-			std::string txt = "";
-			txt = "Room" + std::to_string(f + 1);
-			createRoom(roomList, placeList[i], txt);
-		}
-	}
-	//Ready all important stuff
-	//???
-	game.resetRooms();
-	Effects::ShowConsoleCursor(false);
-	//ACCEPTANCE.
 	std::vector<std::string> weaponNames;
-	for (auto& el : ItemJson["Weapons"].items()) {
-		weaponNames.push_back(el.key());	
-	}
-	for (int i = 0; i < weaponNames.size(); i++) {
-		Weapon* newWeapon;
-		newWeapon = new Weapon(weaponNames[i]);
-		weaponsList.push_back(newWeapon);
-	}
-
-
-	Inventory::initWeaponList(weaponsList);
-
-	player.lastDoor = "Door1";
-	player.RoomDestination = "Room1";
-	player.currentRoom = "Room1";
-	player.currentPlace = "Cave";
-
-	//init the thought path
-	game.key = "Thoughts";
-	game.InteractionKey = "Intro";
 
 	std::vector<Entity*> EntityList;
 	std::vector<Enemy*> EnemyList;
-	InitGame(game, player, EntityList, "Nill", roomList, EnemyList, MapJson);
+
+	//???
+	//if default curScreenState is not MAIN_MENU, leave line 429-474
+	//otherwise comment them
+
+
+	//for (int i = 0; i < placeList.size(); i++) {
+	//	for (int f = 0; f < MapJson[placeList[i]].size(); f++) {
+	//		std::string txt = "";
+	//		txt = "Room" + std::to_string(f + 1);
+	//		//std::cout << MapJson[placeList[i]];
+	//		createRoom(roomList, placeList[i], txt);
+	//	}
+	//}
+
+	//game.resetRooms();
+	//Effects::ShowConsoleCursor(false);
+
+	////ACCEPTANCE.
+	//// 
+
+
+	//for (int i = 0; i < weaponNames.size(); i++) {
+	//	Weapon* newWeapon;
+	//	newWeapon = new Weapon(weaponNames[i]);
+	//	weaponsList.push_back(newWeapon);
+	//}
+
+
+	//Inventory::initWeaponList(weaponsList);
+
+	//player.lastDoor = "Door1";
+	//player.RoomDestination = "Room1";
+	//player.currentRoom = "Room1";
+	//player.currentPlace = "Cave";
+
+	////init the thought path
+	//game.key = "Thoughts";
+	//game.InteractionKey = "Intro";
+
+
+	cutscenes.ZoomOut();
+
+
+	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
+	//Maximize window
+	//HWND consoleWindow = GetConsoleWindow(); // This gets the value Windows uses to identify your output window
+	//ShowWindow(consoleWindow, SW_MAXIMIZE); // this mimics clicking on its' maximize button
+
+	//Set the encoding format of the console
+	SetConsoleOutputCP(CP_UTF8);
+
+	//Set the max size or something (Cutscenes break if you don't Zoom out first)
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+
 	//Intro Splash Screen
-	system("cls");
-	std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
-	Sleep(3000);
-	system("cls");
-	std::cout << "Dedicated to Group 10";
-	Sleep(3000);
-	system("cls");
+	for (auto& el : ItemJson["Weapons"].items()) {
+		weaponNames.push_back(el.key());
+	}
+
+	//cutscenes.ZoomIn();
+	//std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/";
+	////Doing a zoomin here kills it for some reason
+	//Sleep(3500);
+	//system("cls");
+	//std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
+	//Sleep(3000);
+	//system("cls");
+	//std::cout << "Dedicated to Group 10";
+	//Sleep(3000);
+	//system("cls");
 	//fullscreen
 	//system("pause");
 	_running = true;
@@ -482,20 +511,10 @@ int main() {
 
 		//What is 
 		if (game.curScreenState == MAIN_MENU) {
+			
+			cutscenes.ZoomIn();
 
-			game.cutscenes.ZoomIn();
-			_running = false;
-			loadingScrn();
-			if (_enemyThread.joinable()) { //check if can be joined or detached
-				_enemyThread.join(); //be joined
-			}
-			if (EntityList.size() > 0) {
-				roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
-			}
-			EntityList.clear();
-			EnemyList.clear();
 			for (int i = 0; i < roomList.size(); i++) {
-				//for (const Entity *e : roomList[i]->entityRoomSave) {
 				for (int f = 0; f < roomList[i]->entityRoomSave.size(); f++) {
 					if (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]) != nullptr) {
 						for (int r = 0; r < (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.size(); r++) {
@@ -507,24 +526,32 @@ int main() {
 						(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.clear();
 						(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage.clear();
 					}
-					//	system("cls");
-					if (dynamic_cast<Player*>(roomList[i]->entityRoomSave[f]) == nullptr) {
-						delete roomList[i]->entityRoomSave[f];
-					}
+					system("cls");
+					std::cout << i;
+					std::cout << f;
+					std::cout << roomList.at(i)->entityRoomSave.at(f);
+					system("pause");
+					//delete roomList[i]->entityRoomSave[f];
+					delete roomList[i]->entityRoomSave[f];
+					//
+					// roomList[i]->entityRoomSave[f] = nullptr;
 				}
 				roomList[i]->entityRoomSave.clear();
 				delete roomList[i];
+
 			}
 			roomList.clear();
 			for (int i = 0; i < player.playerInventory.consumableStorage.size(); i++) {
 				delete player.playerInventory.consumableStorage[i];
 			}
+			//for (int i = 0; i < player.playerInventory.weaponStorage.size(); i++) {
+			//	delete player.playerInventory.weaponStorage[i];
+			//}
 
 			for (int i = 0; i < weaponsList.size(); i++) {
 				delete weaponsList[i];
 			}
-			//s
-
+			EnemyList.clear();
 			weaponsList.clear();
 			player.playerInventory.consumableStorage.clear();
 			player.playerInventory.weaponStorage.clear();
@@ -538,9 +565,17 @@ int main() {
 					createRoom(roomList, placeList[i], txt);
 				}
 			}
+
 			game.resetRooms();
 			Effects::ShowConsoleCursor(false);
+
 			//ACCEPTANCE.
+			// 
+
+
+
+
+
 			for (int i = 0; i < weaponNames.size(); i++) {
 				Weapon* newWeapon;
 				newWeapon = new Weapon(weaponNames[i]);
@@ -554,15 +589,16 @@ int main() {
 			player.RoomDestination = "Room1";
 			player.currentRoom = "Room1";
 			player.currentPlace = "Cave";
+
 			//init the thought path
 			game.key = "Thoughts";
 			game.InteractionKey = "Intro";
-			InitGame(game, player, EntityList, "Nill", roomList, EnemyList, MapJson);
+			InitGame(game, player, EntityList, "Nill", roomList, EnemyList);
 			game.mainMenuScrn();
 		}
 		if (game.curScreenState == MAP_RENDER) {
 			//I genuinely don't know if constantly setting the font size is a good idea to be honest
-			game.cutscenes.ZoomIn();
+			cutscenes.ZoomIn();
 
 			//print out map
 
@@ -581,7 +617,7 @@ int main() {
 					}
 				}
 				if ((PlayerIntendedX) >= COLUMNS || (PlayerIntendedY) >= ROWS || (PlayerIntendedX) <= 0 || (PlayerIntendedY) <= 0) {
-					nlohmann::json setter = MapJson[player.currentPlace][player.currentRoom];
+					auto setter = MapJson[player.currentPlace][player.currentRoom];
 					//Second pos must be the larger value
 
 					//Check if the position of the doors and set the data acoordingly
@@ -600,7 +636,7 @@ int main() {
 									player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								}
 
-								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList, MapJson);
+								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList);
 								dialog = 0;
 								break;
 							}
@@ -619,20 +655,9 @@ int main() {
 
 			std::cout << Map;
 
-			//Thoughts System
-			std::cout << "\n<-------------------------------------->\nThoughts: ";
-			if (time(0) - old_time == 2 && DialogueJson[game.key][player.currentPlace][player.currentRoom].contains(game.InteractionKey)) {
-				//Timer
-				old_time = time(0);
-				std::cout << DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"][dialog].get<std::string>();
-				//make it so if it doesnt have the key, it plays a random thought
-				if (dialog < DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"].size() - 1) {
-					dialog++;
-				}
-			}
 			//Legend System
 			//today, i commit crimes because i have no mental pseverance any more
-			std::cout << "\n<-------------------------------------->\nLegend:\n";
+			std::cout << "Legend:\n";
 			std::vector<char> check;
 			std::vector<std::string> desc;
 			check.push_back('P');
@@ -649,14 +674,20 @@ int main() {
 				}
 			}
 			for (int d = 0; d < check.size(); d++) {
-				std::cout << "   " << check[d] << ":" << desc[d] << "\n";
+				std::cout << check[d] << ":" << desc[d] << "\n";
 			}
-			std::cout << "<-------------------------------------->";
-			//"Tutorial"
-			std::cout << "\nKeybinds:\n   AWSD:Move\n   Q:Equips\n   E:Inventory\n   U:Main Menu\n   Walk into things to interact";
-			std::cout << "\n<-------------------------------------->";
-
-
+			
+			//Thoughts System
+			std::cout << "Thoughts:";
+			if (time(0) - old_time == 2 && DialogueJson[game.key][player.currentPlace][player.currentRoom].contains(game.InteractionKey)) {
+				//Timer
+				old_time = time(0);
+				std::cout << DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"][dialog].get<std::string>();
+				//make it so if it doesnt have the key, it plays a random thought
+				if (dialog < DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"].size() - 1) {
+					dialog++;
+				}
+			}
 
 			if (game.curScreenState != MAP_RENDER) {
 				system("cls");
@@ -678,21 +709,14 @@ int main() {
 							_enemyThread.join();
 						}
 						system("cls");
-						for (int i = 0; i < 2; i++) {
-							int randDrop = rand() % game.itemList.size();
-							Consumables* consumable;
-							consumable = new Consumables(game.itemList[randDrop].itemType, game.itemList[randDrop].itemID);
-							player.playerInventory.consumableStorage.push_back(consumable);
-							std::cout << "\nYou obtained " << consumable->name << '!';
-							Sleep(1000);
-						}
+						
 						game.curScreenState = MAP_RENDER;
 						for (int f = 0; f < EnemyList.size(); f++) {
 							if (EnemyList[f]->hp <= 0) {
 								EnemyList.erase(EnemyList.begin() + f);
 							}
 						}
-						delete EntityList[i];
+						delete static_cast<Enemy*>(EntityList[i]);
 						EntityList.erase(EntityList.begin() + i);
 
 						size--;

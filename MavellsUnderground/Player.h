@@ -27,7 +27,7 @@ public:
 
 	bool move() override;
 	void learnAtk(std::string atkName);
-	void consumeItem(std::string typeItem, int effectiveness, int itemIndex);
+	static void consumeItem(int itemIndex);
 
 	Player() {
 		icon = 'P';

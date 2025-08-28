@@ -6,6 +6,7 @@
       "Name": "Scorpion",
       "Type": "Grass",
       "HP": 50,
+      "DropCount": 2,
       "Portrait": [],
       "Attacks": [
         {
@@ -27,6 +28,7 @@
       "Name": "Skeleton",
       "Type": "Water",
       "HP": 80,
+      "DropCount": 2,
       "Portrait": [],
       "Attacks": [
         {

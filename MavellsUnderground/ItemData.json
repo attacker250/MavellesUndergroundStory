@@ -37,7 +37,8 @@
   "Weapons": {
     "Spear": {
       "Description": "A cold-bloodstained spear",
-      "Element": "Fire",
+      "Element": "Water",
+      "Value": 60,
       "AttackList": [
         {
           "Name": "Poke",
@@ -65,6 +66,7 @@
     "Sword": {
       "Description": "A fine iron sword",
       "Element": "Water",
+      "Value" :  50,
       "AttackList": [
         {
           "Name": "Slash",

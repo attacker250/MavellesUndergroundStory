@@ -33,6 +33,8 @@ Enemy::Enemy(std::string map) {
 	name = EnemyJson[map][enemyIndex]["Name"];
        //std::cout << name;
 	type = EnemyJson[map][enemyIndex]["Type"];
+
+	dropAmt = EnemyJson[map][enemyIndex]["DropCount"];
 	
 	for (int i = 0; i < EnemyJson[map][enemyIndex]["Portrait"].size(); i++) {
 		std::string row = "";
@@ -110,5 +112,16 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 			//x = newCol;
 			updatePos(newCol, newRow);
 		}
+	}
+}
+
+Enemy::~Enemy() {
+	for (int i = 0; i < dropAmt; i++) {
+		int randDrop = rand() % itemList.size();
+		//Consumables* consumable;
+		//consumable = new Consumables(itemList[randDrop].itemType, itemList[randDrop].itemID);
+		Player::playerInventory.addItem(randDrop);
+		std::cout << "\nYou obtained " << Player::playerInventory.consumableStorage[Player::playerInventory.consumableStorage.size() - 1]->name << '!';
+		Sleep(1000);
 	}
 }

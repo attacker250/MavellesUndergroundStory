@@ -11,7 +11,6 @@ int Player::hp = maxHp;
 int Player::dmgModifier = 0;
 
 bool Player::move(){
-    bool verify = true;
     if (_kbhit()){
         xmov = 0;
         ymov = 0;
@@ -39,25 +38,12 @@ bool Player::move(){
                 xmov++;
                 break;
 
-            //case ('i'):
-            //    playerInventory.addItem("SWORD");
-            //    learnAtk("FIRE");
-            //    break;
+            case ('i'):
+                playerInventory.addItem("SWORD");
+                learnAtk("FIRE");
+                break;
             case ('u'):
-                system("cls");
-                std::cout << "Are You Sure You want to return to the main menu?\n              [Y]Yes              [N]No";
-                
-                while (verify) {
-                    //char verify = _getch();
-                    getbtn = _getch();
-                    if (getbtn == 'y' || getbtn == 'Y') {
-                        curScreenState = MAIN_MENU;
-                        break;
-                    }
-                    else if (getbtn == 'n' || getbtn == 'N') {
-                        verify = false;
-                    }
-                }
+                curScreenState = MAIN_MENU;
                 break;
             case ('E'):
             case ('e'):
@@ -90,15 +76,8 @@ void Player::learnAtk(std::string atkName){
     //
 }
 
-void Player::consumeItem(std::string typeItem, int effectiveness, int itemIndex){
-    if (playerInventory.consumableStorage[itemIndex]->itemType == "Healing") {
-        //std::cout << playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
-        hp += playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
-        //std::cout << (static_cast<Player*>(battlePlayer))->hp;
-    }
-    else if (playerInventory.consumableStorage[itemIndex]->itemType == "Buff") {
-        dmgModifier += playerInventory.consumableStorage[itemIndex]->itemEffectiveness;
-    }
+void Player::consumeItem(int itemIndex){
+    playerInventory.consumeItem(itemIndex,hp,dmgModifier);
     playerInventory.consumableStorage[itemIndex]->consume(1);
     for (int i = 0; i < playerInventory.consumableStorage.size(); i++) {
         if (playerInventory.consumableStorage[i]->broken) {

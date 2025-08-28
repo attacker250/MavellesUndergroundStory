@@ -106,7 +106,6 @@ void Battle::BattleMode() {
         std::cout << "[1] Attack" << std::endl;
         std::cout << "[2] Items" << std::endl;
         std::cout << "[3] Run" << std::endl;
-        std::cout << "[4] Test out learn attack" << std::endl;
     }
 
 
@@ -147,7 +146,7 @@ void Battle::ItemList() {
                 battlePlayer->playerInventory.consumableStorage.erase(battlePlayer->playerInventory.consumableStorage.begin() + i);
             }
         }
-        battlePlayer->consumeItem(battlePlayer->playerInventory.consumableStorage[getbtn]->itemType, battlePlayer->playerInventory.consumableStorage[getbtn]->itemEffectiveness, getbtn);
+        battlePlayer->consumeItem(getbtn);
         Sleep(1000);
         system("cls");
         PrintBattle();
@@ -209,13 +208,13 @@ void Battle::AttackList() {
                 }
 
                 if (battleEnemy->type == "Fire") {
-                    playertype = FIRE;
+                    enemytype = FIRE;
                 }
                 else if (battleEnemy->type == "Water") {
-                    playertype = WATER;
+                    enemytype = WATER;
                 }
                 else if (battleEnemy->type == "Grass") {
-                    playertype = GRASS;
+                    enemytype = GRASS;
                 }
                 if ((playertype == enemytype + 1) || (playertype == FIRE && enemytype == GRASS)) {
                     dmg *= 2;
