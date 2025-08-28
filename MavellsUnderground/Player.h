@@ -15,7 +15,7 @@ class Player: public Entity
 public:
 	//store name of items as string then access the item json data
 
-	const static int maxHp = 300;
+	const static int maxHp = 50;
 	static int hp;
 	int xmov = 0;
 	int ymov = 0;

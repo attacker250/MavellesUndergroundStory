@@ -18,6 +18,8 @@ class Enemy : public Entity
 
 
 public:
+	//Enemy Attack List (??????)
+	std::vector<std::string> atkList;
 
 	//bool move() override;
 	void nextMove(int x, int y, int boardHeight, int boardWidth) override;

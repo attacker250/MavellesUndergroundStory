@@ -38,9 +38,6 @@ public:
 	
 	//Interactions
 	virtual void interact();
-
-	//Enemy Attack List (??????)
-	std::vector<std::string> atkList;
 	
 	//Room moving Data
 	static std::string currentRoom;

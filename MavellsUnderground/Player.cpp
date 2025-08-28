@@ -43,7 +43,7 @@ bool Player::move(){
                 learnAtk("FIRE");
                 break;
             case ('u'):
-                curScreenState = MAIN_MENU;
+                gameQuit = true;
                 break;
             case ('E'):
             case ('e'):

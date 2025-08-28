@@ -13,7 +13,7 @@ public:
         std::string itemType = "";
         int itemID = 0;
     };
-    bool gameQuit = false;
+    static bool gameQuit;
 
     enum mapDimensions {
         ROWS = 13,

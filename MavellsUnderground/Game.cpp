@@ -11,7 +11,7 @@
 //std::vector<Weapon*> Game::weaponList;
 std::string Game::key;
 std::string Game::InteractionKey;
-
+bool Game::gameQuit = false;
 
 Consumables Game::returnItem(std::string type, int itemID) {
 	Consumables obj(type, itemID);
@@ -121,7 +121,12 @@ void Game::mainMenuScrn(){
 		while (!playIntro.PlayScene())Effects::ClearScreen();
 		system("cls");
 		playIntro.ZoomIn();
+
+
+
+
 		curScreenState = MAP_RENDER;
+
 	}
 	else if (getbtnNumber == 2) {
 		gameQuit = true;

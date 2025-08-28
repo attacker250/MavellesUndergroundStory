@@ -29,6 +29,13 @@ void Barrel::interact() {
 
 	//Give items based on Entity Data(PLEASE)
 
+
+
+
+
+
+
+
 	//Consumables* newConsumable;
 	//curScreenState = TRADING;
 	//for (int i = 0; i < 5; i++) {

@@ -457,7 +457,7 @@ int main() {
 
 	std::vector<Entity*> EntityList;
 	std::vector<Enemy*> EnemyList;
-
+	cutscenes.ZoomOut();
 	InitGame(game, player, EntityList, "Nill", roomList, EnemyList);
 
 	//Weapon::setPlayer(static_cast<Player*>(EntityList[0]));
@@ -470,21 +470,20 @@ int main() {
 
 	//Set the max size or something (Cutscenes break if you don't Zoom out first)
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-	cutscenes.ZoomOut();
 
 	//Intro Splash Screen
 
-	//cutscenes.ZoomIn();
-	//std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/";
-	////Doing a zoomin here kills it for some reason
-	//Sleep(3000);
-	//system("cls");
-	//std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
-	//Sleep(3000);
-	//system("cls");
-	//std::cout << "Dedicated to Group 10";
-	//Sleep(3000);
-	//system("cls");
+	cutscenes.ZoomIn();
+	std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/";
+	//Doing a zoomin here kills it for some reason
+	Sleep(3000);
+	system("cls");
+	std::cout << "For the Best Possible Experience, Play this game in maximized or FullScreen. Please Refrain from zooming in or out during gameplay.";
+	Sleep(3000);
+	system("cls");
+	std::cout << "Dedicated to Group 10";
+	Sleep(3000);
+	system("cls");
 	//fullscreen
 	//system("pause");
 	_running = true;
@@ -494,7 +493,7 @@ int main() {
 	//put this in game
 	int dialog = 0;
 
-	while (game.gameQuit == false) {
+	while (!game.gameQuit) {
 
 		//What is 
 		if (game.curScreenState == MAIN_MENU) {
@@ -628,8 +627,13 @@ int main() {
 					//std::cout << '\n' << game.curScreenState;
 					//Battle over
 					if (battle.stillbattle == false && EntityList[i]->hp <= 0) {
+						loadingScrn();
+						_running = false;
+						if (_enemyThread.joinable()) {
+							_enemyThread.join();
+						}
+						system("cls");
 						for (int i = 0; i < 2; i++) {
-							//Loot drop
 							int randDrop = rand() % game.itemList.size();
 							Consumables* consumable;
 							consumable = new Consumables(game.itemList[randDrop].itemType, game.itemList[randDrop].itemID);
@@ -639,12 +643,18 @@ int main() {
 						}
 						game.curScreenState = MAP_RENDER;
 						for (int f = 0; f < EnemyList.size(); f++) {
-							if (EnemyList[i]->hp <= 0) {
+							if (EnemyList[f]->hp <= 0) {
 								EnemyList.erase(EnemyList.begin() + f);
 							}
 						}
 						delete EntityList[i];
 						EntityList.erase(EntityList.begin() + i);
+
+						size--;
+
+						//start new enemy thread
+						_running = true;
+						_enemyThread = std::thread(enemyLoop, std::ref(EnemyList), &player);
 
 						checkClearCondition(EntityList);
 
@@ -655,11 +665,7 @@ int main() {
 
 		}
 		//???????????????????????????? WHY DO WE HAVE TWO OF THESE????????
-		if (game.curScreenState == INVENTORY) {
-			for (int i = 0; i < player.playerInventory.storage.size(); i++) {
-				std::cout << player.playerInventory.storage[i];
-			}
-		}
+
 		if (game.curScreenState == LEARNATK) {
 			game.learnScreen();
 		}
@@ -671,6 +677,7 @@ int main() {
 					std::cout << '\n' << game.curScreenState;
 				}
 			}
+
 
 		}
 		//??????????????????
@@ -687,7 +694,11 @@ int main() {
 		//;
 		Effects::ClearScreen();
 	}
-
+	_running = false;
+	loadingScrn();
+	if (_enemyThread.joinable()) { //check if can be joined or detached
+		_enemyThread.join(); //be joined
+	}
 	//Assuming this is the clean up
 	for (int i = 0; i < roomList.size(); i++) {
 		for (int f = 0; f < roomList[i]->entityRoomSave.size(); f++) {
@@ -725,14 +736,10 @@ int main() {
 
 
 
-	_running = false;
-	loadingScrn();
-	if (_enemyThread.joinable()) { //check if can be joined or detached
-		_enemyThread.join(); //be joined
-	}
+
 	system("cls");
 	//if ((xpos + xmov < COLUMNS) && (ypos + ymov < ROWS) && (xpos + xmov >= 0) && (ypos + ymov >= 0)) {
 
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 	return 0;
 }

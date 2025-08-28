@@ -35,9 +35,6 @@ public:
 	//Check if player is still in battle
 	bool stillbattle = false;
 
-	//Useless
-	static std::string atkLearn;
-
 	//Get Enemy
 	Enemy* battleEnemy;
 
