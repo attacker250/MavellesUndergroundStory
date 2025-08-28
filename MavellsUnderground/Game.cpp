@@ -22,8 +22,8 @@ Consumables Game::returnItem(std::string type, int itemID) {
 
 char Game::mapData[ROWS][COLUMNS];
 
-//int Game::curScreenState = MAIN_MENU;
-int Game::curScreenState = MAP_RENDER;
+int Game::curScreenState = MAIN_MENU;
+//int Game::curScreenState = MAP_RENDER;
 
 
 //char Game::mapObjects[SECTORS][ROOMS][ROWS][COLUMNS];
