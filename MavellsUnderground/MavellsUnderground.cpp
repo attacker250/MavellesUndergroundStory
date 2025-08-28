@@ -523,6 +523,7 @@ int main() {
 			for (int i = 0; i < weaponsList.size(); i++) {
 				delete weaponsList[i];
 			}
+			//s
 
 			weaponsList.clear();
 			player.playerInventory.consumableStorage.clear();
