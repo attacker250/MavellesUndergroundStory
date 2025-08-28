@@ -16,10 +16,9 @@ void Skeleton::interact() {
 	Cutscenes::key = "Skeleton";
 	if (!firstInteraction) {
 		Cutscenes::InteractionKey = "First";
-		Cutscenes zoom;
-		zoom.ZoomOut();
+		cutscenes.ZoomOut();
 		curScreenState = CUTSCENE;
-		while (!zoom.PlayScene())Effects::ClearScreen();
+		while (!cutscenes.PlayScene())Effects::ClearScreen();
 		system("cls");
 		firstInteraction = true;
 		curScreenState = MAP_RENDER;

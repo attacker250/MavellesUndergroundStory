@@ -51,12 +51,11 @@ void Trader::interact() {
 	curScreenState = CUTSCENE;
 	Cutscenes::key = "Trader";
 	Cutscenes::InteractionKey = "Intro";
-	Cutscenes playIntro;
 	system("cls");
-	playIntro.ZoomOut();
-	while (!playIntro.PlayScene())Effects::ClearScreen();
+	cutscenes.ZoomOut();
+	while (!cutscenes.PlayScene())Effects::ClearScreen();
 	system("cls");
-	playIntro.ZoomIn();
+	cutscenes.ZoomIn();
 	curScreenState = TRADING;
 
 }

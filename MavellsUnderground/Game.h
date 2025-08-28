@@ -4,7 +4,7 @@
 #include "Consumables.h"
 #include "Effects.h"
 #include <thread>
-
+#include "Cutscenes.h"
 
 class Game : public Effects
 {
@@ -42,6 +42,8 @@ public:
     static std::vector<itemPath> itemList;
     bool testNew = false;
     std::vector<std::string> weaponAdd;
+
+    Cutscenes cutscenes;
 
     void resetRooms();
     char getPos(int xpos, int ypos);

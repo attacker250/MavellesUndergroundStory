@@ -24,7 +24,6 @@ Cutscenes::Cutscenes() {
 
 
 void Cutscenes::ZoomOut() {
-
     cfi.dwFontSize.X = 0.5;                   // Width of each character in the font
     cfi.dwFontSize.Y = 3;
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
