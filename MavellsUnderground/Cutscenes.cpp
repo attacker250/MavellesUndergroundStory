@@ -8,6 +8,7 @@
 
 std::string Cutscenes::key;
 std::string Cutscenes::InteractionKey;
+nlohmann::json Cutscenes::CutsceneJson = nlohmann::json::parse(std::ifstream{ "Animations/Cutscenes.json" });
 
 Cutscenes::Cutscenes() {
     GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);

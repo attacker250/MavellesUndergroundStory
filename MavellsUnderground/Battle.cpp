@@ -38,10 +38,10 @@ int Battle::battleHp = 0;
 void Battle::PrintBattle() { //to be replaced with enemy ASCII
     for (int i = 0; i < battleEnemy->portrait.size(); i++) {
 
-		std::cout << battleEnemy->portrait[i];
+		//std::cout << battleEnemy->portrait[i];
         std::cout << '\n';
-        
     }
+
     std::cout <<"Type: " << battleEnemy->type << '\n';
 }
 
@@ -80,8 +80,9 @@ void Battle::initBattle(Enemy *enemy, Player* player)
 
 void Battle::BattleMode() {
 	//to be changed to enemy class hp
+    //cutscene.ZoomOut();
 	std::string WinMessage = "You Won!";
-	
+
     //Check if enemy defeated
 	if (battleHp <= 0) {
 		stillbattle = false;
@@ -92,7 +93,8 @@ void Battle::BattleMode() {
     if (stillbattle == false) {
         std::cout << "\n";
         std::string Encounter = "You encountered a wild " + battleEnemy->name + '!';
-        typewriter(Encounter, 1, 40);
+        cutscene.AsciiPrint(Encounter);
+        //typewriter(Encounter, 1, 40);
         stillbattle = true;
         Sleep(400);
         system("cls");

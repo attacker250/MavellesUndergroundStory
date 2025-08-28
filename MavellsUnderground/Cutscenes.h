@@ -30,8 +30,8 @@ public:
 	std::ifstream fFontdata{ "Animations/Fonts.json" };
 	nlohmann::json FontJson = nlohmann::json::parse(fFontdata);
 
-	std::ifstream fCutscenedata{ "Animations/Cutscenes.json" };
-	nlohmann::json CutsceneJson = nlohmann::json::parse(fCutscenedata);
+	//std::ifstream fCutscenedata{ "Animations/Cutscenes.json" };
+	static nlohmann::json CutsceneJson;
 
 	std::ifstream fDialoguedata{"Animations/Dialogue.json"};
 	nlohmann::json DialogueJson = nlohmann::json::parse(fDialoguedata);

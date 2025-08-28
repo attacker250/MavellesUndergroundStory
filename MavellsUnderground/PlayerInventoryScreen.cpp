@@ -81,10 +81,6 @@ void PlayerInventoryScreen::inventorySelection()
 	case '\r':
 		if (selectedObj < Player::playerInventory.consumableStorage.size()){
 			Player::consumeItem(selectedObj);
-			if (Player::playerInventory.consumableStorage[selectedObj]->broken) {
-				delete Player::playerInventory.consumableStorage[selectedObj];
-				Player::playerInventory.consumableStorage.erase(Player::playerInventory.consumableStorage.begin() + selectedObj);
-			}
 		}
 		else {
 			Game::curScreenState = 0;

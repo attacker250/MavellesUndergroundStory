@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "Battle.h"
+#include "Cutscenes.h"
 
 #include "json.hpp"
 #include <fstream>
@@ -54,6 +55,6 @@ public:
 	std::ifstream fAtkData{ "MoveData.json" };
     nlohmann::json AtkJson = nlohmann::json::parse(fAtkData);
 
-
+	Cutscenes cutscene;
 };
 

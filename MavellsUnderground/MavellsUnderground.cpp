@@ -418,9 +418,9 @@ int main() {
 
 	std::ifstream fItemdata("ItemData.json");
 	auto ItemJson = nlohmann::json::parse(fItemdata);
-	game.cutscenes.ZoomIn();
 	system("cls");
-	std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/\nCertain Screens may take a while to load even if there is no loading text\n[Press any Key to continue]";
+	std::cout << "Please ensure that you've launched this game with the Default Terminal Application Set to Windows Console Host.\nFor More Details, go here: https://www.makeuseof.com/set-reset-default-terminal-app-windows/\nCertain Screens may take a while to load even if there is no loading text\nIf the animations are borken,press F11 twice\n[Press any Key to continue]";
+	game.cutscenes.ZoomIn();
 	char enter;
 	enter = _getch();
 	system("cls");
@@ -497,10 +497,20 @@ int main() {
 
 		//What is 
 		if (game.curScreenState == MAIN_MENU) {
-			
-			game.cutscenes.ZoomIn();
 
+			game.cutscenes.ZoomIn();
+			_running = false;
+			loadingScrn();
+			if (_enemyThread.joinable()) { //check if can be joined or detached
+				_enemyThread.join(); //be joined
+			}
+			if (EntityList.size() > 0) {
+				roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->importEntityList(EntityList);
+			}
+			EntityList.clear();
+			EnemyList.clear();
 			for (int i = 0; i < roomList.size(); i++) {
+				//for (const Entity *e : roomList[i]->entityRoomSave) {
 				for (int f = 0; f < roomList[i]->entityRoomSave.size(); f++) {
 					if (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]) != nullptr) {
 						for (int r = 0; r < (dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.size(); r++) {
@@ -512,18 +522,19 @@ int main() {
 						(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.consumableStorage.clear();
 						(dynamic_cast<Trader*>(roomList[i]->entityRoomSave[f]))->traderInventory.weaponStorage.clear();
 					}
-					system("cls");
-					std::cout << i;
-					std::cout << f;
-					std::cout << roomList.at(i)->entityRoomSave.at(f);
-					system("pause");
-					//delete roomList[i]->entityRoomSave[f];
-					delete roomList[i]->entityRoomSave[f];
-					//
-					// roomList[i]->entityRoomSave[f] = nullptr;
+					//	system("cls");
+
+
+					if (dynamic_cast<Player*>(roomList[i]->entityRoomSave[f]) == nullptr) {
+						delete roomList[i]->entityRoomSave[f];
+					}
+
+
 				}
 				roomList[i]->entityRoomSave.clear();
+
 				delete roomList[i];
+
 
 			}
 			roomList.clear();
@@ -537,7 +548,7 @@ int main() {
 			for (int i = 0; i < weaponsList.size(); i++) {
 				delete weaponsList[i];
 			}
-			EnemyList.clear();
+
 			weaponsList.clear();
 			player.playerInventory.consumableStorage.clear();
 			player.playerInventory.weaponStorage.clear();
