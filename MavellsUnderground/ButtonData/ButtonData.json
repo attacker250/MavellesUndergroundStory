@@ -1,8 +1,8 @@
   {
-  "Cave": {
-    "Room1": {
-      "ButtonsActive":1
+    "Cave": {
+      "Room1": {
+        "ButtonsActive": 1
+      }
     }
-  }
   
 }

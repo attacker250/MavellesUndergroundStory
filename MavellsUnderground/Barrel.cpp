@@ -24,6 +24,15 @@ void Barrel::interact() {
 
 		Player::playerInventory.addWeapon("Sword");
 	}
+	else {
+		Cutscenes::InteractionKey = "Other";
+		cutscenes.ZoomOut();
+		curScreenState = CUTSCENE;
+		while (!cutscenes.PlayScene())Effects::ClearScreen();
+		system("cls");
+		firstInteraction = true;
+		curScreenState = MAP_RENDER;
+	}
 	
 
 	//Give items based on Entity Data(PLEASE)

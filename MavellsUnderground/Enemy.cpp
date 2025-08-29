@@ -5,7 +5,6 @@
 #include <ctime>
 #include "Player.h"
 
-
 //SET ENEMY HP FOR BATTLE RAHHH
 void Enemy::interact() {
 	curScreenState = BATTLE;
@@ -116,12 +115,14 @@ void Enemy::nextMove(int playerX, int playerY, int boardHeight, int boardWidth)
 }
 
 Enemy::~Enemy() {
+	std::cout << "+----Thy Reward----+";
 	for (int i = 0; i < dropAmt; i++) {
 		int randDrop = rand() % itemList.size();
-		//Consumables* consumable;
-		//consumable = new Consumables(itemList[randDrop].itemType, itemList[randDrop].itemID);
+		cutscenes.ZoomIn();
 		Player::playerInventory.addItem(randDrop);
-		std::cout << "\nYou obtained " << Player::playerInventory.consumableStorage[Player::playerInventory.consumableStorage.size() - 1]->name << '!';
+		std::cout << "\n| You obtained " << Player::playerInventory.consumableStorage[Player::playerInventory.consumableStorage.size() - 1]->name << '!';
+		std::cout << "\n|--------";
 		Sleep(1000);
 	}
+	Sleep(1000);
 }

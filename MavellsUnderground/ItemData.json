@@ -66,7 +66,7 @@
     "Sword": {
       "Description": "A fine iron sword",
       "Element": "Water",
-      "Value" :  50,
+      "Value": 50,
       "AttackList": [
         {
           "Name": "Slash",
@@ -80,7 +80,7 @@
         },
         {
           "Name": "Stab",
-          "Damage": 40  ,
+          "Damage": 40,
           "Description": "You stab yourself (and them)"
         },
         {
@@ -88,6 +88,18 @@
           "Damage": 50,
           "Description": "You plunged the spear into their chest"
 
+        }
+      ]
+    },
+    "Rock": {
+      "Description": "Somehow,it slipped into you pocket",
+      "Element": "Water",
+      "Value": 0,
+      "AttackList": [
+        {
+          "Name": "HeadBonk",
+          "Damage": 20,
+          "Description": "Bonk"
         }
       ]
     }

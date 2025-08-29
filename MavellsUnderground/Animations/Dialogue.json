@@ -19,6 +19,33 @@
             ]
           }
         ]
+      },
+      "Room2": {
+        "Intro": [
+          {
+            "Type": "Text",
+            "Dialogue": [ "A monster...?" ]
+          }
+        ]
+      },
+      "Room3": {
+        "Intro": [
+          {
+            "Type": "Text",
+            "Dialogue": [ "This place is a mess, but at least there’s no monsters in here." ]
+          }
+        ]
+      },
+      "Room4": {
+        "Intro": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "Huh?",
+              "Is that… a merchant?"
+            ]
+          }
+        ]
       }
     }
   },
@@ -44,7 +71,14 @@
             "Type": "Empty"
           }
         ],
-        "Second": []
+        "Other": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "Still as beaten up as ever. It’s probably seen better days."
+            ]
+          }
+        ]
       }
     }
   },
@@ -65,7 +99,33 @@
       "Room4": {
         "Intro": [
           {
-            "Type": "Empty"
+            "Type": "Text",
+            "Dialogue": [
+              "Now what did the cat drag in?",
+              "I didn’t expect someone like you ‘round here.",
+              "You look matted and stuff. Tough day?"
+            ]
+          },
+          {
+            "Type": "Choice",
+            "TopText": "Reply:",
+            "Choice": [
+              "A really tough day. I could use some gear.",
+              "Completely terrible! I don’t remember a thing about myself,\nI’m in here for some reason, and everything smells awful. So yes, terrible."
+            ]
+          },
+          {
+            "Type": "Branch",
+            "Branches": [
+              [ "I can see it kitty. Wanna see what I have?" ],
+              [ "Woah, cool it kitty!", " I don’t need everything about ya!", "Look, let’s just get down to business, alright?" ]
+            ]
+          }
+        ],
+        "Other": [
+          {
+            "Type": "Empty",
+            "Dialogue": [""]
           }
         ]
       }
@@ -81,6 +141,14 @@
               "A skeleton?",
               "Stars!",
               "I better get out of here soon. I don’t want to end up like that."
+            ]
+          }
+        ],
+        "Other": [
+          {
+            "Type": "Text",
+            "Dialogue": [
+              "There’s nothing of use on the skeleton. I better get moving."
             ]
           }
         ]

@@ -12,5 +12,6 @@ public:
 	static void ClearScreen();
 	static void ShowConsoleCursor(bool showFlag);
 	static void fitBox(int boxwidth,std::string text);
+	std::string returnFit(int boxwidth, std::string text);
 };
 

@@ -27,6 +27,7 @@
 #include "Weapon.h"
 #include "Equipment.h"
 #include "Skeleton.h"
+#include "Padlock.h"
 
 //SceneHeaders
 #include "Battle.h"
@@ -234,6 +235,7 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 		roomList[(returnRoomIndex(player.currentPlace, player.RoomDestination, roomList))]->newRoom = false;
 		EntityList.push_back(&player);
 		//Detects the objects that are predefined on the map
+		bool found = false;
 		for (int i = 0; i < ROWS; i++) {
 			for (int f = 0; f < COLUMNS; f++) {
 				int rmCatalogue = static_cast<int>(player.currentRoom[player.currentRoom.length() - 1]) - 49;
@@ -293,8 +295,19 @@ void InitGame(Game& game, Player& player, std::vector<Entity*>& EntityList, std:
 					skeleton = new Skeleton;
 					EntityList.push_back(skeleton);
 					EntityList[EntityList.size() - 1]->spawn(f, i);
-				
+					break;
+				case '!':
+					Padlock * padlock;
+					padlock = new Padlock;
+					if (!found) {
+						found = true;
+						padlock->secret = true;
+					}
+					EntityList.push_back(padlock);
+					EntityList[EntityList.size() - 1]->spawn(f, i);
+					break;
 				}
+
 
 
 
@@ -350,7 +363,28 @@ void checkClearCondition(std::vector<Entity*>& EntityList) {
 			}
 		}
 	}
-
+	if (MapJson[Entity::currentPlace][Entity::currentRoom]["RoomType"] == "Puzzle") {
+		for (int i = 0; i < EntityList.size(); i++) {
+			if (EntityList[i]->type == "Padlock") {
+				if (!EntityList[i]->alive) {
+					for (int i = 0; i < EntityList.size(); i++) {
+						if (EntityList[i]->type == "Door") {
+							EntityList[i]->alive = false;
+							EntityList[i]->interact();
+						}
+					}
+				}
+				else {
+					for (int i = 0; i < EntityList.size(); i++) {
+						if (EntityList[i]->type == "Door") {
+							EntityList[i]->alive = true;
+							EntityList[i]->interact();
+						}
+					}
+				}
+			}
+		}
+	}
 	//Handle Buttons
 	if (ButtonJson[Entity::currentPlace][Entity::currentRoom].contains("ButtonsActive")) {
 		if (ButtonJson[Entity::currentPlace][Entity::currentRoom]["ButtonsActive"] == active) {
@@ -426,7 +460,6 @@ int main() {
 	system("cls");
 	loadingScrn();
 	Battle battle;
-	Player player;
 	Trading trading;
 	PlayerInventoryScreen playerInventory;
 	Equipment equipment;
@@ -464,6 +497,7 @@ int main() {
 
 
 	Inventory::initWeaponList(weaponsList);
+	Player player;
 
 	player.lastDoor = "Door1";
 	player.RoomDestination = "Room1";
@@ -581,6 +615,9 @@ int main() {
 
 
 			Inventory::initWeaponList(weaponsList);
+			player.playerInventory.addWeapon("Rock");
+			player.playerInventory.weaponStorage[0]->inUse = true;
+			player.playerInventory.weaponStorage[0]->setPlayerAttacks();
 
 			player.lastDoor = "Door1";
 			player.RoomDestination = "Room1";
@@ -633,8 +670,8 @@ int main() {
 									player.RoomDestination = setter["Door" + std::to_string(i)]["Destination"];
 								}
 
-								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList);
 								dialog = 0;
+								InitGame(game, player, EntityList, "Door" + std::to_string(i), roomList, EnemyList);
 								break;
 							}
 						}
@@ -658,7 +695,7 @@ int main() {
 				old_time = time(0);
 				std::cout << DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"][dialog].get<std::string>();
 				//make it so if it doesnt have the key, it plays a random thought
-				if (dialog < DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"].size() - 1) {
+				if (dialog < DialogueJson[game.key][player.currentPlace][player.currentRoom][game.InteractionKey][0]["Dialogue"].size()-1) {
 					dialog++;
 				}
 			}
@@ -685,9 +722,10 @@ int main() {
 			}
 			std::cout << "<-------------------------------------->";
 			//"Tutorial"
-			std::cout << "\nKeybinds:\n   AWSD:Move\n   Q:Equips\n   E:Inventory\n   U:Main Menu\n   Walk into things to interact";
-			std::cout << "\n<-------------------------------------->";
-
+			if (player.currentPlace == "Cave" && player.currentRoom == "Room1") {
+				std::cout << "\nKeybinds:\n   AWSD:Move\n   Q:Equips\n   E:Inventory\n   U:Main Menu\n   Walk into things to interact";
+				std::cout << "\n<-------------------------------------->";
+			}
 			if (game.curScreenState != MAP_RENDER) {
 				system("cls");
 			}

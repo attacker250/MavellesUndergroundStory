@@ -140,6 +140,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Consumables.cpp" />
     <ClCompile Include="MavellsUnderground.cpp" />
+    <ClCompile Include="Padlock.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInventoryScreen.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -154,6 +155,7 @@
     <None Include="Animations\Dialogue.json" />
     <None Include="Animations\Fonts.json" />
     <None Include="ButtonData\ButtonData.json" />
+    <None Include="ButtonData\PuzzleData.json" />
     <None Include="EntityData\EntityData.json" />
     <None Include="ItemData.json" />
     <None Include="MapData\MapData.json" />
@@ -173,6 +175,7 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Consumables.h" />
+    <ClInclude Include="Padlock.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInventoryScreen.h" />
     <ClInclude Include="Room.h" />

@@ -23,6 +23,15 @@ void Skeleton::interact() {
 		firstInteraction = true;
 		curScreenState = MAP_RENDER;
 	}
+	else {
+		Cutscenes::InteractionKey = "Other";
+		cutscenes.ZoomOut();
+		curScreenState = CUTSCENE;
+		while (!cutscenes.PlayScene())Effects::ClearScreen();
+		system("cls");
+		firstInteraction = true;
+		curScreenState = MAP_RENDER;
+	}
 
 
 }

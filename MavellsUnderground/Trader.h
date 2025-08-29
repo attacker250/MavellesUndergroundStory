@@ -17,5 +17,6 @@ public:
 	Trader(std::vector<Weapon*> weaponsList);
 	void interact() override;
 	const int traderInvSize = 5;
+	bool Firstinteract;
 };
 

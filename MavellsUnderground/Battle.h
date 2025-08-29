@@ -23,6 +23,7 @@ public:
 		TRADING,
 		MENU,
 		LEARNATK,
+		END,
 
 		MAXSCREENSTATE,
 	};

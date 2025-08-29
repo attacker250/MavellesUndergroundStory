@@ -47,9 +47,6 @@ bool Cutscenes::PlayScene() {
 
 
     //Keep the Animation Playing
-    if (i < FrameSize) {
-        i++;
-    }
 
     std::cout << AsciiPrint("------------------------------");
 
@@ -92,6 +89,9 @@ bool Cutscenes::PlayScene() {
         std::cout << AsciiPrint("------------------------------");
     }
     
+    if (i < FrameSize) {
+        i++;
+    }
     //Handle Input
     if (_kbhit()) {
         char getbtn = static_cast<char>(_getch());

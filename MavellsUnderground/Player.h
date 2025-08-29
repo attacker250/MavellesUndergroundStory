@@ -31,7 +31,9 @@ public:
 
 	Player() {
 		icon = 'P';
-		atkList.push_back("TestAttack1");
+		playerInventory.addWeapon("Rock");
+		Player::playerInventory.weaponStorage[0]->inUse = true;
+		Player::playerInventory.weaponStorage[0]->setPlayerAttacks();
 		playerInventory.coins = 100;
 
 	}

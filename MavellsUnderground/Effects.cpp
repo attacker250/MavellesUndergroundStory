@@ -53,3 +53,12 @@ void Effects::fitBox(int boxwidth,std::string text)
         std::cout << ' ';
     }
 }
+
+std::string Effects::returnFit(int boxwidth, std::string text) {
+    std::string hi;
+    for (int i = 0; i < (boxwidth - text.size()); i++) {
+        //std::cout << ' ';
+        hi += " ";
+    }
+    return hi;
+}

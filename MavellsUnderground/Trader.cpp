@@ -48,14 +48,29 @@ Trader::Trader(std::vector<Weapon*> weaponsList)
 }
 
 void Trader::interact() {
-	curScreenState = CUTSCENE;
-	Cutscenes::key = "Trader";
-	Cutscenes::InteractionKey = "Intro";
-	system("cls");
-	cutscenes.ZoomOut();
-	while (!cutscenes.PlayScene())Effects::ClearScreen();
-	system("cls");
-	cutscenes.ZoomIn();
-	curScreenState = TRADING;
+	if (!Firstinteract) {
+		curScreenState = CUTSCENE;
+		Cutscenes::key = "Trader";
+		Cutscenes::InteractionKey = "Intro";
+		system("cls");
+		cutscenes.ZoomOut();
+		while (!cutscenes.PlayScene())Effects::ClearScreen();
+		system("cls");
+		cutscenes.ZoomIn();
+		curScreenState = TRADING;
+		Firstinteract = true;
+	}
+	else {
+		curScreenState = CUTSCENE;
+		Cutscenes::key = "Trader";
+		Cutscenes::InteractionKey = "Other";
+		system("cls");
+		cutscenes.ZoomOut();
+		while (!cutscenes.PlayScene())Effects::ClearScreen();
+		system("cls");
+		cutscenes.ZoomIn();
+		curScreenState = TRADING;
+		Firstinteract = true;
+	}
 
 }

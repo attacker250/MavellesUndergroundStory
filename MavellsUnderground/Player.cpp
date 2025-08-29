@@ -56,6 +56,7 @@ bool Player::move(){
                         verify = false;
                     }
                 }
+                system("cls");
                 break;
             case ('E'):
             case ('e'):

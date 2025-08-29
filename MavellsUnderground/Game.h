@@ -30,7 +30,7 @@ public:
 		LEARNATK,
         EQUIPMENT,
         MAIN_MENU,
-
+        END,
         MAXSCREENSTATE,
     };
     enum gameRooms {

@@ -75,6 +75,12 @@
     <ClCompile Include="Equipment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Padlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MapData\MapData.json">
@@ -102,6 +108,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Animations\Dialogue.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ButtonData\PuzzleData.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -161,6 +170,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Padlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

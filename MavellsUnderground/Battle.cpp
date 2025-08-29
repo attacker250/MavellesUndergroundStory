@@ -29,6 +29,7 @@ enum ScreenState {
     LEARNATK,
     EQUIPMENT,
     MAIN_MENU,
+    END,
 
     MAXSCREENSTATE,
 };
@@ -37,27 +38,24 @@ int Battle::battleHp = 0;
 
 void Battle::PrintBattle() { //to be replaced with enemy ASCII
     for (int i = 0; i < battleEnemy->portrait.size(); i++) {
-
-		//std::cout << battleEnemy->portrait[i];
-        std::cout << '\n';
+		std::cout << battleEnemy->portrait[i];
     }
-
-    std::cout <<"Type: " << battleEnemy->type << '\n';
+    std::cout << cutscene.AsciiPrint("\n------------------------------\nName:" + battleEnemy->name + "\nEnemy HP: " + std::to_string(battleEnemy->hp) + "\nEnemy Elemental Type:" + battleEnemy->type + "\n------------------------------");
 }
 
 
  
 
 //input enemy damage here
-void Battle::EnemyTurn()
-{
+void Battle::EnemyTurn(){
 
     Sleep(300);
     srand(time(0));
     int chosenAtk = rand() % battleEnemy->atkList.size();
     int enemydmg = 50;
     std::string enemymssg = "\nThe enemy used " + battleEnemy->atkList[chosenAtk] + "!"; //pass in enemydmg
-    typewriter(enemymssg, 20, 50);
+    std::cout << cutscene.AsciiPrint(enemymssg);
+    //typewriter(enemymssg, 20, 50);
     battlePlayer->hp -= enemydmg;
     if (battlePlayer->hp <= 0) {
         Game::curScreenState = MAIN_MENU;
@@ -80,20 +78,20 @@ void Battle::initBattle(Enemy *enemy, Player* player)
 
 void Battle::BattleMode() {
 	//to be changed to enemy class hp
-    //cutscene.ZoomOut();
+    cutscene.ZoomOut();
 	std::string WinMessage = "You Won!";
 
     //Check if enemy defeated
 	if (battleHp <= 0) {
 		stillbattle = false;
-        typewriter(WinMessage, 40, 50);
+        //typewriter(WinMessage, 40, 50);
+        std::cout << cutscene.AsciiPrint("+---" + WinMessage + "---+\n|               |");
 	}
 
     //On first enter
     if (stillbattle == false) {
-        std::cout << "\n";
         std::string Encounter = "You encountered a wild " + battleEnemy->name + '!';
-        cutscene.AsciiPrint(Encounter);
+        std::cout << cutscene.AsciiPrint(Encounter);
         //typewriter(Encounter, 1, 40);
         stillbattle = true;
         Sleep(400);
@@ -103,25 +101,22 @@ void Battle::BattleMode() {
     }
     //Print menu
     else {
-        std::cout << '\n' << battleEnemy->name << "'s HP:" << battleEnemy->hp << std::endl;
-        std::cout << "Your HP:" << battlePlayer->hp << '\n';
-        std::cout << "[1] Attack" << std::endl;
-        std::cout << "[2] Items" << std::endl;
-        std::cout << "[3] Run" << std::endl;
+        std::cout << cutscene.AsciiPrint("HP:" + std::to_string(battlePlayer->hp) + "\n[1] Attack\n[2] Items\n[3] Run");
     }
 
 
 }
 void Battle::ItemList() {
-    std::cout << "\n";
-
+    std::string toPrint;
     for (int i = 0; i < battlePlayer->playerInventory.consumableStorage.size(); i++) {
-        std::cout << '[' + std::to_string(i + 1) + "] " + battlePlayer->playerInventory.consumableStorage[i]->name << '\n';
-
+        //std::cout << '[' + std::to_string(i + 1) + "] " + battlePlayer->playerInventory.consumableStorage[i]->name << '\n';
+        toPrint += "[" + std::to_string(i + 1) + "] " + battlePlayer->playerInventory.consumableStorage[i]->name + "\n";
     }
 
-    std::cout << '[' + std::to_string(battlePlayer->playerInventory.consumableStorage.size() + 1) + "] Back \n";
+    //std::cout << '[' + std::to_string(battlePlayer->playerInventory.consumableStorage.size() + 1) + "] Back \n";
+    toPrint += "[" + std::to_string(battlePlayer->playerInventory.consumableStorage.size() + 1) + "] Back \n";
     //std::cout << "[4] Back" << std::endl;
+    std::cout << cutscene.AsciiPrint(toPrint);
 
     int getbtn = static_cast<int>(_getch()) - 49;
 
@@ -156,13 +151,16 @@ void Battle::ItemList() {
 }
 
 void Battle::AttackList() {
-    std::cout << "\n";
+    std::string toPrint;
     if (battlePlayer->atkList.size() > 0) {
         for (int i = 0; i < battlePlayer->atkList.size(); i++) {
-            std::cout << "[" << i + 1 << "]" << battlePlayer->atkList[i] << std::endl;
+            //std::cout << "[" << i + 1 << "]" << battlePlayer->atkList[i] << std::endl;
+            toPrint += "[" + std::to_string(i + 1) + "] " + battlePlayer->atkList[i] + "\n";
         }
     }
-    std::cout << "[" << battlePlayer->atkList.size() + 1 << "]" << " Back" << std::endl;
+    toPrint += "[" + std::to_string(battlePlayer->atkList.size() + 1) + "]" + " Back\n";
+    std::cout << cutscene.AsciiPrint(toPrint);
+    //std::cout << "[" << battlePlayer->atkList.size() + 1 << "]" << " Back" << std::endl;
     int getbtn = static_cast<int>(_getch()) - 49;
     //Beep(1080, 300);
 
@@ -171,12 +169,11 @@ void Battle::AttackList() {
         PrintBattle();
     }
     else if (battlePlayer->atkList.size() > getbtn && getbtn >= 0){
-        
+        std::string txt = "You chose " + battlePlayer->atkList[getbtn] + "!";
 
-
-        std::string txt = "You chose " + battlePlayer->atkList[getbtn] + '!';
-        typewriter(txt, 20, 40);
-        std::cout << '\n';
+        std::cout << cutscene.AsciiPrint(txt + "\n");
+        //typewriter(txt, 20, 40);
+        //std::cout << '\n';
         for (int i = 0; i < battlePlayer->playerInventory.weaponStorage.size(); i++) {
             if (battlePlayer->playerInventory.weaponStorage[i]->inUse) {
                 int dmg = 0;
@@ -220,11 +217,13 @@ void Battle::AttackList() {
                 }
                 if ((playertype == enemytype + 1) || (playertype == FIRE && enemytype == GRASS)) {
                     dmg *= 2;
-                    std::cout << "\nIt was super effective!\n";
+                    std::cout << cutscene.AsciiPrint("\nIt was super effective!\n");
+                    //std::cout << "\nIt was super effective!\n";
                 }
                 else if ((playertype == enemytype - 1) || (playertype == GRASS && enemytype == FIRE)) {
                     dmg /= 2;
-                    std::cout << "\nIt was not very effective!\n";
+                    std::cout << cutscene.AsciiPrint("\nIt was not very effective!\n");
+                    //std::cout << "\nIt was not very effective!\n";
                 }
                 Sleep(1000);
 
@@ -258,7 +257,8 @@ void Battle::AttackList() {
 
     }
     else {
-        std::cout << "Invalid option";
+        std::cout << cutscene.AsciiPrint("Invalid option");
+        //std::cout << "Invalid option";
         Sleep(500);
         system("cls");
         PrintBattle();
@@ -294,21 +294,27 @@ void Battle::BattleMenu(int& curScreenState) {
         case '3':
             Sleep(300);
 			srand(static_cast<unsigned>(time(0)));
-            typewriter(attempt, 2, 40);
+            std::cout << cutscene.AsciiPrint(attempt);
+            //typewriter(attempt, 2, 40);
 
 
 
 			if (randNumber == 1) {
 				curScreenState = 0;
-				typewriter(Escape, 2, 50);
+                Sleep(1000);
+                std::cout << cutscene.AsciiPrint(Escape);
+
+				//typewriter(Escape, 2, 50);
 				Sleep(300);
                 stillbattle = false;
 				system("cls");
                 curScreenState = MAP_RENDER;
 			}
 			else if (randNumber == 2) {
-                std::cout << "failed to escape! " << std::endl;
                 Sleep(500);
+                std::cout << cutscene.AsciiPrint("failed to escape! \n");
+                //std::cout << "failed to escape! ";
+                Sleep(1000);
                 system("cls");
 
                 PrintBattle();
